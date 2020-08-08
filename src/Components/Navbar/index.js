@@ -6,6 +6,7 @@ import Home from '../../Screens/Home';
 import Shop from '../../Screens/Shop';
 import Bag from '../../Screens/Bag';
 import Profile from '../../Screens/Profile';
+import { color } from '../../Assets/Styles';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -13,8 +14,8 @@ const Navbar = () => {
     return (
         <>
             <Tab.Navigator
-                activeColor='#DB3022'
-                inactiveColor='#DADADA'
+                activeColor={color.primary}
+                inactiveColor={color.fade}
                 barStyle={{ backgroundColor: '#fff' }}
                 screenOptions={({ route }) => ({
                     tabBarIcon: ({ color }) => {
