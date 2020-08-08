@@ -3,7 +3,22 @@ import {StyleSheet, Text, View, Button} from 'react-native';
 import TextInputs from '../TextInputs';
 import ButtonLarge from '../Button/ButtonsLarge';
 import Headline3 from '../Text/Headline3';
+
 const SignUp = () => {
+  const [logins, setLogins] = useState({});
+
+  validate = (text) => {
+    console.log(text);
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(text) === false) {
+      console.log('Email is Not Correct');
+      setLogins({email: text});
+      return false;
+    } else {
+      setLogins({email: text});
+      console.log('Email is Correct');
+    }
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headline}>
@@ -16,7 +31,11 @@ const SignUp = () => {
           <TextInputs title="Name" placeholder="Name" />
         </View>
         <View style={styles.cardLogin}>
-          <TextInputs title="Email" placeholder="Email" />
+          <TextInputs
+            title="Email"
+            placeholder="Email"
+            onChangeText={(text) => validate(text)}
+          />
         </View>
         <View style={styles.cardLogin}>
           <TextInputs
