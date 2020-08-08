@@ -5,17 +5,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // Page
 import Navbar from './Components/Navbar';
+import Auth from './Screens/Auth';
 
 const Stack = createStackNavigator();
 
 const Routes = (props) => {
     return (
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Index" component={Navbar} options={{ headerShown: false }} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Auth">
+          <Stack.Screen
+            name="Index"
+            component={Navbar}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Auth"
+            component={Auth}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
 }
 
 const mapStateToProps = state => ({
