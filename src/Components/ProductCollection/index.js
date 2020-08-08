@@ -9,7 +9,7 @@ const ProductCollection = (props) => {
     const data = {
         brand: 'OVJ',
         name: 'Blouse',
-        rating: 2,
+        rating: 4,
         price: '$30'
     }
     return (
