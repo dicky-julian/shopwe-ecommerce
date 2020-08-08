@@ -3,11 +3,12 @@ import { color } from '../../Assets/Styles';
 
 const style = StyleSheet.create({
     container: {
+        marginTop: 20,
         marginRight: 20,
         backgroundColor: color.light,
     },
     productImage: {
-        width: 150,
+        width: '100%',
         height: 200
     },
     productLabel: {

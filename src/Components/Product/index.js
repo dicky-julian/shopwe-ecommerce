@@ -6,9 +6,10 @@ import { color } from '../../Assets/Styles';
 
 const Product = (props) => {
     const { brand, name, rating, price } = props.data;
-
+    const width = props.width;
+    
     return (
-        <TouchableOpacity style={style.container} onPress={props.onPress}>
+        <TouchableOpacity style={{...style.container, width: width ? width:150}} onPress={props.onPress}>
             <ImageBackground
                 style={style.productImage}
                 source={require('../../Assets/Images/Home/product.png')}
