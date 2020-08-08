@@ -1,15 +1,24 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import Login from '../../Components/Auth/Login'
-// import SignUp from '../../Components/Auth/SignUp'
+import React, {useState} from 'react';
+import {View, Text} from 'react-native';
+import Login from '../../Components/Auth/Login';
+import SignUp from '../../Components/Auth/SignUp';
 
 const Auth = () => {
-    return (
-        <View>
-            <Login/>
-            {/* <SignUp/> */}
-        </View>
-    )
-}
+  const [status, setStatus] = useState(1);
 
-export default Auth
+  if (status == 1) {
+    return (
+      <View>
+        <Login />
+      </View>
+    );
+  } else {
+    return (
+      <View>
+        <SignUp />
+      </View>
+    );
+  }
+};
+
+export default Auth;

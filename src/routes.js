@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Page
 import Navbar from './Components/Navbar';
 import Auth from './Screens/Auth';
+import DetailProduct from './Screens/DetailProduct';
 
 const Stack = createStackNavigator();
 
@@ -18,10 +19,8 @@ const Routes = (props) => {
             component={Navbar}
             options={{headerShown: false}}
           />
-          <Stack.Screen
-            name="Auth"
-            component={Auth}
-          />
+          <Stack.Screen name="Auth" component={Auth} />
+          <Stack.Screen name="DetailProduct" component={DetailProduct} />
         </Stack.Navigator>
       </NavigationContainer>
     );

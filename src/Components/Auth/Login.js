@@ -20,6 +20,14 @@ const Login = () => {
     }
   };
 
+  const handleLogin = () => {
+    if (logins.email == '') {
+      setLogins(() => ({nameError: 'Email name required.'}));
+    } else {
+      setLogins(() => ({nameError: null}));
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headline}>
@@ -32,17 +40,26 @@ const Login = () => {
           <TextInputs
             title="Email"
             placeholder="Email"
+            onChangeText={(text) => validate(text)}
           />
+          {!!logins.nameError && (
+            <Text style={{color: 'red'}}>{logins.nameError}</Text>
+          )}
         </View>
         <View style={styles.cardLogin}>
-          <TextInputs title="Password" placeholder="Password" />
+          <TextInputs title="Password" placeholder="Password" secureTextEntry={true}/>
         </View>
       </View>
       {/* end Card Login */}
 
       <Text style={styles.forgotText}>Forgot your password?</Text>
       <View style={styles.button}>
-        <ButtonLarge title="LOGIN" onPress={() => Alert.alert('LoginLarge')} />
+        <ButtonLarge
+          title="LOGIN"
+          onPress={() => {
+            handleLogin();
+          }}
+        />
       </View>
     </View>
   );
