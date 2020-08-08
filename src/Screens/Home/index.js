@@ -1,10 +1,22 @@
 import React from 'react';
-import { Text } from 'react-native';
-import { API_URL, API_TOKEN } from "@env"
+import { ImageBackground, Text, ScrollView } from 'react-native';
+import { ProductCollection } from '../../Components';
+import style from './style';
+
 
 const Home = () => {
     return (
-        <Text>{API_URL}</Text>
+        <ScrollView style={style.container}>
+            {/* HEADER */}
+            <ImageBackground
+                style={style.header}
+                source={require('../../Assets/Images/Home/home_header.png')}>
+                <Text style={style.headerText}>Street clothes</Text>
+            </ImageBackground>
+
+            {/* PRODUCT COLLECTIONS */}
+            <ProductCollection title='new' description='You`ve never seen it before' />
+        </ScrollView>
     )
 }
 
