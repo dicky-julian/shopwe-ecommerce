@@ -8,6 +8,7 @@ const style = StyleSheet.create({
     },
     topbarContainer: {
         flexDirection: 'row',
+        alignItems: 'center'
     },
     barAction: {
         width: 20,
@@ -19,6 +20,9 @@ const style = StyleSheet.create({
         fontWeight: '700',
         alignSelf: 'center',
         textAlign: 'center'
+    },
+    customBar: {
+        width: Dimensions.get('window').width - 60,
     }
 });
 
