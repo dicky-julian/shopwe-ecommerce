@@ -1,8 +1,13 @@
 import React from 'react';
+<<<<<<< HEAD
 import {Text, View, ImageBackground} from 'react-native';
 import { ButtonModal, ButtonLarge, Headline2, HelperText, DescText, Rating } from '../../Components';
 import {ScrollView} from 'react-native-gesture-handler';
 import styles from './style'
+=======
+import {StyleSheet, Text, View} from 'react-native';
+import DetailProducts from '../../Components/Card/DetailProducts';
+>>>>>>> ca5df32bf134cfba5b9b1dd57b1e3b2d118574f3
 
 const DetailProduct = () => {
   return (

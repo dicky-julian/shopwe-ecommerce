@@ -1,10 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import { Dimensions, StyleSheet, Text, View, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ButtonLarge = props => {
   const content = (
-    <View style={[styles.button, {backgroundColor: '#DB3022'}]}>
+    <View style={[styles.button, { backgroundColor: '#DB3022' }]}>
       <Text style={styles.title}>{props.title}</Text>
     </View>
   );
@@ -15,9 +15,9 @@ export default ButtonLarge;
 
 const styles = StyleSheet.create({
   button: {
-    width: 320,
+    width: Dimensions.get('window').width - 20,
     borderRadius: 25,
-    padding: 10,
+    padding: 15,
     alignItems: 'center',
   },
   title: {

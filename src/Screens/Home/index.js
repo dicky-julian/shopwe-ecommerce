@@ -16,6 +16,7 @@ const Home = () => {
 
             {/* PRODUCT COLLECTIONS */}
             <ProductCollection title='new' description='You`ve never seen it before' />
+            <ProductCollection title='popular' description='You`ve never seen it before' />
         </ScrollView>
     )
 }

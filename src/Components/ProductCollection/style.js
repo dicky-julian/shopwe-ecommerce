@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { color } from '../../Assets/Styles';
 
 const style = StyleSheet.create({
@@ -28,9 +28,10 @@ const style = StyleSheet.create({
     collectionContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginTop: 30,
+        marginLeft: -20,
         marginRight: -20,
-        paddingBottom: 20
+        padding: 20,
+        paddingTop: 0
     }
 });
 
