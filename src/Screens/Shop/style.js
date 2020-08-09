@@ -28,7 +28,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         backgroundColor: color.light,
-        paddingLeft: 20,
+        paddingLeft: 15,
         paddingBottom: 150
     },
     modalFade: {
@@ -69,7 +69,8 @@ const style = StyleSheet.create({
         color: color.dark,
     },
     filterContainer: {
-        minHeight: Dimensions.get('window').height - 85,
+        minHeight: Dimensions.get('window').height - 90,
+        marginBottom: 65,
         backgroundColor: color.light
     },
     titleText: {
@@ -119,7 +120,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         position: 'absolute',
-        bottom: 0,
+        bottom: 50,
         backgroundColor: color.light,
         elevation: 15
     },

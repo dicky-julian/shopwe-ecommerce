@@ -48,7 +48,7 @@ const Shop = () => {
                     <Product
                         labelName='new'
                         data={data}
-                        width={Dimensions.get('window').width * 50 / 100 - 30}
+                        width={Dimensions.get('window').width * 50 / 100 - 15}
                     />
                     <Product
                         labelName='new'

@@ -11,50 +11,53 @@ import Auth from './Screens/Auth';
 import DetailProduct from './Screens/DetailProduct';
 import MyOrder from './Screens/MyOrders';
 import Checkout from './Screens/Checkout';
-import ShipAddress from './Screens/ShipAddress';
+import ShipAddress from './Screens/Bag/shipingAddress';
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Checkout">
+      <Stack.Navigator initialRouteName="Index">
         <Stack.Screen
-          name="MyOrder"
-          component={MyOrder}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Checkout"
-          component={Checkout}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ShipAddress"
-          component={ShipAddress}
-          options={{headerShown: false}}
+          name="Auth"
+          component={Auth}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Index"
           component={Navbar}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Search"
           component={Search}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Filter"
           component={Filter}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Auth"
-          component={Auth}
-          options={{headerShown: false}}
+          name="MyOrder"
+          component={MyOrder}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen name="DetailProduct" component={DetailProduct} />
+        <Stack.Screen
+          name="Checkout"
+          component={Checkout}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ShipAddress"
+          component={ShipAddress}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="DetailProduct"
+          component={DetailProduct}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
