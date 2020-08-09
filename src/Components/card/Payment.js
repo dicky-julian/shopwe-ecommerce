@@ -1,4 +1,4 @@
-import React from 'react';
+import React from './node_modules/react';
 import {StyleSheet, Text, View} from 'react-native';
 
 const Select = () => {

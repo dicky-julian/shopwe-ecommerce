@@ -1,27 +1,31 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const ButtonLarge = props => {
+const ButtonCircle = (props) => {
   const content = (
-    <View style={[styles.button, {backgroundColor: '#DB3022'}]}>
+    <View style={[styles.button, {backgroundColor: props.color}]}>
       <Text style={styles.title}>{props.title}</Text>
     </View>
   );
   return <TouchableOpacity onPress={props.onPress}>{content}</TouchableOpacity>;
 };
 
-export default ButtonLarge;
+export default ButtonCircle;
 
 const styles = StyleSheet.create({
   button: {
-    width: 340,
-    borderRadius: 25,
-    padding: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.2)',
     alignItems: 'center',
+    justifyContent: 'center',
+    width: 30,
+    height: 30,
+    backgroundColor: '#fff',
+    borderRadius: 50,
   },
   title: {
-    color: 'white',
+    color: 'black',
     margin: 0,
     fontSize: 18,
     justifyContent: 'center',
