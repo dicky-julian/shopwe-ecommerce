@@ -1,16 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, View, ImageBackground} from 'react-native';
-import ButtonsModal from '../Button/ButtonsModal';
-import ButtonLarge from '../Button/ButtonsLarge';
-import Subheads from '../Text/Subheads'
+import ButtonModal from '../Button/ButtonModal';
+import ButtonLarge from '../Button/ButtonLarge';
+import Headline2 from '../Text/Headline2'
 import HelperText from '../Text/HelperText';
 import DescText from '../Text/DescText';
 import { ScrollView } from 'react-native-gesture-handler';
+import Rating from '../Rating';
 
 const DetailProducts = () => {
   return (
-    <View>
-      <ScrollView>
+    <ScrollView>
+      <View>
         <View>
           <ImageBackground
             source={{uri: 'https://reactjs.org/logo-og.png'}}
@@ -19,13 +20,17 @@ const DetailProducts = () => {
         </View>
         <View style={styles.container}>
           <View style={styles.modalsCard}>
-            <ButtonsModal style={styles.modals} title="Size" />
-            <ButtonsModal style={styles.modals} title="Color" />
+            <ButtonModal style={styles.modals} title="Size" />
+            <ButtonModal style={styles.modals} title="Color" />
           </View>
 
           <View style={styles.detailCard}>
-            <Subheads title="H & M" />
+            <View style={styles.modalsCard}>
+              <Headline2 title="H & M" />
+              <Headline2 title="$ 19.99" />
+            </View>
             <HelperText title="categori" />
+            <Rating/>
             <DescText
               style={styles.desc}
               title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae
@@ -36,12 +41,11 @@ const DetailProducts = () => {
             />
           </View>
         </View>
-      </ScrollView>
-<View style={styles.button}>
-  <ButtonLarge title="ADD TO CART" />
-</View>
-      
-    </View>
+        <View style={styles.button}>
+          <ButtonLarge title="ADD TO CART" />
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -50,9 +54,6 @@ export default DetailProducts;
 const styles = StyleSheet.create({
   container: {
     margin: 10,
-    // flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   image: {
     height: 400,
@@ -62,15 +63,12 @@ const styles = StyleSheet.create({
   modalsCard: {
     flex: 1,
     flexDirection: 'row',
-    // justifyContent: 'center',
-    // alignContent: 'center',
+    justifyContent: 'space-between',
+    alignContent: 'space-around',
     marginBottom: 10,
   },
   modals: {
-    flex: 1,
-    // justifyContent: 'center',
-    alignContent: 'space-between',
-    flexWrap: 'wrap',
+    width: 170
   },
   detailCard: {
     marginBottom: 30,

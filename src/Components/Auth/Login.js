@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import TextInputs from '../TextInputs';
-import ButtonLarge from '../Button/ButtonsLarge';
+import ButtonLarge from '../Button/ButtonLarge';
 import Headline3 from '../Text/Headline3';
 
 const Login = () => {
