@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Checkout">
         <Stack.Screen
           name="MyOrder"
           component={MyOrder}

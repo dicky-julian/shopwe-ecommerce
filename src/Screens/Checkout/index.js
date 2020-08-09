@@ -17,7 +17,10 @@ const Checkout = () => {
       </View>
 
       <View style={styles.shipaddress}>
-        <ShippingAddress nameReceiver="Sinta" address="kota bogor" />
+        <ShippingAddress
+          nameReceiver="Sinta"
+          address="kota bogor kota bogor kota bogor kota bogor kota bogor kota bogor"
+        />
       </View>
 
       <View style={styles.subheads}>
