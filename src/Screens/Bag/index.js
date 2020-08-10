@@ -9,19 +9,19 @@ const Bag = () => {
   return (
     <View>
       <Topbar search={true} />
-      <ScrollView>
-        <View style={style.container}>
+      <View style={{ flex: 1 }}>
+        <ScrollView style={style.container}>
           <Text style={style.titleText}>My Bag</Text>
           <ProductOrder />
           <ProductOrder />
+        </ScrollView>
+        <View style={{...style.bottomBar, height: 125, bottom: 125}}>
+          <View style={style.textContainer}>
+            <Text style={style.fadeText}>Total amount:</Text>
+            <Text style={style.darkText}>112$</Text>
+          </View>
+          <Button title='Checkout' style='primary' type='fullwidth' onPress={() => navigation.navigate('Checkout')} />
         </View>
-      </ScrollView>
-      <View style={style.bottomBar}>
-        <View style={style.textContainer}>
-          <Text style={style.fadeText}>Total amount:</Text>
-          <Text style={style.darkText}>112$</Text>
-        </View>
-        <Button title='Checkout' style='primary' type='fullwidth' onPress={() => navigation.navigate('Checkout')} />
       </View>
     </View>
   );

@@ -7,6 +7,11 @@ const style = StyleSheet.create({
         backgroundColor: color.light,
         padding: 15
     },
+    fullContainer: {
+        minHeight: Dimensions.get('window').height - 86,
+        backgroundColor: color.light,
+        padding: 15
+    },
     titleText: {
         marginBottom: 10,
         fontSize: 32,
@@ -26,8 +31,8 @@ const style = StyleSheet.create({
         padding: 15,
         paddingTop: 20,
         paddingBottom: 20,
-        position: 'absolute',
-        bottom: 0,
+        left: 0,
+        right: 0,
         backgroundColor: color.light,
         elevation: 15
     },
@@ -46,11 +51,6 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 20
-    },
-    fullContainer: {
-        minHeight: Dimensions.get('window').height - 75,
-        backgroundColor: color.light,
-        padding: 15
     },
     darkText: {
         fontSize: 16,
