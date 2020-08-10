@@ -39,14 +39,14 @@ const Filter = () => {
                     <View>
                         <Text style={style.titleText}>Sizes</Text>
                         <View style={style.filterCard}>
-                            {sizePallette.map(siz => {
+                            {sizePallette.map((siz, key) => {
                                 if (siz === size) return (
-                                    <TouchableOpacity style={{ ...style.sizePicker, backgroundColor: colors.primary, borderColor: colors.primary }} onPress={() => setSize()}>
+                                    <TouchableOpacity style={{ ...style.sizePicker, backgroundColor: colors.primary, borderColor: colors.primary }} key={key} onPress={() => setSize()}>
                                         <Text style={{ fontSize: 16, color: colors.light }}>{siz}</Text>
                                     </TouchableOpacity>
                                 )
                                 else return (
-                                    <TouchableOpacity style={{ ...style.sizePicker, backgroundColor: 'transparent', borderColor: colors.fade }} onPress={() => setSize(siz)}>
+                                    <TouchableOpacity style={{ ...style.sizePicker, backgroundColor: 'transparent', borderColor: colors.fade }} key={key} onPress={() => setSize(siz)}>
                                         <Text style={{ fontSize: 16, color: colors.dark }}>{siz}</Text>
                                     </TouchableOpacity>
                                 )

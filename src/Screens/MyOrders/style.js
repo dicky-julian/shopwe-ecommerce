@@ -8,6 +8,21 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     padding: 20,
   },
+  darkText: {
+    fontSize: 14,
+    color: color.default,
+  },
+  fadeText: {
+    fontSize: 16,
+    color: color.dark,
+    fontWeight: '700',
+  },
+  headText: {
+    fontSize: 34,
+    color: color.dark,
+    fontWeight: '700',
+    lineHeight: 38,
+  },
   headline: {
     paddingBottom: 20,
   },

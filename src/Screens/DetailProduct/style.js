@@ -6,6 +6,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  darkText: {
+    fontSize: 14,
+    color: color.default,
+  },
+  fadeText: {
+    fontSize: 24,
+    color: color.dark,
+    fontWeight: '700',
+  },
+  headText: {
+    fontSize: 34,
+    color: color.dark,
+    fontWeight: '700',
+    lineHeight: 38,
+  },
   DetailStyle: {
     margin: 20,
   },

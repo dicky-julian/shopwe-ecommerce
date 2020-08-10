@@ -9,9 +9,6 @@ import {
   ImageBackground,
 } from 'react-native';
 import {
-  ButtonModal,
-  Headline2,
-  HelperText,
   Rating,
   Topbar,
   ButtonLarge,
@@ -83,10 +80,10 @@ const DetailProduct = () => {
 
           <View style={styles.detailCard}>
             <View style={styles.modalsCard}>
-              <Headline2 title="H & M" />
-              <Headline2 title="$ 19.99" />
+              <Text style={styles.fadeText}>H & M</Text>
+              <Text style={styles.fadeText}>$ 19.99</Text>
             </View>
-            <HelperText title="categori" />
+            <Text style={styles.darkText}>Categori</Text>
             <Rating />
             <Text style={styles.descText}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
