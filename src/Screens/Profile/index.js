@@ -6,8 +6,11 @@ import {
 import styles from './style';
 import {color} from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const Profile = () => {
+  const navigation = useNavigation();
+
     return (
       <View>
         <Topbar search={true} />
@@ -28,48 +31,49 @@ const Profile = () => {
           </View>
 
           <View style={styles.list}>
-            <View style={styles.cardIcon}>
-              <Text style={styles.fadeText}>My Orders</Text>
-              <TouchableOpacity onPress={() => Alert.alert('hi')}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyOrder')}>
+              <View style={styles.cardIcon}>
+                <Text style={styles.fadeText}>My Orders</Text>
                 <Ionicons
                   name="chevron-forward-outline"
                   size={20}
                   color={color.dark}
                 />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
             <View style={styles.cardIcon}>
               <Text style={styles.darkText}>Already have 12 orders</Text>
             </View>
           </View>
 
           <View style={styles.list}>
-            <View style={styles.cardIcon}>
-              <Text style={styles.fadeText}>Shipping Address</Text>
-              <TouchableOpacity onPress={() => Alert.alert('hi')}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ShipAddress')}>
+              <View style={styles.cardIcon}>
+                <Text style={styles.fadeText}>Shipping Address</Text>
                 <Ionicons
                   name="chevron-forward-outline"
                   size={20}
                   color={color.dark}
                 />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
             <View style={styles.cardIcon}>
               <Text style={styles.darkText}>3 Address</Text>
             </View>
           </View>
 
           <View style={styles.list}>
-            <View style={styles.cardIcon}>
-              <Text style={styles.fadeText}>Settings</Text>
-              <TouchableOpacity onPress={() => Alert.alert('hi')}>
+            <TouchableOpacity onPress={() => Alert.alert('hi')}>
+              <View style={styles.cardIcon}>
+                <Text style={styles.fadeText}>Settings</Text>
                 <Ionicons
                   name="chevron-forward-outline"
                   size={20}
                   color={color.dark}
                 />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
             <View style={styles.cardIcon}>
               <Text style={styles.darkText}>Notifications, password</Text>
             </View>

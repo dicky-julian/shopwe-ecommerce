@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    padding: 20,
+    padding: 15,
   },
   darkText: {
     fontSize: 14,

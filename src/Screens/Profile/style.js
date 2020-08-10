@@ -10,11 +10,11 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   darkText: {
-    fontSize: 14,
+    fontSize: 16,
     color: color.default,
   },
   fadeText: {
-    fontSize: 16,
+    fontSize: 18,
     color: color.dark,
     fontWeight: '700',
   },

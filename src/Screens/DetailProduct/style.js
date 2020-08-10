@@ -3,11 +3,12 @@ import {color} from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: color.light,
     flex: 1,
     flexDirection: 'column',
   },
   darkText: {
-    fontSize: 14,
+    fontSize: 16,
     color: color.default,
   },
   fadeText: {
@@ -15,12 +16,12 @@ const styles = StyleSheet.create({
     color: color.dark,
     fontWeight: '700',
   },
-  headText: {
-    fontSize: 34,
-    color: color.dark,
-    fontWeight: '700',
-    lineHeight: 38,
-  },
+  // headText: {
+  //   fontSize: 34,
+  //   color: color.dark,
+  //   fontWeight: '700',
+  //   lineHeight: 38,
+  // },
   DetailStyle: {
     margin: 20,
   },
@@ -32,7 +33,9 @@ const styles = StyleSheet.create({
   barAction: {
     width: (Dimensions.get('window').width * 35) / 100 - 20,
     flexDirection: 'row',
+    // borderWidth: 0.5,
     borderWidth: 0.5,
+    borderColor: color.fade,
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: color.light,
@@ -79,6 +82,7 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 7,
     borderWidth: 0.5,
+    borderColor: color.fade,
   },
   image: {
     height: 400,

@@ -28,12 +28,12 @@ const MyOrder = () => {
             </View>
 
             <View style={styles.detail}>
-              <Text style={styles.text}> Quantity: </Text>
+              <Text style={styles.text}>Quantity: </Text>
               <Text> 3</Text>
             </View>
 
             <View style={styles.detail}>
-              <Text style={styles.text}> Total Amount: </Text>
+              <Text style={styles.text}>Total Amount: </Text>
               <Text> 122$</Text>
             </View>
             <Text style={styles.status}>Delivered</Text>
