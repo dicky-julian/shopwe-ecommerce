@@ -13,16 +13,31 @@ import styles from './style';
 import {color} from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import {color as colors} from '../../Assets/Styles';
 
 const DetailProduct = () => {
   const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [activeSort, setActiveSort] = useState('');
-  const sortActionList = ['XS', 'S', 'M', 'L', 'XL'];
+  const [modalVisibleSize, setModalVisibleSize] = useState(false);
+  const [activeSize, setActiveSize] = useState('');
+  const [modalVisibleColor, setModalVisibleColor] = useState(false);
+  const [activeColor, setActiveColor] = useState('');
+  const colorActionList = [
+    '#000',
+    '#F7F7F7',
+    '#B82222',
+    '#BEA9A9',
+    '#E2BB8D',
+  ];
+  const sizeActionList = ['XS', 'S', 'M', 'L', 'XL'];
 
-  const handleSetSort = (list) => {
-    setActiveSort(list);
-    setModalVisible(false);
+  const handleSetSize = (list) => {
+    setActiveSize(list);
+    setModalVisibleSize(false);
+  };
+
+  const handleSetColor = (list) => {
+    setActiveColor(list);
+    setModalVisibleColor(false);
   };
 
   return (
@@ -43,7 +58,7 @@ const DetailProduct = () => {
                   width: (Dimensions.get('window').width * 45) / 100 - 20,
                 },
               ]}
-              onPress={() => setModalVisible(true)}>
+              onPress={() => setModalVisibleSize(true)}>
               <Text style={styles.actionText}>Size</Text>
               <Ionicons
                 name="chevron-down-outline"
@@ -60,7 +75,7 @@ const DetailProduct = () => {
                   width: (Dimensions.get('window').width * 45) / 100 - 20,
                 },
               ]}
-              onPress={() => setModalVisible(true)}>
+              onPress={() => setModalVisibleColor(true)}>
               <Text style={styles.actionText}>Color</Text>
               <Ionicons
                 name="chevron-down-outline"
@@ -94,16 +109,19 @@ const DetailProduct = () => {
       </View>
 
       {/* start modal size */}
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisibleSize}>
         <TouchableOpacity
           style={styles.modalFade}
-          onPress={() => setModalVisible(false)}></TouchableOpacity>
+          onPress={() => setModalVisibleSize(false)}></TouchableOpacity>
         <View style={styles.modalContainer}>
           <View style={styles.scrollTit}></View>
           <Text style={styles.titleText}>Size</Text>
           <View style={styles.modalsCard}>
-            {sortActionList.map((list, key) => {
-              if (list === activeSort) {
+            {sizeActionList.map((list, key) => {
+              if (list === activeSize) {
                 return (
                   <TouchableOpacity
                     style={{
@@ -112,7 +130,7 @@ const DetailProduct = () => {
                       width: (Dimensions.get('window').width * 33) / 100 - 20,
                     }}
                     key={key}
-                    onPress={() => handleSetSort(list)}>
+                    onPress={() => handleSetSize(list)}>
                     <Text style={{...styles.listText, color: color.light}}>
                       {list}
                     </Text>
@@ -123,23 +141,70 @@ const DetailProduct = () => {
                   <TouchableOpacity
                     style={styles.listContainer}
                     key={key}
-                    onPress={() => handleSetSort(list)}>
+                    onPress={() => handleSetSize(list)}>
                     <Text style={styles.listText}>{list}</Text>
                   </TouchableOpacity>
                 );
               }
             })}
           </View>
-          <View
-            style={{
-              borderBottomColor: '#9B9B9B',
-              borderBottomWidth: 0.5,
-            }}
-          />
-          <Text style={styles.footerText}>Size Info</Text>
+          <View style={{borderWidth: 0.5, borderColor: colors.fade}}>
+            <Text style={styles.footerText}>Size Info</Text>
+          </View>
         </View>
       </Modal>
       {/* end modal size */}
+
+      {/* start modal color */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisibleColor}>
+        <TouchableOpacity
+          style={styles.modalFade}
+          onPress={() => setModalVisibleColor(false)}></TouchableOpacity>
+        <View style={styles.modalContainer}>
+          <View style={styles.scrollTit}></View>
+          <Text style={styles.titleText}>Color</Text>
+          <View style={styles.modalsCard}>
+            {colorActionList.map((col, key) => {
+              if (col === activeColor) {
+                return (
+                  <TouchableOpacity
+                    style={{
+                      ...styles.colorWrapper,
+                      borderColor: colors.primary,
+                    }}
+                    key={key}
+                    onPress={() => setColor()}>
+                    <View
+                      style={{
+                        ...styles.colorPicker,
+                        backgroundColor: col,
+                      }}></View>
+                  </TouchableOpacity>
+                );
+              } else
+                return (
+                  <TouchableOpacity
+                    style={{
+                      ...styles.colorWrapper,
+                      borderColor: 'transparent',
+                    }}
+                    key={key}
+                    onPress={() => setColor(col)}>
+                    <View
+                      style={{
+                        ...styles.colorPicker,
+                        backgroundColor: col,
+                      }}></View>
+                  </TouchableOpacity>
+                );
+            })}
+          </View>
+        </View>
+      </Modal>
+      {/* end modal color */}
     </View>
   );
 };

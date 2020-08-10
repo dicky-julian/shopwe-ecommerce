@@ -16,12 +16,29 @@ const styles = StyleSheet.create({
     color: color.dark,
     fontWeight: '700',
   },
-  // headText: {
-  //   fontSize: 34,
-  //   color: color.dark,
-  //   fontWeight: '700',
-  //   lineHeight: 38,
-  // },
+
+  colorWrapper: {
+    padding: 3,
+    borderRadius: 39,
+    borderWidth: 1,
+    padding: 5,
+    margin: 10,
+  },
+  colorPicker: {
+    width: 35,
+    height: 35,
+    borderRadius: 35,
+  },
+  filterCard: {
+    width: Dimensions.get('window').width,
+    padding: 20,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    backgroundColor: color.light,
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.05)',
+  },
   DetailStyle: {
     margin: 20,
   },
@@ -33,7 +50,6 @@ const styles = StyleSheet.create({
   barAction: {
     width: (Dimensions.get('window').width * 35) / 100 - 20,
     flexDirection: 'row',
-    // borderWidth: 0.5,
     borderWidth: 0.5,
     borderColor: color.fade,
     justifyContent: 'flex-start',
@@ -75,9 +91,10 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 16,
     color: color.dark,
+    textAlign: 'center',
   },
   listContainer: {
-    padding: 20,
+    padding: 15,
     width: (Dimensions.get('window').width * 33) / 100 - 20,
     margin: 10,
     borderRadius: 7,
@@ -94,7 +111,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'space-around',
-    // margin: 10,
     flexWrap: 'wrap',
   },
   modals: {
@@ -112,7 +128,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     margin: 20,
-    fontSize: 20,
+    fontSize: 18,
     color: color.dark,
   },
 });
