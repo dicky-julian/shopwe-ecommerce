@@ -18,7 +18,7 @@ const Stack = createStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="ShipAddress">
         <Stack.Screen
           name="MyOrder"
           component={MyOrder}
@@ -54,7 +54,11 @@ const Routes = () => {
           component={Auth}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="DetailProduct" component={DetailProduct} />
+        <Stack.Screen
+          name="DetailProduct"
+          component={DetailProduct}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

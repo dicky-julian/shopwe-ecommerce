@@ -1,9 +1,27 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {color} from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
+  searchBar: {
+    width: Dimensions.get('window').width - 20,
+    // height: '70%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 0,
+    paddingLeft: 15,
+    backgroundColor: color.light,
+    borderWidth: 1,
+    borderColor: color.fade,
+    borderRadius: 30,
+    margin: 10
+  },
+  searchInput: {
+    marginLeft: 5,
+    fontSize: 16,
+  },
   container: {
-    flex: 1,
+    minHeight: Dimensions.get('window').height - 60,
+    backgroundColor: color.light,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: 20,

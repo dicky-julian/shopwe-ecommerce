@@ -13,8 +13,8 @@ export default HelperText;
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 11,
-    lineHeight: 11,
+    fontSize: 14,
+    lineHeight: 18,
     color: '#9B9B9B',
   },
 });

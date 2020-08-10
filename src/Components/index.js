@@ -1,9 +1,6 @@
 import Product from './Product';
 import ProductCollection from './ProductCollection';
 import Topbar from './Topbar';
-import TextInputs from './TextInputs';
-import ButtonLarge from './Button/ButtonsLarge';
-import Headline3 from './Text/Headline3';
 
 import ButtonCircle from '../Components/Button/ButtonCircle';
 import ButtonLarge from './Button/ButtonLarge';
