@@ -9,6 +9,7 @@ import ButtonModal from './Button/ButtonModal';
 import Tags from './Button/Tags';
 import Button from './Button';
 import Card from './Card';
+import PaymentCard from './Card/paymentCard';
 
 import Rating from './Rating';
 import ShippingAddress from './ShippingAddress';
@@ -32,6 +33,7 @@ export {
   Tags,
   Button,
   Card,
+  PaymentCard,
   Rating,
   ShippingAddress,
   DescItem,

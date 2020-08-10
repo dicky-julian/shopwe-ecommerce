@@ -14,7 +14,7 @@ const shipingAddress = props => {
     return (
         <View>
             <Topbar backNav={true} title='Shiping Address' />
-            <View style={style.container}>
+            <View style={style.fullContainer}>
                 <View style={style.searchBar}>
                     <Ionicons name='search' size={16} color={color.fade} />
                     <TextInput
@@ -28,8 +28,8 @@ const shipingAddress = props => {
 
                 <Text style={style.subTitleText}>Shipping Address</Text>
                 <View>
-                    <Card dataAddress={dataAddress} />
-                    <Card dataAddress={dataAddress} />
+                    <Card dataAddress={dataAddress} selecting={true} />
+                    <Card dataAddress={dataAddress} selecting={true} />
                     <Button title='Add new address' type='fullwidth' onPress={() => console.log('haha')} />
                 </View>
             </View>

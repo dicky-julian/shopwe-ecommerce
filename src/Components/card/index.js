@@ -9,7 +9,7 @@ const Card = props => {
     return (
         <View>
             {dataAddress ?
-                <TouchableOpacity style={{ ...style.container, borderColor: borderCard ? color.primary : color.fade }} onPress={() => setBorderCard(!borderCard)}>
+                <TouchableOpacity style={{ ...style.container, borderColor: borderCard ? color.primary : color.fade }} onPress={() => setBorderCard(props.selecting ? !borderCard : 0)}>
                     <View style={style.dataContainer}>
                         <Text style={{...style.mediumText, fontWeight: '700'}}>{dataAddress.name}</Text>
                         <Text style={style.mediumText}>{dataAddress.address}</Text>

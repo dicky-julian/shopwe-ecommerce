@@ -20,6 +20,40 @@ const style = StyleSheet.create({
         fontSize: 16,
         lineHeight: 26,
         color: color.dark
+    },
+    paymentContainer: {
+        width: Dimensions.get('window').width - 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+    paymentBrand: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 85,
+        height: 55,
+        backgroundColor: color.light,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: color.fade
+    },
+    brandImage: {
+        width: 50,
+        height: 50
+    },
+    brandText: {
+        marginLeft: 20,
+        fontSize: 16,
+        color: color.dark
+    },
+    brandIndicator: {
+        position: 'absolute',
+        right: 0,
+        width: 25,
+        height: 25,
+        borderRadius: 30,
+        borderWidth: 1,
+        borderColor: color.fade
     }
 });
 

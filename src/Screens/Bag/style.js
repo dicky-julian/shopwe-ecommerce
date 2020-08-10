@@ -3,7 +3,7 @@ import { color } from '../../Assets/Styles';
 
 const style = StyleSheet.create({
     container: {
-        minHeight: Dimensions.get('window').height - 25,
+        minHeight: Dimensions.get('window').height - 90,
         backgroundColor: color.light,
         padding: 15
     },
@@ -24,6 +24,8 @@ const style = StyleSheet.create({
     bottomBar: {
         width: Dimensions.get('window').width,
         padding: 15,
+        paddingTop: 20,
+        paddingBottom: 20,
         position: 'absolute',
         bottom: 49,
         backgroundColor: color.light,
@@ -44,6 +46,11 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 20
+    },
+    fullContainer: {
+        minHeight: Dimensions.get('window').height - 25,
+        backgroundColor: color.light,
+        padding: 15
     },
     darkText: {
         fontSize: 16,

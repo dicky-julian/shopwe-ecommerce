@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, TouchableOpacity, ScrollView, View } from 'react-native';
+import { Text, ScrollView, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { ProductOrder, Topbar } from '../../Components';
+import { Button, ProductOrder, Topbar } from '../../Components';
 import style from './style';
 
 const Bag = () => {
@@ -21,9 +21,7 @@ const Bag = () => {
           <Text style={style.fadeText}>Total amount:</Text>
           <Text style={style.darkText}>112$</Text>
         </View>
-        <TouchableOpacity style={style.button} onPress={() => navigation.navigate('ShipAddress')}>
-          <Text style={style.buttonText}>Checkout</Text>
-        </TouchableOpacity>
+        <Button title='Checkout' style='primary' type='fullwidth' onPress={() => navigation.navigate('Checkout')} />
       </View>
     </View>
   );

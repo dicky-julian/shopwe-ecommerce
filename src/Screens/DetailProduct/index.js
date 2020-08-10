@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View, ImageBackground} from 'react-native';
+import { Text, View, ImageBackground } from 'react-native';
 import { ButtonModal, ButtonLarge, Headline2, HelperText, DescText, Rating } from '../../Components';
-import {ScrollView} from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import styles from './style'
 
 const DetailProduct = () => {
@@ -10,7 +10,7 @@ const DetailProduct = () => {
       <View>
         <View>
           <ImageBackground
-            source={{uri: 'https://reactjs.org/logo-og.png'}}
+            source={{ uri: 'https://reactjs.org/logo-og.png' }}
             style={styles.image}
           />
         </View>

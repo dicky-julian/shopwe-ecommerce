@@ -5,13 +5,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // Page
 import Navbar from './Components/Navbar';
+// Shop Screen
 import Search from './Screens/Search';
 import Filter from './Screens/Shop/filter';
+// Auth Screen
 import Auth from './Screens/Auth';
 import DetailProduct from './Screens/DetailProduct';
+// My Bag Screen
 import MyOrder from './Screens/MyOrders';
-import Checkout from './Screens/Checkout';
 import ShipAddress from './Screens/Bag/shipingAddress';
+import Checkout from './Screens/Bag/checkout';
 
 const Stack = createStackNavigator();
 
