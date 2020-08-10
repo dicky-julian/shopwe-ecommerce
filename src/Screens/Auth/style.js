@@ -1,9 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { color } from '../../Assets/Styles';
 
 const style = StyleSheet.create({
     container: {
-        padding: 10
+        minHeight: Dimensions.get('window').height - 60,
+        padding: 15,
+        backgroundColor: color.light
     },
     headline: {
         marginBottom: 80,
@@ -15,8 +17,8 @@ const style = StyleSheet.create({
         fontWeight: '700'
     },
     forgotText: {
-        marginTop: 30,
-        marginBottom: 30,
+        marginTop: 10,
+        marginBottom: 50,
         fontSize: 16,
         color: color.dark,
         textAlign: 'right',

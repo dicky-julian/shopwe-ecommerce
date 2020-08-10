@@ -47,6 +47,8 @@ const style = StyleSheet.create({
         color: color.dark
     },
     brandIndicator: {
+        justifyContent: 'center',
+        alignItems: 'center',
         position: 'absolute',
         right: 0,
         width: 25,
@@ -54,6 +56,11 @@ const style = StyleSheet.create({
         borderRadius: 30,
         borderWidth: 1,
         borderColor: color.fade
+    },
+    dotIndicator: {
+        width: 18,
+        height: 18,
+        borderRadius: 18,
     }
 });
 

@@ -15,12 +15,6 @@ const Bag = () => {
             <Text style={style.titleText}>My Bag</Text>
             <ProductOrder />
             <ProductOrder />
-            <ProductOrder />
-            <ProductOrder />
-            <ProductOrder />
-            <ProductOrder />
-            <ProductOrder />
-            <ProductOrder />
             <View style={{height: 150}}></View>
           </ScrollView>
         </View>

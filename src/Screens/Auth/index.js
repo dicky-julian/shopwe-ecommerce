@@ -36,14 +36,14 @@ const Auth = () => {
           {form === 'login' ? (
             <></>
           ) : (
-            <View>
-              <TextInputs
-                title="Name"
-                placeholder="Insert Your Name"
-                onChangeText={(text) => setName(text)}
-              />
-            </View>
-          )}
+              <View>
+                <TextInputs
+                  title="Name"
+                  placeholder="Insert Your Name"
+                  onChangeText={(text) => setName(text)}
+                />
+              </View>
+            )}
           <View>
             <TextInputs
               title="Email"
@@ -73,21 +73,27 @@ const Auth = () => {
                 type="fullwidth"
                 onPress={() => handleSubmitLogin()}
               />
+              <Text style={{ ...style.forgotText, marginTop: 20, marginBottom: 20, textAlign: 'center' }}>Or</Text>
+              <Button
+                title="Create new account"
+                type="fullwidth"
+                onPress={() => setForm('signup')}
+              />
             </View>
           </View>
         ) : (
-          <View>
-            <TouchableOpacity onPress={() => setForm('signup')}>
-              <Text style={style.forgotText}>Already have an account?</Text>
-            </TouchableOpacity>
-            <Button
-              title="Sign Up"
-              style="primary"
-              type="fullwidth"
-              onPress={() => handleSubmitRegister()}
-            />
-          </View>
-        )}
+            <View>
+              <TouchableOpacity onPress={() => setForm('login')}>
+                <Text style={style.forgotText}>Already have an account?</Text>
+              </TouchableOpacity>
+              <Button
+                title="Sign Up"
+                style="primary"
+                type="fullwidth"
+                onPress={() => handleSubmitRegister()}
+              />
+            </View>
+          )}
       </View>
     </>
   );
