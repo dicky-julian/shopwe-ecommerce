@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, ScrollView, View } from 'react-native';
+import { Dimensions, Text, TouchableOpacity, ScrollView, View } from 'react-native';
 import { Topbar } from '../../Components';
 import style from './style';
 import { color as colors } from '../../Assets/Styles';
@@ -12,86 +12,150 @@ const Filter = () => {
     const sizePallette = ['XS', 'S', 'M', 'L', 'XL'];
     const categoryPallette = ['All', 'Women', 'Men', 'Boys', 'Girls', 'Kids'];
     return (
-        <View>
-            <Topbar backNav={true} title='Filters' />
-            <ScrollView>
-                <View style={style.filterContainer}>
-                    {/* COLOR PICKER */}
-                    <View>
-                        <Text style={style.titleText}>Color</Text>
-                        <View style={style.filterCard}>
-                            {colorPallette.map((col, key) => {
-                                if (col === color) return (
-                                    <TouchableOpacity style={{ ...style.colorWrapper, borderColor: colors.primary }} key={key} onPress={() => setColor()}>
-                                        <View style={{ ...style.colorPicker, backgroundColor: col }}></View>
-                                    </TouchableOpacity>
-                                )
-                                else return (
-                                    <TouchableOpacity style={{ ...style.colorWrapper, borderColor: 'transparent' }} key={key} onPress={() => setColor(col)}>
-                                        <View style={{ ...style.colorPicker, backgroundColor: col }}></View>
-                                    </TouchableOpacity>
-                                )
-                            })}
+      <View>
+        <Topbar backNav={true} title="Filters" />
 
-                        </View>
-                    </View>
-                    {/* SIZES FILTER */}
-                    <View>
-                        <Text style={style.titleText}>Sizes</Text>
-                        <View style={style.filterCard}>
-                            {sizePallette.map(siz => {
-                                if (siz === size) return (
-                                    <TouchableOpacity style={{ ...style.sizePicker, backgroundColor: colors.primary, borderColor: colors.primary }} onPress={() => setSize()}>
-                                        <Text style={{ fontSize: 16, color: colors.light }}>{siz}</Text>
-                                    </TouchableOpacity>
-                                )
-                                else return (
-                                    <TouchableOpacity style={{ ...style.sizePicker, backgroundColor: 'transparent', borderColor: colors.fade }} onPress={() => setSize(siz)}>
-                                        <Text style={{ fontSize: 16, color: colors.dark }}>{siz}</Text>
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </View>
-                    </View>
-                    {/* CATEGORIES FILTER */}
-                    <View>
-                        <Text style={style.titleText}>Category</Text>
-                        <View style={style.filterCard}>
-                            {categoryPallette.map(cat => {
-                                if (cat === category) return (
-                                    <TouchableOpacity style={{ ...style.categoryPicker, backgroundColor: colors.primary, borderColor: colors.primary }} onPress={() => setCategory()}>
-                                        <Text style={{ fontSize: 16, color: colors.light }}>{cat}</Text>
-                                    </TouchableOpacity>
-                                )
-                                else return (
-                                    <TouchableOpacity style={{ ...style.categoryPicker, backgroundColor: 'transparent', borderColor: colors.fade }} onPress={() => setCategory(cat)}>
-                                        <Text style={{ fontSize: 16, color: colors.dark }}>{cat}</Text>
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </View>
-                    </View>
+        <View style={{height: Dimensions.get('window').height + 10}}>
+          <ScrollView>
+            <View style={style.filterContainer}>
+              {/* COLOR PICKER */}
+              <View>
+                <Text style={style.titleText}>Color</Text>
+                <View style={style.filterCard}>
+                  {colorPallette.map((col, key) => {
+                    if (col === color)
+                      return (
+                        <TouchableOpacity
+                          style={{
+                            ...style.colorWrapper,
+                            borderColor: colors.primary,
+                          }}
+                          key={key}
+                          onPress={() => setColor()}>
+                          <View
+                            style={{
+                              ...style.colorPicker,
+                              backgroundColor: col,
+                            }}></View>
+                        </TouchableOpacity>
+                      );
+                    else
+                      return (
+                        <TouchableOpacity
+                          style={{
+                            ...style.colorWrapper,
+                            borderColor: 'transparent',
+                          }}
+                          key={key}
+                          onPress={() => setColor(col)}>
+                          <View
+                            style={{
+                              ...style.colorPicker,
+                              backgroundColor: col,
+                            }}></View>
+                        </TouchableOpacity>
+                      );
+                  })}
                 </View>
-            </ScrollView>
-            <View style={style.bottomBar}>
-                <TouchableOpacity
-                    style={{
-                        ...style.button,
-                        borderColor: colors.dark,
-                    }}>
-                    <Text style={{ fontSize: 16, color: colors.dark }}>Discard</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{
-                        ...style.button,
-                        backgroundColor: colors.primary,
-                        borderColor: 'transparent',
-                    }}>
-                    <Text style={{ fontSize: 16, color: colors.light }}>Apply</Text>
-                </TouchableOpacity>
+              </View>
+              {/* SIZES FILTER */}
+              <View>
+                <Text style={style.titleText}>Sizes</Text>
+                <View style={style.filterCard}>
+                  {sizePallette.map((siz, key) => {
+                    if (siz === size)
+                      return (
+                        <TouchableOpacity
+                          style={{
+                            ...style.sizePicker,
+                            backgroundColor: colors.primary,
+                            borderColor: colors.primary,
+                          }}
+                          key={key}
+                          onPress={() => setSize()}>
+                          <Text style={{fontSize: 16, color: colors.light}}>
+                            {siz}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    else
+                      return (
+                        <TouchableOpacity
+                          style={{
+                            ...style.sizePicker,
+                            backgroundColor: 'transparent',
+                            borderColor: colors.fade,
+                          }}
+                          key={key}
+                          onPress={() => setSize(siz)}>
+                          <Text style={{fontSize: 16, color: colors.dark}}>
+                            {siz}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                  })}
+                </View>
+              </View>
+              {/* CATEGORIES FILTER */}
+              <View>
+                <Text style={style.titleText}>Category</Text>
+                <View style={style.filterCard}>
+                  {categoryPallette.map((cat, key) => {
+                    if (cat === category)
+                      return (
+                        <TouchableOpacity
+                          style={{
+                            ...style.categoryPicker,
+                            backgroundColor: colors.primary,
+                            borderColor: colors.primary,
+                          }}
+                          key={key}
+                          onPress={() => setCategory()}>
+                          <Text style={{fontSize: 16, color: colors.light}}>
+                            {cat}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    else
+                      return (
+                        <TouchableOpacity
+                          style={{
+                            ...style.categoryPicker,
+                            backgroundColor: 'transparent',
+                            borderColor: colors.fade,
+                          }}
+                          key={key}
+                          onPress={() => setCategory(cat)}>
+                          <Text style={{fontSize: 16, color: colors.dark}}>
+                            {cat}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                  })}
+                </View>
+              </View>
             </View>
+          </ScrollView>
         </View>
-    )
+        <View style={style.bottomBar}>
+          <TouchableOpacity
+            style={{
+              ...style.button,
+              borderColor: colors.dark,
+            }}>
+            <Text style={{fontSize: 16, color: colors.dark}}>Discard</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              ...style.button,
+              backgroundColor: colors.primary,
+              borderColor: 'transparent',
+            }}>
+            <Text style={{fontSize: 16, color: colors.light}}>Apply</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
 }
 
 export default Filter;

@@ -4,7 +4,7 @@ import { color } from '../../Assets/Styles';
 const style = StyleSheet.create({
     container: {
         marginTop: 20,
-        marginRight: 20,
+        marginRight: 15,
         backgroundColor: color.light,
     },
     productImage: {

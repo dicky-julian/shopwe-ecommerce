@@ -1,47 +1,146 @@
-import React from 'react';
-import {Text, View, ImageBackground} from 'react-native';
-import { ButtonModal, ButtonLarge, Headline2, HelperText, DescText, Rating } from '../../Components';
-import {ScrollView} from 'react-native-gesture-handler';
-import styles from './style'
+import React, {useState} from 'react';
+import {
+  Dimensions,
+  Modal,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+  ImageBackground,
+} from 'react-native';
+import {Rating, Topbar, Button} from '../../Components';
+import styles from './style';
+import {color} from '../../Assets/Styles';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const DetailProduct = () => {
+  const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [activeSort, setActiveSort] = useState('');
+  const sortActionList = ['XS', 'S', 'M', 'L', 'XL'];
+
+  const handleSetSort = (list) => {
+    setActiveSort(list);
+    setModalVisible(false);
+  };
+
   return (
-    <ScrollView>
-      <View>
-        <View>
-          <ImageBackground
-            source={{uri: 'https://reactjs.org/logo-og.png'}}
-            style={styles.image}
-          />
-        </View>
-        <View style={styles.container}>
+    <View style={styles.container}>
+      <Topbar backNav={true} title="Brand Name" />
+      <ScrollView>
+        <ImageBackground
+          source={{uri: 'https://reactjs.org/logo-og.png'}}
+          style={styles.image}
+        />
+        <View style={styles.DetailStyle}>
           <View style={styles.modalsCard}>
-            <ButtonModal style={styles.modals} title="Size" />
-            <ButtonModal style={styles.modals} title="Color" />
+            <TouchableOpacity
+              style={[
+                styles.modals,
+                {
+                  ...styles.barAction,
+                  width: (Dimensions.get('window').width * 45) / 100 - 20,
+                },
+              ]}
+              onPress={() => setModalVisible(true)}>
+              <Text style={styles.actionText}>Size</Text>
+              <Ionicons
+                name="chevron-down-outline"
+                size={20}
+                color={color.dark}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.modals,
+                {
+                  ...styles.barAction,
+                  width: (Dimensions.get('window').width * 45) / 100 - 20,
+                },
+              ]}
+              onPress={() => setModalVisible(true)}>
+              <Text style={styles.actionText}>Color</Text>
+              <Ionicons
+                name="chevron-down-outline"
+                size={20}
+                color={color.dark}
+              />
+            </TouchableOpacity>
           </View>
 
           <View style={styles.detailCard}>
             <View style={styles.modalsCard}>
-              <Headline2 title="H & M" />
-              <Headline2 title="$ 19.99" />
+              <Text style={styles.fadeText}>H & M</Text>
+              <Text style={styles.fadeText}>$ 19.99</Text>
             </View>
-            <HelperText title="categori" />
+            <Text style={styles.darkText}>Categori</Text>
             <Rating />
-            <DescText
-              style={styles.desc}
-              title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vitae
-            quam et ante molestie fringilla eu eget neque. Sed at mauris
-            lobortis, varius neque vel, imperdiet erat. Cras elementum augue
-            quis purus egestas laoreet. Suspendisse ligula magna, egestas vitae
-            molestie non, hendrerit quis nisl."
-            />
+            <Text style={styles.descText}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+              vitae quam et ante molestie fringilla eu eget neque.
+            </Text>
           </View>
         </View>
-        <View style={styles.button}>
-          <ButtonLarge title="ADD TO CART" />
-        </View>
+      </ScrollView>
+      <View style={styles.button}>
+        <Button
+          title="ADD TO CART"
+          style="primary"
+          type="fullwidth"
+          onPress={() => navigation.navigate('Checkout')}
+        />
       </View>
-    </ScrollView>
+
+      {/* start modal size */}
+      <Modal animationType="slide" transparent={true} visible={modalVisible}>
+        <TouchableOpacity
+          style={styles.modalFade}
+          onPress={() => setModalVisible(false)}></TouchableOpacity>
+        <View style={styles.modalContainer}>
+          <View style={styles.scrollTit}></View>
+          <Text style={styles.titleText}>Size</Text>
+          <View style={styles.modalsCard}>
+            {sortActionList.map((list, key) => {
+              if (list === activeSort) {
+                return (
+                  <TouchableOpacity
+                    style={{
+                      ...styles.listContainer,
+                      backgroundColor: color.primary,
+                      width: (Dimensions.get('window').width * 33) / 100 - 20,
+                    }}
+                    key={key}
+                    onPress={() => handleSetSort(list)}>
+                    <Text style={{...styles.listText, color: color.light}}>
+                      {list}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              } else {
+                return (
+                  <TouchableOpacity
+                    style={styles.listContainer}
+                    key={key}
+                    onPress={() => handleSetSort(list)}>
+                    <Text style={styles.listText}>{list}</Text>
+                  </TouchableOpacity>
+                );
+              }
+            })}
+          </View>
+          <View
+            style={{
+              borderBottomColor: '#9B9B9B',
+              borderBottomWidth: 0.5,
+            }}
+          />
+          <Text style={styles.footerText}>Size Info</Text>
+        </View>
+      </Modal>
+      {/* end modal size */}
+    </View>
   );
 };
 

@@ -5,33 +5,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // Page
 import Navbar from './Components/Navbar';
+// Shop Screen
 import Search from './Screens/Search';
 import Filter from './Screens/Shop/filter';
+// Auth Screen
 import Auth from './Screens/Auth';
 import DetailProduct from './Screens/DetailProduct';
+// My Bag Screen
 import MyOrder from './Screens/MyOrders';
-import Checkout from './Screens/Checkout';
-import ShipAddress from './Screens/ShipAddress';
+import ShipAddress from './Screens/Bag/shipingAddress';
+import Checkout from './Screens/Bag/checkout';
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Checkout">
+      <Stack.Navigator initialRouteName="Index">
         <Stack.Screen
-          name="MyOrder"
-          component={MyOrder}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Checkout"
-          component={Checkout}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ShipAddress"
-          component={ShipAddress}
+          name="Auth"
+          component={Auth}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -50,11 +43,25 @@ const Routes = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Auth"
-          component={Auth}
+          name="MyOrder"
+          component={MyOrder}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="DetailProduct" component={DetailProduct} />
+        <Stack.Screen
+          name="Checkout"
+          component={Checkout}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ShipAddress"
+          component={ShipAddress}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DetailProduct"
+          component={DetailProduct}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

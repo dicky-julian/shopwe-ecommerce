@@ -3,7 +3,7 @@ import { color } from '../../Assets/Styles';
 
 const style = StyleSheet.create({
     container: {
-        padding: 20,
+        padding: 15,
         backgroundColor: color.light,
     },
     titleHeader: {
@@ -28,9 +28,9 @@ const style = StyleSheet.create({
     collectionContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        marginLeft: -20,
-        marginRight: -20,
-        padding: 20,
+        marginLeft: -15,
+        marginRight: -15,
+        padding: 15,
         paddingTop: 0
     }
 });

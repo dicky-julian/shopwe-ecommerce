@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { ButtonLarge, TextInputs, Topbar } from '../../Components';
+import { TextInputs, Topbar, Button } from '../../Components';
 import style from './style';
 
 const Auth = () => {
@@ -27,46 +27,70 @@ const Auth = () => {
 
   return (
     <>
-      <Topbar backNav='Index' />
+      <Topbar backNav="Index" />
       <View style={style.container}>
         <View>
-          <Text style={style.titleText}>{form === 'login' ? 'Login' : 'Signup'}</Text>
-          {form === 'login' ? <></> :
+          <Text style={style.titleText}>
+            {form === 'login' ? 'Login' : 'Signup'}
+          </Text>
+          {form === 'login' ? (
+            <></>
+          ) : (
             <View>
-              <TextInputs title="Name" placeholder="Insert Your Name" onChangeText={(text) => setName(text)} />
+              <TextInputs
+                title="Name"
+                placeholder="Insert Your Name"
+                onChangeText={(text) => setName(text)}
+              />
             </View>
-          }
+          )}
           <View>
-            <TextInputs title="Email" placeholder="Insert Your Email" onChangeText={(text) => setEmail(text)} />
+            <TextInputs
+              title="Email"
+              placeholder="Insert Your Email"
+              onChangeText={(text) => setEmail(text)}
+            />
           </View>
           <View>
-            <TextInputs title="Password" placeholder="Insert Your Password" secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
+            <TextInputs
+              title="Password"
+              placeholder="Insert Your Password"
+              secureTextEntry={true}
+              onChangeText={(text) => setPassword(text)}
+            />
           </View>
         </View>
 
-        {form === 'login' ?
+        {form === 'login' ? (
           <View>
             <TouchableOpacity>
               <Text style={style.forgotText}>Forgot your password?</Text>
             </TouchableOpacity>
             <View style={style.button}>
-              <ButtonLarge title="LOGIN" onPress={() => handleSubmitLogin()} />
+              <Button
+                title="Login"
+                style="primary"
+                type="fullwidth"
+                onPress={() => handleSubmitLogin()}
+              />
             </View>
           </View>
-          :
+        ) : (
           <View>
             <TouchableOpacity onPress={() => setForm('signup')}>
               <Text style={style.forgotText}>Already have an account?</Text>
             </TouchableOpacity>
-            <ButtonLarge title="SIGN UP" onPress={() => handleSubmitRegister()} />
+            <Button
+              title="Sign Up"
+              style="primary"
+              type="fullwidth"
+              onPress={() => handleSubmitRegister()}
+            />
           </View>
-        }
-
-
-
+        )}
       </View>
     </>
-  )
+  );
 };
 
 export default Auth;
