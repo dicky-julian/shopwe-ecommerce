@@ -48,27 +48,17 @@ const Shop = () => {
                     <Product
                         labelName='new'
                         data={data}
-                        width={Dimensions.get('window').width * 50 / 100 - 15}
+                        width={Dimensions.get('window').width * 50 / 100 - 22.5}
                     />
                     <Product
                         labelName='new'
                         data={data}
-                        width={Dimensions.get('window').width * 50 / 100 - 30}
+                        width={Dimensions.get('window').width * 50 / 100 - 22.5}
                     />
                     <Product
                         labelName='new'
                         data={data}
-                        width={Dimensions.get('window').width * 50 / 100 - 30}
-                    />
-                    <Product
-                        labelName='new'
-                        data={data}
-                        width={Dimensions.get('window').width * 50 / 100 - 30}
-                    />
-                    <Product
-                        labelName='new'
-                        data={data}
-                        width={Dimensions.get('window').width * 50 / 100 - 30}
+                        width={Dimensions.get('window').width * 50 / 100 - 22.5}
                     />
                 </View>
             </ScrollView>
