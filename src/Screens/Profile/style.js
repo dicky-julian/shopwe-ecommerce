@@ -3,11 +3,12 @@ import {color} from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: Dimensions.get('window').height,
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignContent: 'space-around',
+    // justifyContent: 'space-between',
+    // alignContent: 'space-around',
     padding: 15,
+    backgroundColor: color.light,
   },
   darkText: {
     fontSize: 16,
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 34,
     color: color.dark,
     fontWeight: '700',
-    lineHeight: 38
+    lineHeight: 38,
   },
   headline: {
     margin: 15,

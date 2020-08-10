@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, Alert, TouchableOpacity } from 'react-native';
+import {Dimensions, Text, View, Image, Alert, TouchableOpacity } from 'react-native';
 import {
   Topbar,
 } from '../../Components';
@@ -12,7 +12,10 @@ const Profile = () => {
   const navigation = useNavigation();
 
     return (
-      <View>
+      <View
+        style={{
+          backgroundColor: color.light,
+        }}>
         <Topbar search={true} />
         <View style={styles.headline}>
           <Text style={styles.headText}>My Profile</Text>

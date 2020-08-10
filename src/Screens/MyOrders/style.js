@@ -1,12 +1,14 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {color} from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: 15,
+    backgroundColor: color.light,
+    height: Dimensions.get('window').height,
   },
   darkText: {
     fontSize: 14,
