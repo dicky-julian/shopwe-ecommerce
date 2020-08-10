@@ -57,14 +57,14 @@ const Filter = () => {
                     <View>
                         <Text style={style.titleText}>Category</Text>
                         <View style={style.filterCard}>
-                            {categoryPallette.map(cat => {
+                            {categoryPallette.map((cat, key) => {
                                 if (cat === category) return (
-                                    <TouchableOpacity style={{ ...style.categoryPicker, backgroundColor: colors.primary, borderColor: colors.primary }} onPress={() => setCategory()}>
+                                    <TouchableOpacity style={{ ...style.categoryPicker, backgroundColor: colors.primary, borderColor: colors.primary }} key={key} onPress={() => setCategory()}>
                                         <Text style={{ fontSize: 16, color: colors.light }}>{cat}</Text>
                                     </TouchableOpacity>
                                 )
                                 else return (
-                                    <TouchableOpacity style={{ ...style.categoryPicker, backgroundColor: 'transparent', borderColor: colors.fade }} onPress={() => setCategory(cat)}>
+                                    <TouchableOpacity style={{ ...style.categoryPicker, backgroundColor: 'transparent', borderColor: colors.fade }} key={key} onPress={() => setCategory(cat)}>
                                         <Text style={{ fontSize: 16, color: colors.dark }}>{cat}</Text>
                                     </TouchableOpacity>
                                 )

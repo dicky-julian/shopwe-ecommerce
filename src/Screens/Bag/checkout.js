@@ -30,7 +30,7 @@ const Checkout = props => {
                 />
 
             </ScrollView>
-            <View style={{ ...style.bottomBar, bottom: 60 }}>
+            <View style={{ ...style.bottomBar}}>
                 <View style={style.textContainer}>
                     <Text style={style.fadeText}>Order:</Text>
                     <Text style={style.darkText}>112$</Text>

@@ -3,7 +3,7 @@ import { color } from '../../Assets/Styles';
 
 const style = StyleSheet.create({
     container: {
-        minHeight: Dimensions.get('window').height - 90,
+        minHeight: Dimensions.get('window').height - 139,
         backgroundColor: color.light,
         padding: 15
     },
@@ -27,7 +27,7 @@ const style = StyleSheet.create({
         paddingTop: 20,
         paddingBottom: 20,
         position: 'absolute',
-        bottom: 49,
+        bottom: 0,
         backgroundColor: color.light,
         elevation: 15
     },
@@ -48,7 +48,7 @@ const style = StyleSheet.create({
         marginBottom: 20
     },
     fullContainer: {
-        minHeight: Dimensions.get('window').height - 25,
+        minHeight: Dimensions.get('window').height - 75,
         backgroundColor: color.light,
         padding: 15
     },
