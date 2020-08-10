@@ -12,17 +12,16 @@ const style = StyleSheet.create({
     },
     barAction: {
         width: 20,
-        margin: 20
+        margin: 15,
+        marginTop: 20,
+        marginBottom: 20
     },
     titleText: {
-        width: Dimensions.get('window').width - 120,
+        width: Dimensions.get('window').width - 100,
         fontSize: 20,
         fontWeight: '700',
         alignSelf: 'center',
         textAlign: 'center'
-    },
-    customBar: {
-        width: Dimensions.get('window').width - 60,
     }
 });
 

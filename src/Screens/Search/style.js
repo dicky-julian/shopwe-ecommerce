@@ -3,8 +3,8 @@ import { color } from '../../Assets/Styles';
 
 const style = StyleSheet.create({
     searchBar: {
-        width: Dimensions.get('window').width - 80,
-        height: '70%',
+        width: Dimensions.get('window').width - 70,
+        height: '80%',
         flexDirection: 'row',
         alignItems: 'center',
         padding: 0,
