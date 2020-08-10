@@ -5,34 +5,26 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View, 
+  View,
   ImageBackground,
 } from 'react-native';
-import {
-  Rating,
-  Topbar,
-  ButtonLarge,
-} from '../../Components';
+import {Rating, Topbar, Button} from '../../Components';
 import styles from './style';
 import {color} from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 const DetailProduct = () => {
-   const [modalVisible, setModalVisible] = useState(false);
-   const [activeSort, setActiveSort] = useState('');
-    const sortActionList = [
-      'XS',
-      'S',
-      'M',
-      'L',
-      'XL',
-    ];
-   
-   const handleSetSort = (list) => {
-     setActiveSort(list);
-     setModalVisible(false);
-   };
-   
+  const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [activeSort, setActiveSort] = useState('');
+  const sortActionList = ['XS', 'S', 'M', 'L', 'XL'];
+
+  const handleSetSort = (list) => {
+    setActiveSort(list);
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <Topbar backNav={true} title="Brand Name" />
@@ -93,7 +85,12 @@ const DetailProduct = () => {
         </View>
       </ScrollView>
       <View style={styles.button}>
-        <ButtonLarge title="ADD TO CART" />
+        <Button
+          title="ADD TO CART"
+          style="primary"
+          type="fullwidth"
+          onPress={() => navigation.navigate('Checkout')}
+        />
       </View>
 
       {/* start modal size */}

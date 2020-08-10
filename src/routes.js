@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Checkout">
+      <Stack.Navigator initialRouteName="DetailProduct">
         <Stack.Screen
           name="Auth"
           component={Auth}
