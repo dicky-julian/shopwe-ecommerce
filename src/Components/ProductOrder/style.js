@@ -11,19 +11,20 @@ const style = StyleSheet.create({
         borderColor: color.fade
     },
     productImage: {
-        width: '30%',
+        width: '35%',
         height: 0,
-        paddingTop: '30%',
+        paddingTop: '35%',
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10
     },
     cardProduct: {
-        width: '70%',
-        height: '99%',
+        width: '65%',
+        // height: '99%',
         padding: 10,
         backgroundColor: color.light,
         borderTopRightRadius: 10,
-        borderBottomRightRadius: 10
+        borderBottomRightRadius: 10,
+        justifyContent: 'space-between'
     },
     productTitle: {
         marginBottom: 5,

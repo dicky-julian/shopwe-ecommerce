@@ -10,7 +10,9 @@ const Home = () => {
             {/* HEADER */}
             <ImageBackground
                 style={style.header}
-                source={require('../../Assets/Images/Home/home_header.png')}>
+                resizeMode='cover'
+                source={require('../../Assets/Images/Home/home_header.png')
+                }>
                 <Text style={style.headerText}>Street clothes</Text>
             </ImageBackground>
 
