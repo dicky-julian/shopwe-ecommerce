@@ -14,7 +14,7 @@ const Checkout = props => {
       <View>
         <Topbar backNav={true} title="Checkout" />
         <View style={{flex: 1, flexDirection: 'column'}}>
-          <View style={{height: Dimensions.get('window').height - 40}}>
+          <View style={{height: Dimensions.get('window').height - 285}}>
             <ScrollView style={style.fullContainer}>
               <Text style={style.subTitleText}>Shipping Address</Text>
               <Card dataAddress={dataAddress} />
@@ -43,7 +43,7 @@ const Checkout = props => {
               <View style={{height: 220}}></View>
             </ScrollView>
           </View>
-          <View style={{...style.bottomBar, height: 200, bottom: 200}}>
+          <View style={{...style.bottomBar, height: 200, bottom: 0}}>
             <View style={style.textContainer}>
               <Text style={style.fadeText}>Order:</Text>
               <Text style={style.darkText}>112$</Text>

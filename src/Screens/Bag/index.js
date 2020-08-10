@@ -10,7 +10,7 @@ const Bag = () => {
     <View>
       <Topbar search={true} />
       <View style={{flex: 1, flexDirection: 'column'}}>
-        <View style={{height: Dimensions.get('window').height - 93}}>
+        <View style={{height: Dimensions.get('window').height - 260}}>
           <ScrollView style={style.container}>
             <Text style={style.titleText}>My Bag</Text>
             <ProductOrder />
@@ -21,9 +21,10 @@ const Bag = () => {
             <ProductOrder />
             <ProductOrder />
             <ProductOrder />
+            <View style={{height: 150}}></View>
           </ScrollView>
         </View>
-        <View style={{...style.bottomBar, height: 125, bottom: 125}}>
+        <View style={{...style.bottomBar, height: 125, bottom: 0}}>
           <View style={style.textContainer}>
             <Text style={style.fadeText}>Total amount:</Text>
             <Text style={style.darkText}>112$</Text>
