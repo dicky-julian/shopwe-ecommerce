@@ -17,13 +17,15 @@ import Address from './Screens/Bag/address';
 import ShipAddress from './Screens/Bag/shipingAddress';
 import Checkout from './Screens/Bag/checkout';
 import shipStatus from './Screens/Bag/shipingStatus';
+// Profile Screen
+import SettingProfile from './Screens/Profile/setting';
 
 const Stack = createStackNavigator();
 
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Index">
+      <Stack.Navigator initialRouteName="SettingProfile">
         <Stack.Screen
           name="Auth"
           component={Auth}
@@ -72,6 +74,11 @@ const Routes = () => {
         <Stack.Screen
           name="DetailProduct"
           component={DetailProduct}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SettingProfile"
+          component={SettingProfile}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

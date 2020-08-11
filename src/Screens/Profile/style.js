@@ -1,28 +1,26 @@
-import {StyleSheet, Dimensions} from 'react-native';
-import {color} from '../../Assets/Styles';
+import { StyleSheet, Dimensions } from 'react-native';
+import { color } from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignContent: 'space-around',
     padding: 15,
+    backgroundColor: color.light,
+    height: Dimensions.get('window').height - 60
   },
-  darkText: {
+  fadeText: {
     fontSize: 16,
     color: color.default,
   },
-  fadeText: {
+  darkText: {
     fontSize: 18,
     color: color.dark,
-    fontWeight: '700',
   },
   headText: {
-    fontSize: 34,
+    fontSize: 32,
     color: color.dark,
-    fontWeight: '700',
-    lineHeight: 38
+    fontWeight: '700'
   },
   headline: {
     margin: 15,
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignContent: 'space-around',
-  },
+  }
 });
 
 export default styles;
