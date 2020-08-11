@@ -1,13 +1,17 @@
-import { Dimensions, StyleSheet } from 'react-native';
-import { color } from '../../Assets/Styles';
+import {Dimensions, StyleSheet} from 'react-native';
+import {color} from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  cardOrder: {
+    // flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: 15,
-    backgroundColor: color.light
+    backgroundColor: color.light,
+    height: Dimensions.get('window').height,
+  },
+  headline: {
+    paddingBottom: 20,
   },
   fullContainer: {
     minHeight: Dimensions.get('window').height - 85,
@@ -43,19 +47,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     lineHeight: 38,
   },
-  headline: {
-    paddingBottom: 20,
-  },
-  text: {
-    fontSize: 14,
-    color: '#9B9B9B',
-    lineHeight: 20,
-  },
   box: {
     width: 320,
     height: 130,
     backgroundColor: 'white',
-    padding: 15,
   },
   detail: {
     width: 200,

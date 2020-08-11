@@ -27,6 +27,7 @@ const ProductCollection = (props) => {
                 <Product
                     labelName='new'
                     data={data}
+                    onPress={() => navigation.navigate('DetailProduct')}
                 />
                 <Product
                     label='disc'

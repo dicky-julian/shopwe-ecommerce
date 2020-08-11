@@ -3,7 +3,7 @@ import { color } from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: Dimensions.get('window').height,
     flexDirection: 'column',
     padding: 15,
     backgroundColor: color.light,
