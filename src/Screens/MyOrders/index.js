@@ -16,8 +16,8 @@ const MyOrder = () => {
           <View style={styles.box}>
             <View style={styles.order}>
               <View style={styles.detail}>
-                <Text style={styles.fadeText}>Order No. </Text>
-                <Text style={styles.fadeText}>1947034 </Text>
+                <Text style={styles.darkText}>Order No. </Text>
+                <Text style={styles.darkText}>1947034 </Text>
               </View>
               <Text style={styles.text}>10-08-2020 </Text>
             </View>

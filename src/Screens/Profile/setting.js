@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Text, TouchableHighlight, ScrollView, View } from 'react-native';
-import moment from 'moment';
 import { Button, TextInputs, DateTimeInputs, Topbar } from '../../Components';
 import style from './style';
 
@@ -25,7 +24,7 @@ const Setting = props => {
                                 title="Date of Birth"
                                 placeholder="Insert Your Date of Birth"
                                 date={date}
-                                onDateChange={() => setDate}
+                                onDateChange={(date) => setDate(date)}
                             />
                             <Text style={{ ...style.darkText, marginTop: 25, marginBottom: 25 }}>Password</Text>
                             <TextInputs

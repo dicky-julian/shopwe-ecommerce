@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { Dimensions, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
 import { color } from '../../Assets/Styles';
 
 const DateTime = (props) => {
+    const dates = props.date;
+    const formatDate = moment(dates).format('DD MM YYYY');
     const [modalVisible, setModalVisible] = useState(false);
+    const [date, month, year] = formatDate.split(' ');
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{props.title}</Text>
             <TouchableOpacity onPress={() => setModalVisible(true)}>
                 <View style={styles.input}>
-                    <Text>{`${12} / `}</Text>
-                    <Text>{`${12} / `}</Text>
-                    <Text>{`${12}`}</Text>
+                    <Text>{`${date} / `}</Text>
+                    <Text>{`${month} / `}</Text>
+                    <Text>{`${year}`}</Text>
                 </View>
             </TouchableOpacity>
             <Modal animationType='slide'
@@ -22,7 +27,7 @@ const DateTime = (props) => {
                     <TouchableOpacity onPress={() => setModalVisible(false)} style={styles.fadeView} />
                     <View style={styles.date}>
                         <DatePicker
-                            date={props.date}
+                            date={dates}
                             mode="date"
                             onDateChange={props.onDateChange}
                         />

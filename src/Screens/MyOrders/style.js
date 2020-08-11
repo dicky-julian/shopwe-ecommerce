@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {color} from '../../Assets/Styles';
+import { Dimensions, StyleSheet } from 'react-native';
+import { color } from '../../Assets/Styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -7,15 +7,35 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     padding: 15,
+    backgroundColor: color.light
   },
-  darkText: {
-    fontSize: 14,
-    color: color.default,
+  fullContainer: {
+    minHeight: Dimensions.get('window').height - 85,
+    flex: 1,
+    padding: 15,
+    backgroundColor: color.light
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: color.dark,
+    marginBottom: 5
   },
   fadeText: {
     fontSize: 16,
+    lineHeight: 26,
+    color: color.default,
+    marginBottom: 5
+  },
+  darkText: {
+    fontSize: 16,
+    lineHeight: 26,
     color: color.dark,
-    fontWeight: '700',
+    marginBottom: 5
+  },
+  successText: {
+    fontSize: 16,
+    color: color.success
   },
   headText: {
     fontSize: 34,
@@ -57,6 +77,26 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'right',
   },
+  detailContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10
+  },
+  textContainer: {
+    width: Dimensions.get('window').width - 30,
+    flexDirection: 'row',
+    marginBottom: 10
+  },
+  paymentContainer: {
+    width: '65%', 
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  paymentImage: {
+    width: 50, 
+    height: 50,
+    marginRight: 10
+  }
 });
 
 export default styles;

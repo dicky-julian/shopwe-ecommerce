@@ -13,6 +13,7 @@ import Auth from './Screens/Auth';
 import DetailProduct from './Screens/DetailProduct';
 // My Bag Screen
 import MyOrder from './Screens/MyOrders';
+import OrderDetail from './Screens/MyOrders/orderDetail';
 import Address from './Screens/Bag/address';
 import ShipAddress from './Screens/Bag/shipingAddress';
 import Checkout from './Screens/Bag/checkout';
@@ -25,7 +26,7 @@ const Stack = createStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SettingProfile">
+      <Stack.Navigator initialRouteName="OrderDetail">
         <Stack.Screen
           name="Auth"
           component={Auth}
@@ -49,6 +50,11 @@ const Routes = () => {
         <Stack.Screen
           name="MyOrder"
           component={MyOrder}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="OrderDetail"
+          component={OrderDetail}
           options={{ headerShown: false }}
         />
         <Stack.Screen
