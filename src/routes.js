@@ -10,6 +10,9 @@ import Search from './Screens/Search';
 import Filter from './Screens/Shop/filter';
 // Auth Screen
 import Auth from './Screens/Auth';
+import ScreenOtp from './Screens/Auth/ScreenOtp';
+import ResetPassword from './Screens/Auth/ResetPassword';
+import ForgotPassword from './Screens/Auth/ForgotPassword';
 import DetailProduct from './Screens/DetailProduct';
 // My Bag Screen
 import MyOrder from './Screens/MyOrders';
@@ -21,6 +24,7 @@ import shipStatus from './Screens/Bag/shipingStatus';
 // Profile Screen
 import SettingProfile from './Screens/Profile/setting';
 
+
 const Stack = createStackNavigator();
 
 const Routes = () => {
@@ -31,6 +35,21 @@ const Routes = () => {
           name="Auth"
           component={Auth}
           options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ScreenOtp"
+          component={ScreenOtp}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ForgotPassword"
+          component={ForgotPassword}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Index"
