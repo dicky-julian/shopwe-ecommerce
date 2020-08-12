@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { login } from '../../Redux/Actions/auth';
 
 const Auth = (props) => {
+  const navigation = useNavigation();
   const [form, setForm] = useState('');
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -23,9 +24,8 @@ const Auth = (props) => {
     } return true;
   };
 
-  const handleSubmitLogin = async (event) => {
+  const handleSubmitLogin = async () => {
     await setLoading(true);
-    event.preventDefault();
     const data = {
       email: email,
       password: password
@@ -48,7 +48,7 @@ const Auth = (props) => {
         console.log(err.response);
         Alert.alert(
           "Failed!",
-          "Username and password is wrong!",
+          err.response.data.message,
           [
             { text: "OK"}
           ],
@@ -56,10 +56,8 @@ const Auth = (props) => {
         );
     })
   }
-
-  const handleSubmitRegister = async (event) => {
+  const handleSubmitRegister = async () => {
     await setLoading(true);
-    event.preventDefault();
     const data = {
       email: email,
       requestType: 'register'
@@ -78,7 +76,7 @@ const Auth = (props) => {
       })
       .catch((err) => {
         setLoading(false)
-        console.log(err.response);
+        console.log(err);
         Alert.alert(
           "Failed!",
           "Register failed!",
@@ -91,6 +89,7 @@ const Auth = (props) => {
   }
 
   useEffect(() => {
+    checkAuth()
     if(props.route.params !== undefined){
       setForm(props.route.params.form)
     } else {
@@ -98,7 +97,9 @@ const Auth = (props) => {
     }
   }, [])
 
-
+  const checkAuth = () => {
+    props.auth.auth.tokenLogin && navigation.navigate('Home')
+  }
   return (
     <>
       <Topbar backNav="Index" />
