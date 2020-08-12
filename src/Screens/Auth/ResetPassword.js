@@ -1,11 +1,55 @@
-import React from 'react';
-import {View, Text, ScrollView, Dimensions} from 'react-native';
+import React, { useState } from 'react';
+import {View, Text, ScrollView, Dimensions, Alert} from 'react-native';
 import style from './style';
 import {TextInputs, Topbar, Button} from '../../Components';
 import { color } from '../../Assets/Styles';
+import axios from 'axios';
+import { API_URL } from '@env';
 
-const ResetPassword = () => {
-  const handleSubmitSend = () => {};
+const ResetPassword = (props) => {
+  const [password, setPassword] = useState();
+  const [loading, setLoading] = useState();
+
+  const handleSubmitSend = async (event) => {
+    await setLoading(true);
+    event.preventDefault();
+    const data = {
+      email: props.route.params.email,
+      password: password
+    }
+    axios({
+      method: 'POST',
+      url: API_URL + '/auth/resetpassword',
+      data: {
+        email: data.email,
+        password: data.password,
+      },
+    }).then((res) => {
+        setLoading(false);
+        console.log(res);
+        Alert.alert(
+          "Success!",
+          "Your password has been changed!",
+          [
+            { text: "OK"}
+          ],
+          { cancelable: false }
+        );
+        props.navigation.replace('Auth', {form: 'login'});
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.response);
+        Alert.alert(
+          "Failled!",
+          "Reset password failed!",
+          [
+            { text: "OK"}
+          ],
+          { cancelable: false }
+        );
+    })
+  };
   return (
     <View>
       <Topbar backNav={true} />
@@ -20,22 +64,33 @@ const ResetPassword = () => {
             <TextInputs
               title="New Password"
               placeholder="Insert Your Password"
-              onChangeText={(text) => setOtp(text)}
             />
             <TextInputs
               title="Confirmation New Password"
               placeholder="Insert Your Password"
-              onChangeText={(text) => setOtp(text)}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
             />
           </View>
-
+          
           <View style={style.button}>
-            <Button
+            {loading ? (
+              <Button
+              title="Loading"
+              style="primary"
+              type="fullwidth"
+              />
+            )
+            :
+            (
+              <Button
               title="Reset Password"
               style="primary"
               type="fullwidth"
-              onPress={() => handleSubmitSend()}
-            />
+              onPress={handleSubmitSend}
+              />
+            )}
+            
           </View>
         </View>
       </ScrollView>

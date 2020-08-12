@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInputs, Topbar, Button } from '../../Components';
 import style from './style';
+import axios from 'axios';
+import { API_URL } from '@env';
 
-const Auth = () => {
-  const [form, setForm] = useState('signup');
+import { connect } from 'react-redux';
+import { login } from '../../Redux/Actions/auth';
+
+const Auth = (props) => {
+  const [form, setForm] = useState('');
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();
+  const [loading, setLoading] = useState();
 
   const handleValidate = (text) => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -17,18 +23,85 @@ const Auth = () => {
     } return true;
   };
 
-  const handleSubmitLogin = () => {
-
+  const handleSubmitLogin = async (event) => {
+    await setLoading(true);
+    event.preventDefault();
+    const data = {
+      email: email,
+      password: password
+    }
+    axios({
+      method: 'POST',
+      url: API_URL + '/auth/login',
+      data: {
+        email: data.email,
+        password: data.password
+      },
+    }).then((res) => {
+        setLoading(false)
+        props.login(res.data.data);
+        props.navigation.navigate('Index');
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err.response);
+        Alert.alert(
+          "Failed!",
+          "Username and password is wrong!",
+          [
+            { text: "OK"}
+          ],
+          { cancelable: false }
+        );
+    })
   }
 
-  const handleSubmitRegister = () => {
-
+  const handleSubmitRegister = async (event) => {
+    await setLoading(true);
+    event.preventDefault();
+    const data = {
+      email: email,
+      requestType: 'register'
+    }
+    axios({
+      method: 'POST',
+      url: API_URL + '/auth/request/otp',
+      data: {
+        email: data.email,
+        requestType: data.requestType
+      },
+    }).then((res) => {
+        setLoading(false)
+        console.log(res);
+        props.navigation.push('ScreenOtp', {fullname: name,email: email,password: password,form: 'signup'});
+      })
+      .catch((err) => {
+        setLoading(false)
+        console.log(err.response);
+        Alert.alert(
+          "Failed!",
+          "Register failed!",
+          [
+            { text: "OK"}
+          ],
+          { cancelable: false }
+        );
+    })
   }
+
+  useEffect(() => {
+    if(props.route.params !== undefined){
+      setForm(props.route.params.form)
+    } else {
+      setForm('signup')
+    }
+  }, [])
+
 
   return (
     <>
       <Topbar backNav="Index" />
-      <View style={style.container}>
+        <View style={style.container}>
         <View>
           <Text style={style.titleText}>
             {form === 'login' ? 'Login' : 'Signup'}
@@ -40,6 +113,7 @@ const Auth = () => {
                 <TextInputs
                   title="Name"
                   placeholder="Insert Your Name"
+                  value={name}
                   onChangeText={(text) => setName(text)}
                 />
               </View>
@@ -48,6 +122,7 @@ const Auth = () => {
             <TextInputs
               title="Email"
               placeholder="Insert Your Email"
+              value={email}
               onChangeText={(text) => setEmail(text)}
             />
           </View>
@@ -56,6 +131,7 @@ const Auth = () => {
               title="Password"
               placeholder="Insert Your Password"
               secureTextEntry={true}
+              value={password}
               onChangeText={(text) => setPassword(text)}
             />
           </View>
@@ -63,16 +139,26 @@ const Auth = () => {
 
         {form === 'login' ? (
           <View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate('ForgotPassword')}>
               <Text style={style.forgotText}>Forgot your password?</Text>
             </TouchableOpacity>
             <View style={style.button}>
-              <Button
+            {loading ? (
+                <Button
+                title="Loading"
+                style="primary"
+                type="fullwidth"
+                />
+              )
+              :
+              (
+                <Button
                 title="Login"
                 style="primary"
                 type="fullwidth"
-                onPress={() => handleSubmitLogin()}
-              />
+                onPress={handleSubmitLogin}
+                />
+              )}
               <Text style={{ ...style.forgotText, marginTop: 20, marginBottom: 20, textAlign: 'center' }}>Or</Text>
               <Button
                 title="Create new account"
@@ -86,12 +172,22 @@ const Auth = () => {
               <TouchableOpacity onPress={() => setForm('login')}>
                 <Text style={style.forgotText}>Already have an account?</Text>
               </TouchableOpacity>
-              <Button
+              {loading ? (
+                <Button
+                title="Loading"
+                style="primary"
+                type="fullwidth"
+                />
+              )
+              :
+              (
+                <Button
                 title="Sign Up"
                 style="primary"
                 type="fullwidth"
-                onPress={() => handleSubmitRegister()}
-              />
+                onPress={handleSubmitRegister}
+                />
+              )}
             </View>
           )}
       </View>
@@ -99,4 +195,10 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+const mapStateToProps = state =>({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = { login };
+
+export default connect(mapStateToProps,mapDispatchToProps)(Auth);

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ImageBackground, Text, ScrollView } from 'react-native';
 import { ProductCollection } from '../../Components';
 import style from './style';
 
+import { connect } from 'react-redux';
+import auth from '../../Redux/Reducers/auth';
 
-const Home = () => {
+const Home = (props) => {
+    useEffect(() => {
+        console.log(props.auth);
+      }, [props.auth])
+
     return (
         <ScrollView style={style.container}>
             {/* HEADER */}
@@ -23,4 +29,11 @@ const Home = () => {
     )
 }
 
-export default Home;
+
+const mapStateToProps = state =>({
+    auth: state.auth,
+});
+  
+const mapDispatchToProps = { };
+  
+export default connect(mapStateToProps,mapDispatchToProps)(Home);

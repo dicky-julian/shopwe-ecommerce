@@ -7,6 +7,15 @@ const style = StyleSheet.create({
         padding: 15,
         backgroundColor: color.light
     },
+
+    containerLoading: {
+        minHeight: Dimensions.get('window').height - 60,
+        padding: 15,
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        alignItems:'center',
+        justifyContent:'center'
+    },
+
     headline: {
         marginBottom: 80,
     },

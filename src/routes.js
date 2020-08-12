@@ -30,7 +30,7 @@ const Stack = createStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Index">
+      <Stack.Navigator initialRouteName="Auth">
         <Stack.Screen
           name="Auth"
           component={Auth}
