@@ -10,7 +10,8 @@ const style = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     borderWidth: 1,
-    marginBottom: 15
+    marginBottom: 15,
+    borderColor: color.fade,
   },
   dataContainer: {
     width: '80%',

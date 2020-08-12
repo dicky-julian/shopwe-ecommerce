@@ -4,11 +4,12 @@ import {color} from '../../Assets/Styles';
 const styles = StyleSheet.create({
   cardOrder: {
     // flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    // flexDirection: 'column',
+    // justifyContent: 'flex-start',
     padding: 15,
     backgroundColor: color.light,
     height: Dimensions.get('window').height,
+    // minHeight: Dimensions.get('window').height - 85,
   },
   headline: {
     paddingBottom: 20,
@@ -17,29 +18,29 @@ const styles = StyleSheet.create({
     minHeight: Dimensions.get('window').height - 85,
     flex: 1,
     padding: 15,
-    backgroundColor: color.light
+    backgroundColor: color.light,
   },
   titleText: {
     fontSize: 20,
     fontWeight: '700',
     color: color.dark,
-    marginBottom: 5
+    marginBottom: 5,
   },
   fadeText: {
     fontSize: 16,
     lineHeight: 26,
     color: color.default,
-    marginBottom: 5
+    marginBottom: 5,
   },
   darkText: {
     fontSize: 16,
     lineHeight: 26,
     color: color.dark,
-    marginBottom: 5
+    marginBottom: 5,
   },
   successText: {
     fontSize: 16,
-    color: color.success
+    color: color.success,
   },
   headText: {
     fontSize: 34,
@@ -49,8 +50,11 @@ const styles = StyleSheet.create({
   },
   box: {
     width: 320,
-    height: 130,
-    backgroundColor: 'white',
+    minHeight: Dimensions.get('window').height - 85,
+    flex: 1,
+    marginBottom: 50,
+    // height: 130,
+    // backgroundColor: 'white',
   },
   detail: {
     width: 200,
@@ -75,23 +79,23 @@ const styles = StyleSheet.create({
   detailContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10
+    marginBottom: 10,
   },
   textContainer: {
     width: Dimensions.get('window').width - 30,
     flexDirection: 'row',
-    marginBottom: 10
+    marginBottom: 10,
   },
   paymentContainer: {
-    width: '65%', 
+    width: '65%',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   paymentImage: {
-    width: 50, 
+    width: 50,
     height: 50,
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 });
 
 export default styles;

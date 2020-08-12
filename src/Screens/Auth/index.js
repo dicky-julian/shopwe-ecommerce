@@ -4,7 +4,7 @@ import { TextInputs, Topbar, Button } from '../../Components';
 import style from './style';
 
 const Auth = () => {
-  const [form, setForm] = useState('signup');
+  const [form, setForm] = useState('login');
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [name, setName] = useState();

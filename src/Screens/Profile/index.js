@@ -7,9 +7,15 @@ import styles from './style';
 import { color } from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
+import {connect} from 'react-redux';
 
 const Profile = () => {
   const navigation = useNavigation();
+  // const [profiles, setProfiles] = useState({});
+
+  // useEffect(() => {
+  // }, [])
 
   return (
     <View
@@ -87,4 +93,11 @@ const Profile = () => {
   );
 }
 
-export default Profile;
+// const mapStateToProps = (state) => ({
+//   auth: state.auth,
+// });
+
+// const mapDispatchProps = {get_all_order};
+
+export default Profile
+// connect(mapStateToProps, mapDispatchProps)(Profile);
