@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import {Topbar, Button} from '../../Components';
 import styles from './style';
@@ -15,6 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {color as colors} from '../../Assets/Styles';
 import { RenderRating } from '../../Components/Product/action';
+import { apiUri } from '../../Utils/config';
 
 const DetailProduct = (props) => {
   const navigation = useNavigation();
@@ -46,12 +48,30 @@ const DetailProduct = (props) => {
   /**
    * Life Cycles
    */
+
+   /**
+    * Logics
+    */
+  const addToCart = () => {
+    if (activeColor === '' || activeColor === undefined || activeColor.length < 1) Alert.alert('No Color Choosed!', 'Please choose one color of product.')
+    if (activeSize === '' || activeSize === undefined || activeSize.length < 1) Alert.alert('No Size Choosed!', 'Please choose one size of product.')
+    const detail_product = {
+      "product_id": product.id,
+      "size": activeSize,
+      "color": activeColor,
+      "price": product.price,
+      "quantity": 1,
+      "subtotal": 1*parseInt(product.price)
+    }
+    console.log(detail_product)
+    // navigation.navigate('Checkout')
+  }
   return (
     <View style={styles.container}>
-      <Topbar backNav={true} title="Brand Name" />
+      <Topbar backNav={true} title={product.name} />
       <ScrollView>
         <ImageBackground
-          source={{uri: product.image}}
+          source={{ uri: `${apiUri.newImagePath}/${product.image}`}}
           style={styles.image}
         />
         <View style={styles.DetailStyle}>
@@ -109,7 +129,7 @@ const DetailProduct = (props) => {
           title="ADD TO CART"
           style="primary"
           type="fullwidth"
-          onPress={() => navigation.navigate('Checkout')}
+          onPress={() => addToCart()}
         />
       </View>
 
@@ -181,7 +201,7 @@ const DetailProduct = (props) => {
                       borderColor: colors.primary,
                     }}
                     key={key}
-                    onPress={() => setColor()}>
+                    onPress={() => handleSetColor(col)}>
                     <View
                       style={{
                         ...styles.colorPicker,
@@ -197,7 +217,7 @@ const DetailProduct = (props) => {
                       borderColor: 'transparent',
                     }}
                     key={key}
-                    onPress={() => setColor(col)}>
+                    onPress={() => handleSetColor(col)}>
                     <View
                       style={{
                         ...styles.colorPicker,
