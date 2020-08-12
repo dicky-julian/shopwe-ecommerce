@@ -5,12 +5,12 @@ import styles from './style';
 import { color } from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import { get_all_order } from '../../Redux/Action/order';
 import { apiUri } from '../../Utils/config';
 import Axios from 'axios';
 import { API_URL } from '@env';
+import { logout } from '../../Redux/Actions/auth';
 
 const Profile = (props) => {
   const navigation = useNavigation();
@@ -45,6 +45,30 @@ const Profile = (props) => {
     }).catch((error) => {
       console.log(error.response);
     });
+  }
+
+  /**
+   * Logics
+   */
+  const logout = () => {
+    Alert.alert(
+      "Logout.",
+      "This will end your session, anything unsaved will be lost!. Continue?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK", onPress: () => { 
+            props.logout()
+            navigation.navigate('Auth')
+          }
+        }
+      ],
+      { cancelable: false }
+    );
   }
   return (
     <View
@@ -115,6 +139,22 @@ const Profile = (props) => {
             <Text style={styles.fadeText}>Notifications, password</Text>
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.list} onPress={() => logout()}>
+          <View>
+            <View style={styles.cardIcon}>
+              <Text style={styles.darkText}>Logout</Text>
+              <Ionicons
+                name="chevron-forward-outline"
+                size={20}
+                color={color.dark}
+              />
+            </View>
+          </View>
+          <View style={styles.cardIcon}>
+            <Text style={styles.fadeText}>End your session.</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -125,7 +165,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchProps = {
-  get_all_order
+  get_all_order,
+  logout
 };
 
 export default connect(mapStateToProps, mapDispatchProps)(Profile);
