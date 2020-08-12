@@ -42,7 +42,7 @@ const ResetPassword = (props) => {
         console.log(err.response);
         Alert.alert(
           "Failled!",
-          "Reset password failed!",
+          err.response.data.message,
           [
             { text: "OK"}
           ],
