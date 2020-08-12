@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
+import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Card, Topbar } from '../../Components';
@@ -7,9 +8,18 @@ import style from './style';
 import store from './store';
 import { color } from '../../Assets/Styles';
 
+import { fetchPayment } from '../../Redux/Actions/transactions/payments';
+
 const shipingAddress = props => {
     const navigation = useNavigation();
     const [activeCard, setActiveCard] = useState(1);
+    const payment = props.payment;
+
+    useEffect(() => {
+        if (!payment) {
+            props.fetchPayment();
+        }
+    }, [])
 
     return (
         <View>
@@ -45,4 +55,10 @@ const shipingAddress = props => {
     )
 }
 
-export default shipingAddress;
+const mapStateToProps = state => ({
+    payment: state.transaction.payment
+});
+
+const mapDispathToProps = { fetchPayment };
+
+export default connect(mapStateToProps, mapDispathToProps)(shipingAddress);

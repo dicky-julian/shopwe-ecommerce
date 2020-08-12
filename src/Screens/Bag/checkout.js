@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Text, ScrollView, View } from 'react-native';
+import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Card, PaymentCard, Topbar } from '../../Components';
 import style from './style';
 import store from './store';
 
+import { fetchPayment } from '../../Redux/Actions/transactions/payments';
+
 const Checkout = props => {
   const navigation = useNavigation();
   const [activePayment, setActivePayment] = useState(1);
+  const payment = props.payment;
+
+  useEffect(() => {
+    if (!payment) {
+      props.fetchPayment();
+    }
+  }, [])
 
   return (
     <View>
@@ -58,4 +68,10 @@ const Checkout = props => {
   );
 }
 
-export default Checkout;
+const mapStateToProps = state => ({
+  payment: state.transaction.payment
+});
+
+const mapDispathToProps = { fetchPayment };
+
+export default connect(mapStateToProps, mapDispathToProps)(Checkout);

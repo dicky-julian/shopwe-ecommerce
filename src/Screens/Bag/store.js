@@ -20,7 +20,17 @@ const paymentData = [
         id: 2,
         name: 'Gopay',
         brandImage: require('../../Assets/Images/Payment/gopay.jpg')
-    }
+    },
+    {
+        id: 3,
+        name: 'Ovo',
+        brandImage: require('../../Assets/Images/Payment/ovo.png')
+    },
+    {
+        id: 4,
+        name: 'Dana',
+        brandImage: require('../../Assets/Images/Payment/dana.jpg')
+    },
 ]
 
 export default {
