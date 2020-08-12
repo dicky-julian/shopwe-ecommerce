@@ -11,7 +11,7 @@ const initialState = {
       case 'LOGIN':
         return {
           ...state,
-          auth: action.payload
+          auth: action.payload[0]
         };
 
       case 'LOGOUT':
