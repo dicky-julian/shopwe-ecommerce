@@ -5,21 +5,35 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Card, Topbar } from '../../Components';
 import style from './style';
-import store from './store';
 import { color } from '../../Assets/Styles';
 
-import { fetchPayment } from '../../Redux/Actions/transactions/payments';
+import { updateUser } from '../../Utils/Api';
+import { setUpdateUser } from '../../Redux/Actions/users/users';
+import { splitString } from '../../Utils/helper';
 
 const shipingAddress = props => {
     const navigation = useNavigation();
-    const [activeCard, setActiveCard] = useState(1);
-    const payment = props.payment;
+    const user = props.user;
+    const [activeCard, setActiveCard] = useState(user.address_active);
+    const [address, setAddress] = useState();
 
     useEffect(() => {
-        if (!payment) {
-            props.fetchPayment();
+        if (!address) {
+            const userAddress = splitString(user.address);
+            setAddress(userAddress);
         }
-    }, [])
+    })
+
+    const handleActivate = (key) => {
+        const data = { address_active: key };
+        updateUser(data, user.id).then(res => {
+            if (res) {
+                props.setUpdateUser(data);
+                setActiveCard(key);
+            }
+        })
+
+    }
 
     return (
         <View>
@@ -38,16 +52,20 @@ const shipingAddress = props => {
 
                 <Text style={style.subTitleText}>Shipping Address</Text>
                 <View>
-                    {store.dataAddress.map((address, key) => {
-                        return (
-                            <Card
-                                key={key}
-                                dataAddress={address}
-                                isActive={address.id === activeCard ? true : false}
-                                onPress={() => setActiveCard(address.id)}
-                            />
-                        )
-                    })}
+                    {address ?
+                        address.map((address, key) => {
+                            return (
+                                <Card
+                                    key={key}
+                                    dataAddress={address}
+                                    indexCard={key}
+                                    isActive={key === activeCard ? true : false}
+                                    onPress={() => handleActivate(key)}
+                                />
+                            )
+                        })
+                        :
+                        <></>}
                     <Button title='Add new address' type='fullwidth' onPress={() => navigation.navigate('Address')} />
                 </View>
             </View>
@@ -56,9 +74,10 @@ const shipingAddress = props => {
 }
 
 const mapStateToProps = state => ({
-    payment: state.transaction.payment
+    payment: state.transaction.payment,
+    user: state.auth.auth
 });
 
-const mapDispathToProps = { fetchPayment };
+const mapDispathToProps = { setUpdateUser };
 
 export default connect(mapStateToProps, mapDispathToProps)(shipingAddress);

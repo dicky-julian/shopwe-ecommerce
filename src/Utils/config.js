@@ -5,6 +5,7 @@ const tokenApi = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoxLCJuYW1lIjoiY
 export const apiUri = {
   products: `${baseUrl}/products`,
   payments: `${baseUrl}/payments`,
+  users: `${baseUrl}/users`
 }
 
 export {

@@ -7,17 +7,28 @@ import style from './style';
 import store from './store';
 
 import { fetchPayment } from '../../Redux/Actions/transactions/payments';
+import { splitString } from '../../Utils/helper';
 
 const Checkout = props => {
   const navigation = useNavigation();
   const [activePayment, setActivePayment] = useState(1);
+  const [address, setAddress] = useState();
   const payment = props.payment;
+  const user = props.user;
 
   useEffect(() => {
     if (!payment) {
       props.fetchPayment();
     }
-  }, [])
+
+    if (!address) {
+      if (user.address) {
+        let userAddress = splitString(user.address);
+        userAddress = userAddress[user.address_active];
+        setAddress(userAddress);
+      }
+    }
+  })
 
   return (
     <View>
@@ -26,8 +37,11 @@ const Checkout = props => {
         <View style={{ height: Dimensions.get('window').height - 285 }}>
           <ScrollView style={style.fullContainer}>
             <Text style={style.subTitleText}>Shipping Address</Text>
-            <Card dataAddress={store.dataAddress[0]} onPress={() => navigation.navigate('ShipAddress')} />
-
+            {address ?
+              <Card dataAddress={address} indexCard={user.address_active} onPress={() => navigation.navigate('ShipAddress')} />
+              :
+              <></>
+            }
             <Text style={style.subTitleText}>Payment</Text>
             {store.paymentData.map((payment, key) => {
               return (
@@ -69,7 +83,8 @@ const Checkout = props => {
 }
 
 const mapStateToProps = state => ({
-  payment: state.transaction.payment
+  payment: state.transaction.payment,
+  user: state.auth.auth
 });
 
 const mapDispathToProps = { fetchPayment };

@@ -8,20 +8,18 @@ const Card = props => {
   const navigation = useNavigation();
   const dataAddress = props.dataAddress;
   const dataOrder = props.dataOrder;
-
+  
   // DEFINE PART OF ADDRESS
-  let newAddress;
-  if (dataAddress) newAddress = dataAddress.address.split('|');
-  const [address, city, province, country, zip_code] = newAddress || [];
+  const [label, fullname, address, city, state, country, zip] = dataAddress || [];
   return (
     <View>
       {dataAddress ? (
         <View style={{ ...style.container, borderColor: props.isActive ? color.primary : color.fade }}>
           <TouchableOpacity style={style.dataContainer} onPress={props.onPress}>
-            <Text style={{ ...style.mediumText, fontWeight: '700' }}>{dataAddress.name}</Text>
-            <Text style={style.mediumText}>{`${address}, ${city}, ${province}, ${country}, ${zip_code}`}</Text>
+            <Text style={{ ...style.mediumText, fontWeight: '700' }}>{fullname}</Text>
+            <Text style={{...style.mediumText}}>{`${address}, ${city}, ${state}, ${country}, ${zip}`}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('Address', { data: dataAddress })}>
+          <TouchableOpacity onPress={() => navigation.navigate('Address', { data: [...dataAddress, props.indexCard] })}>
             <Text style={{ ...style.mediumText, color: color.primary }}>Change</Text>
           </TouchableOpacity>
         </View>

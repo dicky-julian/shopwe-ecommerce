@@ -1,17 +1,19 @@
 import fetch from '../fetch';
 import { apiUri, tokenApi } from '../config.js';
 
-const getPayment = async () => {
+const updateUser = async (data, id) => {
     const options = {
-        'method': 'get',
-        'url': apiUri.payments,
+        'method': 'patch',
+        'url': `${apiUri.users}/${id}`,
         'headers': {
             "Authorization": tokenApi
-        }
+        },
+        'data': data
     };
 
     const res = await fetch(options)
         .then(res => {
+            console.log(res);
             return {
                 data: res.data.data
             }
@@ -25,5 +27,5 @@ const getPayment = async () => {
 }
 
 export {
-    getPayment
+    updateUser
 }
