@@ -19,6 +19,15 @@ const initialState = {
           ...state,
           auth: {},
         };
+
+      case 'UPDATE_USER':
+        return {
+          ...state,
+          auth: {
+            ...state.auth,
+            ...action.payload
+          }
+        }
       default:
         return state;
     }

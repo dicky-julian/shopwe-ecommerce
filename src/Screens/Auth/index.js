@@ -44,6 +44,7 @@ const Auth = (props) => {
       })
       .catch((err) => {
         setLoading(false);
+        console.log(err)
         console.log(err.response);
         Alert.alert(
           "Failed!",

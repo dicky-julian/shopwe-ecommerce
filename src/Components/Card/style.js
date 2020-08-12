@@ -20,7 +20,8 @@ const style = StyleSheet.create({
     marginBottom: 10,
     fontSize: 16,
     lineHeight: 26,
-    color: color.dark
+    color: color.dark,
+    textTransform: 'capitalize'
   },
   paymentContainer: {
     width: Dimensions.get('window').width - 30,

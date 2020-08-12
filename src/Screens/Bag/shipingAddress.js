@@ -1,21 +1,45 @@
-import React, { useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, TextInput, View, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Card, Topbar } from '../../Components';
 import style from './style';
-import store from './store';
 import { color } from '../../Assets/Styles';
+
+import { updateUser } from '../../Utils/Api';
+import { setUpdateUser } from '../../Redux/Actions/users/users';
+import { splitString } from '../../Utils/helper';
 
 const shipingAddress = props => {
     const navigation = useNavigation();
-    const [activeCard, setActiveCard] = useState(1);
+    const user = props.user;
+    const [activeCard, setActiveCard] = useState(user.address_active);
+    const [address, setAddress] = useState();
+
+    useEffect(() => {
+        if (!address) {
+            const userAddress = splitString(user.address);
+            setAddress(userAddress);
+        }
+    })
+
+    const handleActivate = (key) => {
+        const data = { address_active: key };
+        updateUser(data, user.id).then(res => {
+            if (res) {
+                props.setUpdateUser(data);
+                setActiveCard(key);
+            }
+        })
+
+    }
 
     return (
         <View>
             <Topbar backNav={true} title='Shiping Address' />
-            <View style={style.fullContainer}>
-                <View style={style.searchBar}>
+            <ScrollView style={{ ...style.fullContainer, flex: 1 }}>
+                {/* <View style={style.searchBar}>
                     <Ionicons name='search' size={16} color={color.fade} />
                     <TextInput
                         style={style.searchInput}
@@ -24,25 +48,37 @@ const shipingAddress = props => {
                         onChangeText={text => setSearch(text)}
                         onSubmitEditing={({ nativeEvent }) => handleSubmitSearch(nativeEvent.text)}
                     />
-                </View>
+                </View> */}
 
                 <Text style={style.subTitleText}>Shipping Address</Text>
                 <View>
-                    {store.dataAddress.map((address, key) => {
-                        return (
-                            <Card
-                                key={key}
-                                dataAddress={address}
-                                isActive={address.id === activeCard ? true : false}
-                                onPress={() => setActiveCard(address.id)}
-                            />
-                        )
-                    })}
+                    {address ?
+                        address.map((address, key) => {
+                            return (
+                                <Card
+                                    key={key}
+                                    dataAddress={address}
+                                    indexCard={key}
+                                    isActive={key === activeCard ? true : false}
+                                    onPress={() => handleActivate(key)}
+                                />
+                            )
+                        })
+                        :
+                        <></>}
                     <Button title='Add new address' type='fullwidth' onPress={() => navigation.navigate('Address')} />
+                    <View style={{ height: 30 }}></View>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     )
 }
 
-export default shipingAddress;
+const mapStateToProps = state => ({
+    payment: state.transaction.payment,
+    user: state.auth.auth
+});
+
+const mapDispathToProps = { setUpdateUser };
+
+export default connect(mapStateToProps, mapDispathToProps)(shipingAddress);
