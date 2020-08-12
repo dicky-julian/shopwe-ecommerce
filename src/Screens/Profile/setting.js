@@ -4,35 +4,59 @@ import {Button, TextInputs, DateTimeInputs, Topbar} from '../../Components';
 import style from './style';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
-import {color} from '../../Assets/Styles/colors';
+import { color } from '../../Assets/Styles/colors';
+import moment from 'moment';
+import Axios from 'axios';
+import { API_URL } from '@env';
 
 const Setting = (props) => {
-  const [date, setDate] = useState(new Date());
+  const {
+    id,
+    tokenLogin,
+    full_name,
+    email,
+    created_at
+  } = props.auth.auth;
+  const [date, setDate] = useState(moment(created_at).format('DD/MM/YYYY'));
+  const [name, setName] = useState(full_name);
   const [modalVisiblePassword, setModalVisiblePassword] = useState(false);
   const [activePass, setActivePass] = useState('');
   const [profil, setProfil] = useState('');
-
-  // const [full_name, setName] = useState('');
-  // const [password, setPassword] = useState('');
-
-  // useEffect(() => {
-  // }, [])
-
-  // const submitSetting = () =>{
-  //     data ={
-
-  //     }
-  //     AsyncStorage.getItem(){
-
-  //     }
-  // }
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSetPassword = () => {
     setActivePass();
     setModalVisiblePassword(false);
   };
 
-
+  /**
+   * API Services
+   */
+  const updateUser = () => {
+    setIsLoading(true)
+    const data = {
+      full_name: name,
+      birth: moment(date).format('YYYY-MM-DD')
+    }
+    if (name === full_name) delete data.full_name;
+    Axios({
+      method: 'PATCH',
+      url: `${API_URL}/users/${id}`,
+      data: data,
+      headers: {
+        Authorization: tokenLogin,
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      setIsLoading(false)
+      Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+      console.log(res, 'ini result')
+    }).catch((error) => {
+      setIsLoading(false)
+      console.log(error.response)
+      if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
+    });
+  }
   return (
     <View style={{flex: 1}}>
       <Topbar backNav={true} title="Checkout" />
@@ -48,7 +72,7 @@ const Setting = (props) => {
               <TextInputs
                 title="Fullname"
                 placeholder="Insert Your Fullname"
-                value=""
+                value={name}
                 onChangeText={(text) => setName(text)}
               />
               <DateTimeInputs
@@ -88,15 +112,22 @@ const Setting = (props) => {
                 title="Password"
                 placeholder="Insert Your Password"
                 value=""
-                onChangeText={(text) => setName(text)}
+                onChangeText={(text) => setPassword(text)}
               />
             </View>
-            <Button
-              title="Save Profile"
-              style="primary"
-              type="fullwidth"
-              onPress={() => navigation.navigate('ShipStatus')}
-            />
+            {isLoading
+              ? <Button
+                title="Loading..."
+                style="primary"
+                type="fullwidth"
+                onPress={() => console.log('')}
+              />
+              : <Button
+                title="Save Profile"
+                style="primary"
+                type="fullwidth"
+                onPress={() => updateUser()}
+              />}
           </ScrollView>
         </View>
       </View>
@@ -143,7 +174,7 @@ const Setting = (props) => {
                 title="Save Profile"
                 style="primary"
                 type="fullwidth"
-                onPress={() => navigation.navigate('ShipStatus')}
+                onPress={() => updatePassword()}
               />
             </View>
           </ScrollView>
@@ -154,9 +185,12 @@ const Setting = (props) => {
   );
 };
 
-// const mapStateToProps = (state) => ({
-//   auth: state.auth,
-// });
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
 
-export default Setting;
-// connect(mapStateToProps, mapDispatchProps)(Setting);
+const mapDispatchToProps = {
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Setting);

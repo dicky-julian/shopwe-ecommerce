@@ -7,26 +7,30 @@ import {useNavigation} from '@react-navigation/native';
 import {get_all_order} from '../../Redux/Action/order';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
+import { API_URL } from '@env';
 
 const MyOrder = (props) => {
   const navigation = useNavigation();
-  // const [order, setOrder] = useState([])
-
+  const {
+    tokenLogin,
+    id
+  } = props.auth.auth;
   useEffect(() => {
     AsyncStorage.getItem('token', (error, result) => {
       axios({
         method: 'GET',
-        url: `http://192.168.1.2:3000/shopwe/api/v1/users/3/orders`,
+        url: `${API_URL}/users/${id}/orders`,
         headers: {
-          // Authorization: result,
+          Authorization: tokenLogin,
           'Content-Type': 'application/json'
         },
       })
         .then((res) => {
+          console.log(res, 'ini result')
           props.get_all_order(res)
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
         });
     });
   }, []);
@@ -40,19 +44,24 @@ const MyOrder = (props) => {
             <Text style={styles.headText}>My Orders </Text>
           </View>
           <View>
-            {props.order.data.map((data, index) => (
+            {props.order.data 
+              ? props.order.data.length > 0
+                ? props.order.data.map((data, index) => (
+
+                  <TouchableOpacity key={index}>
+                    {/* {console.log(data.order_id, 'data')} */}
+                    <Card
+                      dataOrder={data}
+                      onPress={() =>
+                        navigation.navigate('OrderDetail', { ...data })
+                      }
+                    />
+                  </TouchableOpacity>
+                ))
+                : <Text>No Data</Text>
+              : <Text>No Data</Text>
              
-                <TouchableOpacity key={index}>
-                  {/* {console.log(data.order_id, 'data')} */}
-                  <Card
-                    dataOrder={data}
-                    onPress={() =>
-                      navigation.navigate('OrderDetail', {...data})
-                    }
-                  />
-                </TouchableOpacity>
-             
-            ))}
+            }
           </View>
         </View>
       </ScrollView>
@@ -61,7 +70,7 @@ const MyOrder = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  // auth: state.auth,
+  auth: state.auth,
   order: state.order,
 });
 

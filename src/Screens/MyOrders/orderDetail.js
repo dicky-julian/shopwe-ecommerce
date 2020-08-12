@@ -8,9 +8,13 @@ import {get_all_order, get_id_order} from '../../Redux/Action/order';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import moment from 'moment';
+import { API_URL } from '@env';
+import { createUrlParamFromObj } from '../../Utils/helper';
+import { log } from 'react-native-reanimated';
 
 const OrderDetail = (props) => {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false)
   const [detailOrder, setDetailOrder] = useState([])
   const {
     order_id,
@@ -19,8 +23,22 @@ const OrderDetail = (props) => {
     address,
     name,
     total,
-    quantity,
+    payment_id,
   } = props.route.params;
+  const {
+    tokenLogin,
+    id,
+  } = props.auth.auth;
+  let detail_order = [];
+  
+  let order = {
+    "user_id": id,
+    "address": address,
+    "payment_id": payment_id,
+    "detail_order": detail_order,
+    "tracking_number": tracking_number
+  }
+  
 
   const Date = moment(updated_at).format('MM-DD-YYYY');
 
@@ -30,19 +48,17 @@ const OrderDetail = (props) => {
     const word = address.substring(1, address.length);
     addressSplit += firstWord+word+', ';
   })
-
   useEffect(() => {
     AsyncStorage.getItem('token', (error, result) => {
       axios({
         method: 'GET',
-        url: `http://192.168.1.2:3000/shopwe/api/v1/users/3/orders/${order_id}`,
+        url: `${API_URL}/users/${id}/orders/${order_id}`,
         headers: {
-          // Authorization: result,
+          Authorization: tokenLogin,
           'Content-Type': 'application/json',
         },
       })
         .then((res) => {
-          console.log(res, 'res');
           setDetailOrder(res.data.data)
           // props.get_id_order(res);
           // props.get_all_order(res);
@@ -53,10 +69,50 @@ const OrderDetail = (props) => {
     });
   }, []);
 
-  handleReorder= () => {
-    
+  /**
+   * API Services
+   */
+  const addOrder = () => {
+    setIsLoading(true)
+    axios({
+      method: 'POST',
+      url: `${API_URL}/orders`,
+      headers: {
+        Authorization: tokenLogin,
+        'Content-Type': 'application/json'
+      },
+      data: order
+    })
+      .then((res) => {
+        setIsLoading(false)
+        Alert.alert(
+          "Reorder Success!",
+          "Reorder again?",
+          [{text: "No, Thanks", onPress: () => console.log("Cancel Pressed"), style: "cancel"},
+            { text: "OK", onPress: () => console.log("OK Pressed") }],
+          { cancelable: false }
+        );
+        console.log(res, 'ini result')
+      })
+      .catch((error) => {
+        setIsLoading(false)
+        console.log(error.response);
+      });
   }
 
+  /**
+   * Logics
+   */
+  const addDetailOrder = (data) => {
+    detail_order.push({
+      "product_id": data.product_id,
+      "size": data.size,
+      "color": data.color,
+      "price": data.price,
+      "quantity": data.quantity,
+      "subtotal": data.sub_total
+    });
+  }
   return (
     <View>
       <Topbar backNav={true} search={true} title="Order Details" />
@@ -89,6 +145,7 @@ const OrderDetail = (props) => {
             {detailOrder ? (
               detailOrder.length > 0 ? (
                 detailOrder.map((dataDetail, index) => {
+                  addDetailOrder(dataDetail);
                   return <ProductOrder dataOrderDetail={dataDetail} />;
                 })
               ) : (
@@ -148,8 +205,16 @@ const OrderDetail = (props) => {
               marginTop: 30,
               marginBottom: 35,
             }}>
-            <Button title="Reorder" onPress={()=>Alert.alert('hi')} />
-            <Button title="Leave Feedback" style="primary" />
+            <View style={{
+              width: '100%',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              {isLoading 
+                ? <Button title="Loading..." onPress={() => console.log('')} />
+                : <Button title="Reorder" onPress={() => addOrder()} />
+              }
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -158,7 +223,7 @@ const OrderDetail = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  // auth: state.auth,
+  auth: state.auth,
   order: state.order,
 });
 
