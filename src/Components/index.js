@@ -7,6 +7,7 @@ import Card from './Card';
 import PaymentCard from './Card/paymentCard';
 import Rating from './Rating';
 import TextInputs from './TextInputs';
+import DateTimeInputs from './TextInputs/dateTime';
 
 export {
   Product,
@@ -17,5 +18,6 @@ export {
   PaymentCard,
   Rating,
   TextInputs,
+  DateTimeInputs,
   Topbar,
 };

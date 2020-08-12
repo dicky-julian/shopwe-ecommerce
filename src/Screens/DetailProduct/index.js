@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
   Modal,
@@ -8,27 +8,30 @@ import {
   View,
   ImageBackground,
 } from 'react-native';
-import {Rating, Topbar, Button} from '../../Components';
+import {Topbar, Button} from '../../Components';
 import styles from './style';
 import {color} from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {color as colors} from '../../Assets/Styles';
+import { RenderRating } from '../../Components/Product/action';
 
-const DetailProduct = () => {
+const DetailProduct = (props) => {
   const navigation = useNavigation();
+  const { product } = props.route.params;
   const [modalVisibleSize, setModalVisibleSize] = useState(false);
   const [activeSize, setActiveSize] = useState('');
   const [modalVisibleColor, setModalVisibleColor] = useState(false);
   const [activeColor, setActiveColor] = useState('');
-  const colorActionList = [
-    '#000',
-    '#F7F7F7',
-    '#B82222',
-    '#BEA9A9',
-    '#E2BB8D',
-  ];
-  const sizeActionList = ['XS', 'S', 'M', 'L', 'XL'];
+  const colorActionList = product.colors.split('|');
+  // const colorActionList = [
+  //   '#000',
+  //   '#F7F7F7',
+  //   '#B82222',
+  //   '#BEA9A9',
+  //   '#E2BB8D',
+  // ];
+  const sizeActionList = product.sizes.split('|');
 
   const handleSetSize = (list) => {
     setActiveSize(list);
@@ -40,12 +43,15 @@ const DetailProduct = () => {
     setModalVisibleColor(false);
   };
 
+  /**
+   * Life Cycles
+   */
   return (
     <View style={styles.container}>
       <Topbar backNav={true} title="Brand Name" />
       <ScrollView>
         <ImageBackground
-          source={{uri: 'https://reactjs.org/logo-og.png'}}
+          source={{uri: product.image}}
           style={styles.image}
         />
         <View style={styles.DetailStyle}>
@@ -87,15 +93,14 @@ const DetailProduct = () => {
 
           <View style={styles.detailCard}>
             <View style={styles.modalsCard}>
-              <Text style={styles.fadeText}>H & M</Text>
-              <Text style={styles.fadeText}>$ 19.99</Text>
+              <Text style={styles.fadeText}>{product.name}</Text>
+              <Text style={styles.fadeText}>$ {product.price}</Text>
             </View>
-            <Text style={styles.darkText}>Categori</Text>
-            <Rating />
-            <Text style={styles.descText}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vitae quam et ante molestie fringilla eu eget neque.
-            </Text>
+            <Text style={styles.darkText}>{product.category_name}</Text>
+            <View style={styles.ratingContainer}>
+              <RenderRating rating={product.rating} />
+            </View>
+            <Text style={styles.descText}>{product.description}</Text>
           </View>
         </View>
       </ScrollView>
@@ -132,7 +137,7 @@ const DetailProduct = () => {
                     key={key}
                     onPress={() => handleSetSize(list)}>
                     <Text style={{...styles.listText, color: color.light}}>
-                      {list}
+                      {list.toUpperCase()}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -142,7 +147,7 @@ const DetailProduct = () => {
                     style={styles.listContainer}
                     key={key}
                     onPress={() => handleSetSize(list)}>
-                    <Text style={styles.listText}>{list}</Text>
+                    <Text style={styles.listText}>{list.toUpperCase()}</Text>
                   </TouchableOpacity>
                 );
               }
@@ -171,7 +176,7 @@ const DetailProduct = () => {
               if (col === activeColor) {
                 return (
                   <TouchableOpacity
-                    style={{
+                    style={{ 
                       ...styles.colorWrapper,
                       borderColor: colors.primary,
                     }}

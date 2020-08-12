@@ -4,7 +4,8 @@ const color = {
     light: '#FFF', //white
     dark: '#000', //black
     fade: '#DADADA', //light gray
-    gold: '#FFBA49' // yellow for rating's star
+    gold: '#FFBA49', // yellow for rating's star
+    success: '#1bc47d' //green success
 }
 
 export {

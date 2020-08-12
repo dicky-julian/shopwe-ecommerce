@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import styles from './style';
-import {Topbar, Card} from '../../Components';
+import { Topbar, Card } from '../../Components';
 
 const MyOrder = props => {
    const dataOrder = {
@@ -19,9 +19,14 @@ const MyOrder = props => {
           <View style={styles.headline}>
             <Text style={styles.headText}>My Orders </Text>
           </View>
-          {/* <View style={styles.box}> */}
+          <View style={styles.box}>
             <Card dataOrder={dataOrder} />
-          {/* </View> */}
+            <Card dataOrder={dataOrder} />
+            <Card dataOrder={dataOrder} />
+            <Card dataOrder={dataOrder} />
+            <Card dataOrder={dataOrder} />
+            <Card dataOrder={dataOrder} />
+          </View>
         </View>
       </ScrollView>
     </View>
