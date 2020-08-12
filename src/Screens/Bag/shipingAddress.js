@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Card, Topbar } from '../../Components';
 import style from './style';
+import store from './store';
 import { color } from '../../Assets/Styles';
 
 const shipingAddress = props => {
-    const dataAddress = {
-        name: 'John Doe',
-        address: 'Jalan Gempol Marga Bhakti RT 02 RW 10 No. 3, Tanjungrejo, Sukun, Malang 65147'
-    }
+    const navigation = useNavigation();
+    const [activeCard, setActiveCard] = useState(1);
 
     return (
         <View>
@@ -28,9 +28,17 @@ const shipingAddress = props => {
 
                 <Text style={style.subTitleText}>Shipping Address</Text>
                 <View>
-                    <Card dataAddress={dataAddress} selecting={true} />
-                    <Card dataAddress={dataAddress} selecting={true} />
-                    <Button title='Add new address' type='fullwidth' onPress={() => console.log('haha')} />
+                    {store.dataAddress.map((address, key) => {
+                        return (
+                            <Card
+                                key={key}
+                                dataAddress={address}
+                                isActive={address.id === activeCard ? true : false}
+                                onPress={() => setActiveCard(address.id)}
+                            />
+                        )
+                    })}
+                    <Button title='Add new address' type='fullwidth' onPress={() => navigation.navigate('Address')} />
                 </View>
             </View>
         </View>

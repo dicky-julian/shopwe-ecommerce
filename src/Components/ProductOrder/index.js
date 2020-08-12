@@ -37,15 +37,21 @@ const ProductOrder = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={style.productWrapper}>
+                    {props.counter ?
                     <View style={style.counterContainer}>
-                        <TouchableOpacity style={style.counterButton} onPress={() => handleRemoveCount()}>
-                            <Ionicons name='remove-outline' size={20} color={color.default} />
-                        </TouchableOpacity>
-                        <Text style={style.counterText}>{count}</Text>
-                        <TouchableOpacity style={style.counterButton} onPress={() => setCount(count + 1)}>
-                            <Ionicons name='add-outline' size={20} color={color.default} />
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity style={style.counterButton} onPress={() => handleRemoveCount()}>
+                        <Ionicons name='remove-outline' size={20} color={color.default} />
+                    </TouchableOpacity>
+                    <Text style={style.counterText}>{count}</Text>
+                    <TouchableOpacity style={style.counterButton} onPress={() => setCount(count + 1)}>
+                        <Ionicons name='add-outline' size={20} color={color.default} />
+                    </TouchableOpacity>
+                </View>
+                :
+                <View style={style.counterContainer}>
+                    <Text style={style.darkText}>Units: 1</Text>
+                </View>
+                    }
                     <Text style={style.counterText}>30$</Text>
                 </View>
             </View>

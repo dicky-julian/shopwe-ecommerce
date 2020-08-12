@@ -54,10 +54,12 @@ const style = StyleSheet.create({
     },
     darkText: {
         fontSize: 16,
+        lineHeight: 26,
         color: color.dark
     },
     fadeText: {
         fontSize: 16,
+        lineHeight: 26,
         color: color.default
     },
     searchBar: {
@@ -77,6 +79,11 @@ const style = StyleSheet.create({
         marginLeft: 5,
         fontSize: 16
     },
+    statusImage: {
+        height: 213,
+        width: 208,
+        marginBottom: 30
+    }
 });
 
 export default style;
