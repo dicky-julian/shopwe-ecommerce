@@ -32,8 +32,6 @@ const OrderDetail = (props) => {
   })
 
   useEffect(() => {
-    
-
     AsyncStorage.getItem('token', (error, result) => {
       axios({
         method: 'GET',
@@ -54,6 +52,10 @@ const OrderDetail = (props) => {
         });
     });
   }, []);
+
+  handleReorder= () => {
+    
+  }
 
   return (
     <View>
@@ -146,7 +148,7 @@ const OrderDetail = (props) => {
               marginTop: 30,
               marginBottom: 35,
             }}>
-            <Button title="Reorder" />
+            <Button title="Reorder" onPress={()=>Alert.alert('hi')} />
             <Button title="Leave Feedback" style="primary" />
           </View>
         </View>
