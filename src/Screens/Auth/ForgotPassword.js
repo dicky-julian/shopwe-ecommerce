@@ -33,7 +33,7 @@ const ForgotPassword = (props) => {
         console.log(err);
         Alert.alert(
           "Failed!",
-          "Email is not valid!",
+          err.response.data.message,
           [
             { text: "OK"}
           ],

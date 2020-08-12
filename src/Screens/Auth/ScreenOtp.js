@@ -28,6 +28,9 @@ const ScreenOtp = (props) => {
         password: data.password,
         otp: otp,
       },
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }).then((res) => {
         setLoading(false);
         console.log(res);
@@ -38,7 +41,7 @@ const ScreenOtp = (props) => {
         console.log(err.response);
         Alert.alert(
           "Failed!",
-          "OTP is not valid!",
+          err.response.data.message,
           [
             { text: "OK"}
           ],
