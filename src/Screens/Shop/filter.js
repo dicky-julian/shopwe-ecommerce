@@ -1,21 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dimensions, Text, TouchableOpacity, ScrollView, View } from 'react-native';
 import { Topbar } from '../../Components';
 import style from './style';
 import { color as colors } from '../../Assets/Styles';
+import { useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux';
+import { setFilters } from '../../Redux/Actions/products/products';
 
-const Filter = () => {
-  const [color, setColor] = useState('#000');
-  const [size, setSize] = useState('XS');
-  const [category, setCategory] = useState('All');
+const Filter = (props) => {
+  const navigation = useNavigation();
+  const { sizes, categories } = props.products.filters;
+  const myColors = props.products.filters.colors;
+  const [color, setColor] = useState(myColors);
+  const [size, setSize] = useState(sizes);
+  const [category, setCategory] = useState(categories);
   const colorPallette = ['#000', '#F7F7F7', '#B82222', '#BEA9A9', '#E2BB8D', '#151867'];
   const sizePallette = ['XS', 'S', 'M', 'L', 'XL'];
   const categoryPallette = ['All', 'Women', 'Men', 'Boys', 'Girls', 'Kids'];
+
+  /**
+   * Life Cycles
+   */
+
+  /**
+   * Logics
+   */
+  const applyFilters = () => {
+    props.setFilters({
+      colors: color,
+      sizes: size,
+      categories: category
+    })
+    navigation.goBack();
+  }
   return (
     <View>
       <Topbar backNav={true} title="Filters" />
 
-      <View style={{ height: Dimensions.get('window').height - 35 }}>
+      <View style={{ height: Dimensions.get('window').height + 10 }}>
         <ScrollView>
           <View style={style.filterContainer}>
             {/* COLOR PICKER */}
@@ -150,7 +172,8 @@ const Filter = () => {
             ...style.button,
             backgroundColor: colors.primary,
             borderColor: 'transparent',
-          }}>
+          }}
+          onPress={() => applyFilters()}>
           <Text style={{ fontSize: 16, color: colors.light }}>Apply</Text>
         </TouchableOpacity>
       </View>
@@ -158,4 +181,12 @@ const Filter = () => {
   );
 }
 
-export default Filter;
+const mapStateToProps = (state) => ({
+  products: state.products
+})
+
+const mapDispatchToProps = {
+  setFilters
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Filter);

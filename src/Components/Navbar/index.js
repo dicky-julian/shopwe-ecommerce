@@ -10,7 +10,7 @@ import { color } from '../../Assets/Styles';
 
 const Tab = createMaterialBottomTabNavigator();
 
-const Navbar = () => {
+const Navbar = (props) => {
     return (
         <>
             <Tab.Navigator

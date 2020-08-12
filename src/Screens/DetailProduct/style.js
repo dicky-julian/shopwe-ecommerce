@@ -10,11 +10,21 @@ const styles = StyleSheet.create({
   darkText: {
     fontSize: 16,
     color: color.default,
+    textTransform: 'capitalize'
   },
   fadeText: {
     fontSize: 24,
     color: color.dark,
     fontWeight: '700',
+    textTransform: 'capitalize'
+  },
+  ratingContainer: {
+    flexDirection: 'row'
+  },
+  rating: {
+    marginTop: 10,
+    marginBottom: 3,
+    marginRight: 2
   },
 
   colorWrapper: {

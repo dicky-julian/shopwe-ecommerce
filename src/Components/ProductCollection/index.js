@@ -5,43 +5,44 @@ import Product from '../Product';
 import style from './style';
 
 const ProductCollection = (props) => {
-    const navigation = useNavigation();
-    const data = {
-        brand: 'OVJ',
-        name: 'Blouse',
-        rating: 4,
-        price: '$30'
-    }
-    return (
-        <View style={style.container}>
-            <View style={style.titleHeader}>
-                <View>
-                    <Text style={style.titleText}>{props.title}</Text>
-                    <Text style={style.descriptionText}>{props.description}</Text>
-                </View>
-                <TouchableOpacity onPress={() => navigation.navigate('Shop')}>
-                    <Text style={style.actionText}>View all</Text>
-                </TouchableOpacity>
-            </View>
-            <ScrollView style={style.collectionContainer} horizontal={true}>
-                <Product
-                    labelName='new'
-                    data={data}
-                    onPress={() => navigation.navigate('DetailProduct')}
-                />
-                <Product
-                    label='disc'
-                    labelName='-20%'
-                    data={data}
-                />
-                <Product
-                    label='disc'
-                    labelName='-20%'
-                    data={data}
-                />
-            </ScrollView>
+  const navigation = useNavigation();
+  const {
+    data,
+    label,
+    labelName,
+  } = props;
+  return (
+    <View style={style.container}>
+      <View style={style.titleHeader}>
+        <View>
+          <Text style={style.titleText}>{props.title}</Text>
+          <Text style={style.descriptionText}>{props.description}</Text>
         </View>
-    )
+        <TouchableOpacity onPress={() => navigation.navigate('Shop')}>
+          <Text style={style.actionText}>View all</Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView
+        style={style.collectionContainer}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+      >
+        {
+          data.map(product => {
+            return (
+              <Product
+                key={product.id}
+                label={label}
+                labelName='New'
+                data={product}
+                onPress={() => navigation.navigate('DetailProduct', { product: product })}
+              />
+            )
+          })
+        }
+      </ScrollView>
+    </View>
+  )
 }
 
 export default ProductCollection;

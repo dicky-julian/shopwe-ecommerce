@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
-import product from './product';
+import products from './products';
 import order from './order';
+import auth from './auth';
 
-export default combineReducers({ product, order });
+export default combineReducers({ products, order, auth });
