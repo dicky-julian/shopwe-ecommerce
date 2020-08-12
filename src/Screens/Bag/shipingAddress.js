@@ -38,7 +38,7 @@ const shipingAddress = props => {
     return (
         <View>
             <Topbar backNav={true} title='Shiping Address' />
-            <View style={style.fullContainer}>
+            <ScrollView style={{ ...style.fullContainer, flex: 1 }}>
                 {/* <View style={style.searchBar}>
                     <Ionicons name='search' size={16} color={color.fade} />
                     <TextInput
@@ -67,8 +67,9 @@ const shipingAddress = props => {
                         :
                         <></>}
                     <Button title='Add new address' type='fullwidth' onPress={() => navigation.navigate('Address')} />
+                    <View style={{ height: 30 }}></View>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     )
 }
