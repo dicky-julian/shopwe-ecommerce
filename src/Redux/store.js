@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
-// import logger from 'redux-logger';
+import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducer from './Reducers';
 
@@ -15,7 +15,7 @@ const persistConfig = {
 const persistreducer = persistReducer(persistConfig, reducer);
 const store = createStore(
     persistreducer,
-    applyMiddleware(thunk)
+    applyMiddleware(thunk, logger)
 );
 
 const persiststore = persistStore(store);
