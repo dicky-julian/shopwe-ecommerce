@@ -22,7 +22,7 @@ const OrderDetail = (props) => {
     quantity,
   } = props.route.params;
 
-  // const Date = moment(updated_at);
+  const Date = moment(updated_at).format('MM-DD-YYYY');
 
   let addressSplit = '';
   address.split('-').map(address => {
@@ -74,12 +74,12 @@ const OrderDetail = (props) => {
                   <Text style={style.fadeText}>Tracking Number: </Text>
                   <Text style={style.darkText}>{tracking_number}</Text>
                 </View>
-                <Text style={style.darkText}>{quantity} Items</Text>
+                <Text style={style.darkText}>{detailOrder.length} Items</Text>
               </View>
               <View style={{alignItems: 'flex-end'}}>
                 <Text style={style.fadeText}>
                   {/* {Date.format('MM-DD-YYYY')} */}
-                  {updated_at}
+                  {Date}
                 </Text>
                 <Text style={style.successText}>Delivered</Text>
               </View>
@@ -107,7 +107,7 @@ const OrderDetail = (props) => {
                 {addressSplit}
               </Text>
             </View>
-            <View style={style.textContainer}>
+            {/* <View style={style.textContainer}>
               <Text style={{...style.fadeText, width: '35%'}}>
                 Payment Method
               </Text>
@@ -120,10 +120,10 @@ const OrderDetail = (props) => {
                   *** *** *** 6543
                 </Text>
               </View>
-            </View>
+            </View> */}
             <View style={style.textContainer}>
               <Text style={{...style.fadeText, width: '35%'}}>
-                Delivery Method
+                Payment Method
               </Text>
               <Text style={{...style.darkText, width: '65%'}}>{name}</Text>
             </View>
