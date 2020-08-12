@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -39,7 +39,7 @@ const shipingAddress = props => {
         <View>
             <Topbar backNav={true} title='Shiping Address' />
             <View style={style.fullContainer}>
-                <View style={style.searchBar}>
+                {/* <View style={style.searchBar}>
                     <Ionicons name='search' size={16} color={color.fade} />
                     <TextInput
                         style={style.searchInput}
@@ -48,7 +48,7 @@ const shipingAddress = props => {
                         onChangeText={text => setSearch(text)}
                         onSubmitEditing={({ nativeEvent }) => handleSubmitSearch(nativeEvent.text)}
                     />
-                </View>
+                </View> */}
 
                 <Text style={style.subTitleText}>Shipping Address</Text>
                 <View>
