@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Text, View, Image, Alert, TouchableOpacity } from 'react-native';
-import {
-  Topbar,
-} from '../../Components';
+import { Topbar } from '../../Components';
 import styles from './style';
 import { color } from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -11,23 +9,42 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {connect} from 'react-redux';
 import { get_all_order } from '../../Redux/Action/order';
 import { apiUri } from '../../Utils/config';
+import Axios from 'axios';
+import { API_URL } from '@env';
 
 const Profile = (props) => {
   const navigation = useNavigation();
+  const [totalOrders, setTotalOrders] = useState(0)
   const {
     tokenLogin,
     image,
     full_name,
     username,
-    email
+    email,
+    id
   } = props.auth.auth;
   // const [profiles, setProfiles] = useState({});
   useEffect(() => {
     checkAuth()
+    getUserOrders()
   }, [])
 
   const checkAuth = () => {
     !tokenLogin && navigation.navigate('Auth')
+  }
+  const getUserOrders = () => {
+    Axios({
+      method: 'GET',
+      url: `${API_URL}/users/${id}/orders`,
+      headers: {
+        Authorization: tokenLogin,
+        'Content-Type': 'application/json'
+      },
+    }).then((res) => {
+      setTotalOrders(res.data.data.length)
+    }).catch((error) => {
+      console.log(error.response);
+    });
   }
   return (
     <View
@@ -63,7 +80,7 @@ const Profile = (props) => {
             </View>
           </View>
           <View style={styles.cardIcon}>
-            <Text style={styles.fadeText}>Already have 12 orders</Text>
+            <Text style={styles.fadeText}>Already have {totalOrders} orders</Text>
           </View>
         </TouchableOpacity>
 

@@ -3,6 +3,7 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import style from './style';
 import {color} from '../../Assets/Styles';
+import { apiUri } from '../../Utils/config';
 
 const ProductOrder = (props) => {
   const [count, setCount] = useState(1);
@@ -17,7 +18,7 @@ const ProductOrder = (props) => {
     <View style={style.container}>
       <Image
         style={style.productImage}
-        source={require('../../Assets/Images/Home/product.png')}
+        source={{ uri: `${apiUri.newImagePath}/${dataOrderDetail.image}`}}
       />
       <View style={style.cardProduct}>
         <View style={style.productWrapper}>
