@@ -13,8 +13,8 @@ const Bag = () => {
         <View style={{height: Dimensions.get('window').height - 260}}>
           <ScrollView style={style.container}>
             <Text style={style.titleText}>My Bag</Text>
-            <ProductOrder counter={true} />
-            <ProductOrder counter={true} />
+            {/* <ProductOrder counter={true} />
+            <ProductOrder counter={true} /> */}
             <View style={{height: 150}}></View>
           </ScrollView>
         </View>

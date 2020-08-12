@@ -16,10 +16,10 @@ const Checkout = props => {
         <View style={{ height: Dimensions.get('window').height - 285 }}>
           <ScrollView style={style.fullContainer}>
             <Text style={style.subTitleText}>Shipping Address</Text>
-            <Card dataAddress={store.dataAddress[0]} onPress={() => navigation.navigate('ShipAddress')} />
+            {/* <Card dataAddress={store.dataAddress[0]} onPress={() => navigation.navigate('ShipAddress')} /> */}
 
             <Text style={style.subTitleText}>Payment</Text>
-            {store.paymentData.map((payment, key) => {
+            {/* {store.paymentData.map((payment, key) => {
               return (
                 <PaymentCard
                   name={payment.name}
@@ -29,7 +29,7 @@ const Checkout = props => {
                   onPress={() => setActivePayment(payment.id)}
                 />
               )
-            })}
+            })} */}
             <View style={{ height: 220 }}></View>
           </ScrollView>
         </View>
