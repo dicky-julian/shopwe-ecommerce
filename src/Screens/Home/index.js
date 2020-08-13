@@ -33,14 +33,16 @@ const Home = (props) => {
       limit: 5
     }
     const params = createUrlParamFromObj(obj);
+    console.log(`${apiUri.products}${params}`);
     Axios({
       method: 'GET',
       url: `${apiUri.products}${params}`,
       headers: {
-        // authorization: token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
       }
     }).then(res => {
+      console.log(res, 'test')
       setNewProductsLoading(!newProductsLoading);
       if (res.status === 200) {
         setNewProducts(getResultResponse(res));
@@ -48,7 +50,7 @@ const Home = (props) => {
       }
     }).catch(err => {
       setNewProductsLoading(!newProductsLoading);
-      console.log(err)
+      console.log(err.response, 'top')
     })
   }
   const getPopularProducts = () => {
@@ -65,10 +67,11 @@ const Home = (props) => {
       method: 'GET',
       url: `${apiUri.products}${params}`,
       headers: {
-        // authorization: token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
       }
     }).then(res => {
+      console.log(res, 'test')
       setPopularProductsLoading(!popularProductsLoading);
       if (res.status === 200) {
         setPopularProducts(getResultResponse(res));
@@ -76,7 +79,7 @@ const Home = (props) => {
       }
     }).catch(err => {
       setPopularProductsLoading(!popularProductsLoading);
-      console.log(err)
+      console.log(err, 'down')
     })
   }
   return (

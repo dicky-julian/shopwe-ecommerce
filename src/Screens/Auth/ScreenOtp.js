@@ -3,7 +3,7 @@ import {View, Text, ScrollView, Alert} from 'react-native';
 import style from './style';
 import {TextInputs, Topbar, Button} from '../../Components';
 import axios from 'axios';
-import { API_URL } from '@env';
+import { API_URL } from '../../../env';
 
 const ScreenOtp = (props) => {
   const [form, setForm] =  useState('');

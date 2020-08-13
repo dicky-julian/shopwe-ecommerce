@@ -4,7 +4,7 @@ import style from './style';
 import {TextInputs, Topbar, Button} from '../../Components';
 import { color } from '../../Assets/Styles';
 import axios from 'axios';
-import { API_URL } from '@env';
+import { API_URL } from '../../../env';
 
 const ResetPassword = (props) => {
   const [password, setPassword] = useState();

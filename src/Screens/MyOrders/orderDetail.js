@@ -8,8 +8,7 @@ import {get_all_order, get_id_order} from '../../Redux/Action/order';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import moment from 'moment';
-import { API_URL } from '@env';
-import { apiUri } from '../../Utils/config';
+import { API_URL } from '../../../env';
 
 const OrderDetail = (props) => {
   const navigation = useNavigation();

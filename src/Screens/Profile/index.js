@@ -9,8 +9,9 @@ import {connect} from 'react-redux';
 import { get_all_order } from '../../Redux/Action/order';
 import { apiUri } from '../../Utils/config';
 import Axios from 'axios';
-import { API_URL } from '@env';
 import { logout } from '../../Redux/Actions/auth';
+import { API_URL } from '../../../env';
+
 
 const Profile = (props) => {
   const navigation = useNavigation();
