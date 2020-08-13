@@ -42,7 +42,6 @@ const Home = (props) => {
         'Accept': 'application/json'
       }
     }).then(res => {
-      console.log(res, 'test')
       setNewProductsLoading(!newProductsLoading);
       if (res.status === 200) {
         setNewProducts(getResultResponse(res));
@@ -50,7 +49,7 @@ const Home = (props) => {
       }
     }).catch(err => {
       setNewProductsLoading(!newProductsLoading);
-      console.log(err.response, 'top')
+      console.log(err)
     })
   }
   const getPopularProducts = () => {
@@ -71,7 +70,6 @@ const Home = (props) => {
         'Accept': 'application/json'
       }
     }).then(res => {
-      console.log(res, 'test')
       setPopularProductsLoading(!popularProductsLoading);
       if (res.status === 200) {
         setPopularProducts(getResultResponse(res));
@@ -79,7 +77,7 @@ const Home = (props) => {
       }
     }).catch(err => {
       setPopularProductsLoading(!popularProductsLoading);
-      console.log(err, 'down')
+      console.log(err)
     })
   }
   return (
