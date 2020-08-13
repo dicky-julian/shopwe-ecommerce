@@ -1,3 +1,4 @@
+import Alert from './Alert';
 import Product from './Product';
 import ProductCollection from './ProductCollection';
 import ProductOrder from './ProductOrder';
@@ -10,6 +11,7 @@ import TextInputs from './TextInputs';
 import DateTimeInputs from './TextInputs/dateTime';
 
 export {
+  Alert,
   Product,
   ProductCollection,
   ProductOrder,

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { Button, Card, TextInputs, Topbar } from '../../Components';
+import { Alert, Button, TextInputs, Topbar } from '../../Components';
 import style from './style';
 
 import { updateUser } from '../../Utils/Api';
 import { setUpdateUser } from '../../Redux/Actions/users/users';
-import { splitString } from '../../Utils/helper';
 
 const Address = props => {
     const data = props.route.params ? props.route.params.data : '';
@@ -18,16 +17,17 @@ const Address = props => {
     const [state, setState] = useState(stateOld || '');
     const [country, setCountry] = useState(countryOld || '');
     const [zip, setZip] = useState(zipOld || '');
+    const [isSuccess, setSuccess] = useState('');
+    const [isError, setError] = useState('');
     const user = props.user;
 
     const handleSubmit = () => {
         if (!fullname || !address || !city || !state || !country || !zip) {
-            console.log('data kosong');
+            setError('Data cant be empty')
             return;
         }
 
         const dataAddress = `${label}-${fullname}-${address}-${city}-${state}-${country}-${zip}`;
-
         data ? handleUpdateAddress(dataAddress) : handleAddAddress(dataAddress);
     }
 
@@ -42,7 +42,10 @@ const Address = props => {
 
         const result = { address: newAddress };
         updateUser(result, user.id).then(res => {
-            if (res) props.setUpdateUser(result);
+            if (res) {
+                setSuccess('Successfully updated address')
+                props.setUpdateUser(result);
+            } else setError('Something wrong, please check later')
         })
     }
 
@@ -54,9 +57,11 @@ const Address = props => {
             newAddress = newAddress ? `${newAddress}|${item}` : item;
         })
         const result = { address: newAddress };
-        console.log(result)
         updateUser(result, user.id).then(res => {
-            if (res) props.setUpdateUser(result);
+            if (res) {
+                setSuccess('Successfully added address')
+                props.setUpdateUser(result);
+            } else setError('Something wrong, please check later')
         })
     }
 
@@ -110,6 +115,12 @@ const Address = props => {
                     <Button title='Save Address' style='primary' type='fullwidth' onPress={() => handleSubmit()} />
                 </View>
             </ScrollView>
+            {isSuccess ?
+                <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>
+            }
+            {isError ?
+                <Alert title={isError} type='failed' onPress={() => setError()} /> : <></>
+            }
         </View>
     )
 }
