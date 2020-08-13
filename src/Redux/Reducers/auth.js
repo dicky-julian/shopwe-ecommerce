@@ -9,6 +9,7 @@ const initialState = {
     switch (action.type) {
 
       case 'LOGIN':
+        console.log(action.payload[0])
         return {
           ...state,
           auth: action.payload[0]

@@ -13,3 +13,10 @@ export const get_id_order = (data) => {
     payload: data
   };
 };
+
+export const setOrder = (data) => {
+  return {
+    type: 'SET_ORDER',
+    payload: data
+  };
+};

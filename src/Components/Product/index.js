@@ -3,6 +3,7 @@ import { ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { RenderRating } from './action';
 import style from './style';
 import { color } from '../../Assets/Styles';
+import { apiUri } from '../../Utils/config';
 
 const Product = (props) => {
   const { brand_name, name, rating, price, image } = props.data;
@@ -12,7 +13,7 @@ const Product = (props) => {
     <TouchableOpacity style={{ ...style.container, width: width ? width : 150 }} onPress={props.onPress}>
       <ImageBackground
         style={style.productImage}
-        source={{ uri: image }}
+        source={{ uri: `${apiUri.newImagePath}/${image}` }}
         // source={require('../../Assets/Images/Home/product.png')}
         resizeMode='cover'
         imageStyle={{ borderRadius: 5 }}>

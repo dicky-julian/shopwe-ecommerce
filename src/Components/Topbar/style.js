@@ -21,7 +21,8 @@ const style = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         alignSelf: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        textTransform: 'capitalize'
     }
 });
 
