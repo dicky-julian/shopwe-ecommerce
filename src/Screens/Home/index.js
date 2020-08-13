@@ -19,7 +19,6 @@ const Home = (props) => {
     props.initProducts();
     getNewProducts()
     getPopularProducts()
-    console.log(props.products)
   }, [])
 
   /**

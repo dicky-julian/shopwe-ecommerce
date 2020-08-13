@@ -21,7 +21,7 @@ const ShipingStatus = props => {
             <Text style={{ ...style.darkText, width: 300, textAlign: 'center', marginBottom: 75 }}>
                 Your order will be delivered soon, Thank you fir choosing our app!
             </Text>
-            <Button title='Continue Shoping' style='primary' type='fullwidth' onPress={() => navigation.navigate('Index')} />
+            <Button title='Continue Shoping' style='primary' type='fullwidth' onPress={() => navigation.replace('Index')} />
         </View>
     )
 }

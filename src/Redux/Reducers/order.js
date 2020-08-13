@@ -3,7 +3,8 @@ const initialState = {
   isError: false,
   errorMsg: '',
   data: [],
-  detailOrder: []
+  detailOrder: [],
+  orders: []
 };
 
 const order = (state = initialState, action) => {
@@ -20,7 +21,12 @@ const order = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: false,
-        detailOrder: action.payload.data.data[0],
+        detailOrder: action.payload.data.data[0]
+      };
+    case 'SET_ORDER':
+      return {
+        ...state,
+        orders: action.payload
       };
     default:
       return state;

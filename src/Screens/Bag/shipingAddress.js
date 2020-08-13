@@ -24,6 +24,13 @@ const shipingAddress = props => {
         }
     })
 
+    useEffect(() => {
+        if (!address) {
+            const userAddress = splitString(user.address);
+            setAddress(userAddress);
+        }
+    }, [props.user])
+
     const handleActivate = (key) => {
         const data = { address_active: key };
         updateUser(data, user.id).then(res => {

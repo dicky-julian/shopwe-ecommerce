@@ -17,6 +17,8 @@ import {useNavigation} from '@react-navigation/native';
 import {color as colors} from '../../Assets/Styles';
 import { RenderRating } from '../../Components/Product/action';
 import { apiUri } from '../../Utils/config';
+import { setOrder } from '../../Redux/Action/order';
+import { connect } from 'react-redux';
 
 const DetailProduct = (props) => {
   const navigation = useNavigation();
@@ -53,18 +55,58 @@ const DetailProduct = (props) => {
     * Logics
     */
   const addToCart = () => {
-    if (activeColor === '' || activeColor === undefined || activeColor.length < 1) Alert.alert('No Color Choosed!', 'Please choose one color of product.')
-    if (activeSize === '' || activeSize === undefined || activeSize.length < 1) Alert.alert('No Size Choosed!', 'Please choose one size of product.')
+    let error = 0;
+    if (activeColor === '' || activeColor === undefined || activeColor.length < 1) {
+      Alert.alert('No Color Choosed!', 'Please choose one color of product.')
+      error += 1;
+    }
+    if (activeSize === '' || activeSize === undefined || activeSize.length < 1) {
+      Alert.alert('No Size Choosed!', 'Please choose one size of product.')
+      error += 1;
+    }
+    if (error !== 0) {
+      return;
+    }
     const detail_product = {
       "product_id": product.id,
+      "image": product.image,
       "size": activeSize,
       "color": activeColor,
       "price": product.price,
       "quantity": 1,
-      "subtotal": 1*parseInt(product.price)
+      "sub_total": 1*parseInt(product.price)
     }
-    console.log(detail_product)
-    // navigation.navigate('Checkout')
+    let orders = props.order.orders;
+    if (orders.length > 0) {
+      let getIndex;
+      orders.map((order, index) => {
+        if (order.product_id === detail_product.product_id && order.size === detail_product.size && order.color === detail_product.color) {
+          getIndex = index;
+        }
+      })
+      if (getIndex !== undefined) {
+        orders[getIndex].quantity += orders[getIndex].quantity;
+        orders[getIndex].sub_total += orders[getIndex].sub_total;
+      } else {
+        orders.push(detail_product)
+      }
+    } else {
+      orders.push(detail_product)
+    }
+    props.setOrder(orders);
+    Alert.alert(
+      "Item Added To Cart",
+      "Add one more?",
+      [
+        {
+          text: "No, Thanks",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Yes", onPress: () => addToCart() }
+      ],
+      { cancelable: false }
+    );
   }
   return (
     <View style={styles.container}>
@@ -234,4 +276,13 @@ const DetailProduct = (props) => {
   );
 };
 
-export default DetailProduct;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  order: state.order
+})
+
+const mapDispatchToProps = {
+  setOrder
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailProduct);
