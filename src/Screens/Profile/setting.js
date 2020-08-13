@@ -59,7 +59,7 @@ const Setting = (props) => {
   }
   return (
     <View style={{flex: 1}}>
-      <Topbar backNav={true} title="Checkout" />
+      <Topbar backNav={true} title="Profile Setting" />
       <View style={{flex: 1}}>
         <View style={style.container}>
           <ScrollView>

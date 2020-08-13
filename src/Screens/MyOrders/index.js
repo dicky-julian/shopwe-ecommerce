@@ -38,7 +38,7 @@ const MyOrder = (props) => {
   return (
     <View>
       <Topbar backNav={true} search={true} />
-      <ScrollView style={styles.cardOrder}>
+      <ScrollView style={styles.cardOrder} contentContainerStyle={{paddingBottom: 50}} >
         <View style={styles.box}>
           <View style={styles.headline}>
             <Text style={styles.headText}>My Orders </Text>

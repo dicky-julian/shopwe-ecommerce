@@ -9,6 +9,7 @@ const initialState = {
     switch (action.type) {
 
       case 'LOGIN':
+        console.log(action.payload[0])
         return {
           ...state,
           auth: action.payload[0]
@@ -19,6 +20,15 @@ const initialState = {
           ...state,
           auth: {},
         };
+
+      case 'UPDATE_USER':
+        return {
+          ...state,
+          auth: {
+            ...state.auth,
+            ...action.payload
+          }
+        }
       default:
         return state;
     }

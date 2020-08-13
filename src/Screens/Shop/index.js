@@ -279,7 +279,7 @@ const Shop = (props) => {
   }
 
   return (
-    <View>
+    <View style={{backgroundColor: 'white'}}>
       <Topbar
         backNav='Home'
         title='Shop'

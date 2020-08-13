@@ -9,7 +9,7 @@ const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
     timeout: 0,
-    // whitelist: ['auth']
+    whitelist: ['auth']
 }
 
 const persistreducer = persistReducer(persistConfig, reducer);

@@ -40,10 +40,11 @@ const Auth = (props) => {
     }).then((res) => {
         setLoading(false)
         props.login(res.data.data);
-        props.navigation.navigate('Index');
+        props.navigation.replace('Index');
       })
       .catch((err) => {
         setLoading(false);
+        console.log(err)
         console.log(err.response);
         Alert.alert(
           "Failed!",
