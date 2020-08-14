@@ -6,7 +6,7 @@ import { Button, Card, PaymentCard, Topbar } from '../../Components';
 import style from './style';
 import store from './store';
 import Axios from 'axios';
-import { API_URL } from '@env';
+import { API_URL } from '../../../env';
 
 import { fetchPayment } from '../../Redux/Actions/transactions/payments';
 import { splitString } from '../../Utils/helper';

@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { color } from '../../Assets/Styles/colors';
 import moment from 'moment';
 import Axios from 'axios';
-import { API_URL } from '@env';
+import { API_URL } from '../../../env';
 
 const Setting = (props) => {
   const {

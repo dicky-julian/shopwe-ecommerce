@@ -18,11 +18,9 @@ const shipingAddress = props => {
     const [address, setAddress] = useState();
 
     useEffect(() => {
-        if (!address) {
-            const userAddress = splitString(user.address);
-            setAddress(userAddress);
-        }
-    })
+        const userAddress = splitString(user.address);
+        setAddress(userAddress);
+    }, [user])
 
     useEffect(() => {
         if (!address) {

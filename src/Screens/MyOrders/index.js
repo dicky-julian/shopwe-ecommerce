@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {get_all_order} from '../../Redux/Action/order';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
-import { API_URL } from '@env';
+import { API_URL } from '../../../env';
 
 const MyOrder = (props) => {
   const navigation = useNavigation();

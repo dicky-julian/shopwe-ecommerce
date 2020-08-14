@@ -33,12 +33,13 @@ const Home = (props) => {
       limit: 5
     }
     const params = createUrlParamFromObj(obj);
+    console.log(`${apiUri.products}${params}`);
     Axios({
       method: 'GET',
       url: `${apiUri.products}${params}`,
       headers: {
-        // authorization: token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
       }
     }).then(res => {
       setNewProductsLoading(!newProductsLoading);
@@ -65,8 +66,8 @@ const Home = (props) => {
       method: 'GET',
       url: `${apiUri.products}${params}`,
       headers: {
-        // authorization: token,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
       }
     }).then(res => {
       setPopularProductsLoading(!popularProductsLoading);

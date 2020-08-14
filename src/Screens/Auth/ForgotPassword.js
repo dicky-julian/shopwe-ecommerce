@@ -3,7 +3,7 @@ import {View, Text, Alert} from 'react-native';
 import style from './style';
 import {TextInputs, Topbar, Button} from '../../Components';
 import axios from 'axios';
-import { API_URL } from '@env';
+import { API_URL } from '../../../env';
 
 const ForgotPassword = (props) => {
   const [email,setEmail] = useState();

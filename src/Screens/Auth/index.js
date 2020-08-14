@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { TextInputs, Topbar, Button } from '../../Components';
 import style from './style';
 import axios from 'axios';
-import { API_URL } from '@env';
+import { API_URL } from '../../../env';
 import { connect } from 'react-redux';
 import { login } from '../../Redux/Actions/auth';
 import {useNavigation} from '@react-navigation/native';
