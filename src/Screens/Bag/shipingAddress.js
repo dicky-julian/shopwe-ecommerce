@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, TextInput, View, ScrollView } from 'react-native';
+import { Text, TextInput, View, ScrollView, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,12 +18,14 @@ const shipingAddress = props => {
     const [address, setAddress] = useState();
 
     useEffect(() => {
-        const userAddress = splitString(user.address);
-        setAddress(userAddress);
+        if (user.address) {
+            const userAddress = splitString(user.address);
+            setAddress(userAddress);
+        }
     }, [user])
 
     useEffect(() => {
-        if (!address) {
+        if (!address && user.address) {
             const userAddress = splitString(user.address);
             setAddress(userAddress);
         }
@@ -41,9 +43,9 @@ const shipingAddress = props => {
     }
 
     return (
-        <View>
+        <View style={{flex: 1, position: 'relative'}}>
             <Topbar backNav={true} title='Shiping Address' />
-            <ScrollView style={{ ...style.fullContainer, flex: 1 }}>
+            <ScrollView style={{ ...style.fullContainer, flex: 1 }} contentContainerStyle={{paddingBottom: 90}}>
                 {/* <View style={style.searchBar}>
                     <Ionicons name='search' size={16} color={color.fade} />
                     <TextInput
@@ -70,11 +72,13 @@ const shipingAddress = props => {
                             )
                         })
                         :
-                        <></>}
-                    <Button title='Add new address' type='fullwidth' onPress={() => navigation.navigate('Address')} />
-                    <View style={{ height: 30 }}></View>
+                        <Text style={[style.exceptionText, style.standaloneCenter]}>No address yet.</Text>}
                 </View>
             </ScrollView>
+            <View style={style.buttonBackground}>
+                <Button title='Add new address' type='fullwidth' style={color.light} onPress={() => navigation.navigate('Address')} />
+            </View>
+            {/* <View style={{ height: 30 }}></View> */}
         </View>
     )
 }
