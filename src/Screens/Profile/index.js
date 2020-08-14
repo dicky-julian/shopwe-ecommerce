@@ -16,14 +16,9 @@ import { API_URL } from '../../../env';
 const Profile = (props) => {
   const navigation = useNavigation();
   const [totalOrders, setTotalOrders] = useState(0)
-  const {
-    tokenLogin,
-    image,
-    full_name,
-    username,
-    email,
-    id
-  } = props.auth.auth;
+  const { tokenLogin, image, full_name, username, email, id } = props.auth.auth;
+  const { address } = props.auth.auth;
+  const [addressAvailable] = useState(address ? address.split('|').length : 0)
   // const [profiles, setProfiles] = useState({});
   useEffect(() => {
     checkAuth()
@@ -121,7 +116,7 @@ const Profile = (props) => {
             </View>
           </View>
           <View style={styles.cardIcon}>
-            <Text style={styles.fadeText}>3 Address</Text>
+            <Text style={styles.fadeText}>{addressAvailable} Address</Text>
           </View>
         </TouchableOpacity>
 
