@@ -58,10 +58,8 @@ const MyOrder = (props) => {
                     />
                   </TouchableOpacity>
                 ))
-                : <Text>No Data</Text>
-              : <Text>No Data</Text>
-             
-            }
+                : <Text style={[styles.exceptionText, styles.standaloneCenter]}>No order yet.</Text>
+              : <Text style={[styles.exceptionText, styles.standaloneCenter]}>No order yet.</Text>}
           </View>
         </View>
       </ScrollView>
