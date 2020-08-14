@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import style from './style';
-import { color } from '../../Assets/Styles';
+import {color} from '../../Assets/Styles';
 import { apiUri } from '../../Utils/config';
 import { connect } from 'react-redux';
 import { setOrder } from '../../Redux/Action/order';
