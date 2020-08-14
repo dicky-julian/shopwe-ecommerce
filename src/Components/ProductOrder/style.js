@@ -17,6 +17,11 @@ const style = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10
     },
+    productColor: {
+        height: 20,
+        width: 30,
+        borderRadius: 5
+    },
     cardProduct: {
         width: '65%',
         // height: '99%',
