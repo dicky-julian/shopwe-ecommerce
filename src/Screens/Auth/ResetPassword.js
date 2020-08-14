@@ -64,33 +64,28 @@ const ResetPassword = (props) => {
             <TextInputs
               title="New Password"
               placeholder="Insert Your Password"
+              secureTextEntry={true}
             />
             <TextInputs
               title="Confirmation New Password"
               placeholder="Insert Your Password"
               value={password}
               onChangeText={(text) => setPassword(text)}
+              secureTextEntry={true}
             />
           </View>
-          
+
           <View style={style.button}>
             {loading ? (
+              <Button title="Loading" style="primary" type="fullwidth" />
+            ) : (
               <Button
-              title="Loading"
-              style="primary"
-              type="fullwidth"
-              />
-            )
-            :
-            (
-              <Button
-              title="Reset Password"
-              style="primary"
-              type="fullwidth"
-              onPress={handleSubmitSend}
+                title="Reset Password"
+                style="primary"
+                type="fullwidth"
+                onPress={handleSubmitSend}
               />
             )}
-            
           </View>
         </View>
       </ScrollView>

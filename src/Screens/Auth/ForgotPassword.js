@@ -4,6 +4,7 @@ import style from './style';
 import {TextInputs, Topbar, Button} from '../../Components';
 import axios from 'axios';
 import { API_URL } from '../../../env';
+// import {forgotPassword} from '../../Utils/valid';
 
 const ForgotPassword = (props) => {
   const [email,setEmail] = useState();
