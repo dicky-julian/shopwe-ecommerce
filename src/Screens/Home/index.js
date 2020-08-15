@@ -86,7 +86,7 @@ const Home = (props) => {
       <ImageBackground
         style={style.header}
         resizeMode='cover'
-        source={require('../../Assets/Images/Home/home_header.png')
+        source={require('../../Assets/Images/Home/home_header.jpg')
         }>
         <Text style={style.headerText}>Street clothes</Text>
       </ImageBackground>

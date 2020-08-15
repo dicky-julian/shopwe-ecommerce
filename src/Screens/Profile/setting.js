@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, TouchableOpacity, ScrollView, View, Modal, Alert} from 'react-native';
 import {Button, TextInputs, DateTimeInputs, Topbar} from '../../Components';
 import style from './style';
@@ -10,25 +10,29 @@ import Axios from 'axios';
 import { API_URL } from '../../../env';
 
 const Setting = (props) => {
-  const {
-    id,
-    tokenLogin,
-    full_name,
-    email,
-    created_at
-  } = props.auth.auth;
-  const [date, setDate] = useState(moment(created_at).format('DD/MM/YYYY'));
+  const {id, tokenLogin, full_name, birth, email, created_at} = props.auth.auth;
+  const [date, setDate] = useState(new Date(birth));
   const [name, setName] = useState(full_name);
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [repeatNewPassword, setRepeatNewPassword] = useState('');
   const [modalVisiblePassword, setModalVisiblePassword] = useState(false);
   const [activePass, setActivePass] = useState('');
   const [profil, setProfil] = useState('');
   const [isLoading, setIsLoading] = useState(false)
 
+  useEffect(() => {
+  }, [])
+  
   const handleSetPassword = () => {
     setActivePass();
     setModalVisiblePassword(false);
   };
 
+  const formatDate = (dates) => {
+    return new Date(moment(dates).toISOString());
+  }
+  
   /**
    * API Services
    */
@@ -57,6 +61,66 @@ const Setting = (props) => {
       if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
     });
   }
+  const updatePassword = () => {
+    setIsLoading(true)
+    /**
+     * Replace this validation using JOI or your own validation style.
+     */
+    // start replace
+    if (password.length < 1) {
+      setIsLoading(false);
+      Alert.alert('Old Password Couldn\'t To Be Empty!', 'Please type the password.');
+      return;
+    }
+    if (newPassword.length < 1) {
+      setIsLoading(false);
+      Alert.alert('New Password Couldn\'t To Be Empty!', 'Please type the password.');
+      return;
+    }
+    if (repeatNewPassword.length < 1) {
+      setIsLoading(false);
+      Alert.alert('Repeat Password Couldn\'t To Be Empty!', 'Please type the password.');
+      return;
+    }
+    // end replace
+
+    /**
+     * If you using joi as validation library,
+     * please use validateAsync with try catch
+     * and move this code inside of try code block.
+     */
+    // start move
+    if (password !== newPassword) {
+      setIsLoading(false);
+      Alert.alert('Password Not Match!', 'Please match the password.');
+      return;
+    }
+    const data = {
+      old_password: password,
+      new_password: newPassword
+    }
+    if (name === full_name) delete data.full_name;
+    Axios({
+      method: 'PATCH',
+      url: `${API_URL}/users/${id}`,
+      data: data,
+      headers: {
+        Authorization: tokenLogin,
+        'Content-Type': 'application/json'
+      }
+    }).then((res) => {
+      setIsLoading(false)
+      Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+      console.log(res, 'ini result')
+    }).catch((error) => {
+      setIsLoading(false)
+      console.log(error.response)
+      if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
+    });
+    // end move
+    // I have joi error message handler in my helper file btw :v
+    // and the output would be like a human readable message.
+  }
   return (
     <View style={{flex: 1}}>
       <Topbar backNav={true} title="Profile Setting" />
@@ -79,7 +143,7 @@ const Setting = (props) => {
                 title="Date of Birth"
                 placeholder="Insert Your Date of Birth"
                 date={date}
-                onDateChange={(date) => setDate(date)}
+                onDateChange={(date) => setDate(formatDate(date))}
               />
               <View
                 style={{
@@ -148,8 +212,9 @@ const Setting = (props) => {
               <TextInputs
                 title="Old Password"
                 placeholder="Insert Your Old Password"
-                value=""
-                onChangeText={(text) => setName(text)}
+                value={password}
+                secureTextEntry={true}
+                onChangeText={(text) => setNewPassword(text)}
               />
               <TouchableOpacity onPress={() => Alert.alert('hi')}>
                 <Text style={{marginBottom: 5, textAlign: 'right'}}>
@@ -160,14 +225,16 @@ const Setting = (props) => {
               <TextInputs
                 title="New Password"
                 placeholder="Insert Your New Password"
-                value=""
-                onChangeText={(text) => setName(text)}
+                value={newPassword}
+                secureTextEntry={true}
+                onChangeText={(text) => setNewPassword(text)}
               />
               <TextInputs
                 title="Repeat New Password"
                 placeholder="Insert Your Repeat New Password"
-                value=""
-                onChangeText={(text) => setName(text)}
+                value={repeatNewPassword}
+                secureTextEntry={true}
+                onChangeText={(text) => setRepeatNewPassword(text)}
               />
 
               <Button

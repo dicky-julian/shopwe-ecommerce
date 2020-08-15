@@ -26,6 +26,15 @@ const style = StyleSheet.create({
         fontWeight: '700',
         color: color.dark
     },
+    exceptionText: {
+        marginVertical: 20,
+        fontWeight: '700',
+        color: color.dark
+    },
+    standaloneCenter: {
+        width: '100%',
+        textAlign: 'center'
+    },
     bottomBar: {
         width: Dimensions.get('window').width,
         padding: 15,
@@ -42,6 +51,16 @@ const style = StyleSheet.create({
         padding: 15,
         borderRadius: 30,
         backgroundColor: color.primary
+    },
+    buttonBackground: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        left: 0,
+        paddingVertical: 20,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     buttonText: {
         fontSize: 16,

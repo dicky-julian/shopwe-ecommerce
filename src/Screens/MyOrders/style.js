@@ -26,6 +26,15 @@ const styles = StyleSheet.create({
     color: color.dark,
     marginBottom: 5,
   },
+  exceptionText: {
+    marginVertical: 20,
+    fontWeight: '700',
+    color: color.dark
+  },
+  standaloneCenter: {
+    width: Dimensions.get('window').width - 20,
+    textAlign: 'center'
+  },
   fadeText: {
     fontSize: 16,
     lineHeight: 26,
