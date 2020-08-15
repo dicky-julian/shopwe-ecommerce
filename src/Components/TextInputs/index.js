@@ -13,6 +13,8 @@ const TextInputs = (props) => {
         placeholder={props.placeholder}
         value={props.value}
         ref={props.ref}
+        onFocus={props.onFocus}
+        autoFocus={props.autoFocus}
       />
     </View>
   );

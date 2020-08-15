@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, ScrollView, Alert} from 'react-native';
 import style from './style';
 import {TextInputs, Topbar, Button} from '../../Components';
 import axios from 'axios';
-import { API_URL } from '../../../env';
+import {API_URL} from '../../../env';
+import {otpSchema} from '../../Utils/valid';
 
 const ScreenOtp = (props) => {
-  const [form, setForm] =  useState('');
+  const [form, setForm] = useState('');
   const [otp, setOtp] = useState();
   const [loading, setLoading] = useState();
+  const { email } = props.route.params;
 
   const handleSubmitSendSignup = async (event) => {
     await setLoading(true);
@@ -18,36 +20,33 @@ const ScreenOtp = (props) => {
       email: props.route.params.email,
       password: props.route.params.password,
       otp: otp,
-    }
-    axios({
-      method: 'POST',
-      url: API_URL + '/auth/register',
-      data: {
-        full_name: data.fullname,
-        email: data.email,
-        password: data.password,
-        otp: otp,
-      },
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then((res) => {
+    };
+    try {
+      await otpSchema.validateAsync(data);
+      axios({
+        method: 'POST',
+        url: API_URL + '/auth/register',
+        data: {
+          full_name: data.fullname,
+          email: data.email,
+          password: data.password,
+          otp: otp,
+        },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
         setLoading(false);
         console.log(res);
-        props.navigation.replace('Auth', {form: 'login'});
-      })
-      .catch((err) => {
+        props.navigation.replace('Auth', { form: 'login' });
+      }).catch((err) => {
         setLoading(false);
         console.log(err.response);
-        Alert.alert(
-          "Failed!",
-          err.response.data.message,
-          [
-            { text: "OK"}
-          ],
-          { cancelable: false }
-        );
-    })
+        Alert.alert("Failed!",err.response.data.message,[{ text: "OK" }],{ cancelable: false });
+      })
+    } catch (error) {
+      console.log(error);
+    } 
   }
 
   const handleSubmitSendReset = async (event) => {
@@ -55,7 +54,7 @@ const ScreenOtp = (props) => {
     event.preventDefault();
     const data = {
       otp: otp,
-    }
+    };
     axios({
       method: 'POST',
       url: API_URL + '/auth/confirm/otp',
@@ -63,38 +62,32 @@ const ScreenOtp = (props) => {
         otp: otp,
       },
     }).then((res) => {
-        setLoading(false);
-        console.log(res);
-        props.navigation.replace('ResetPassword', {email: props.route.params.email});
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log(err.response);
-        Alert.alert(
-          "Failed!",
-          "OTP is not valid!",
-          [
-            { text: "OK"}
-          ],
-          { cancelable: false }
-        );
-    })
-  }
+      setLoading(false);
+      console.log(res);
+      props.navigation.replace('ResetPassword', {
+        email: props.route.params.email,
+      });
+    }).catch((err) => {
+      setLoading(false);
+      console.log(err.response);
+      Alert.alert('Failed!', 'OTP is not valid!', [{text: 'OK'}], {cancelable: false});
+    });
+  };
 
   useEffect(() => {
-    setForm(props.route.params.form)
-  }, [])
+    setForm(props.route.params.form);
+  }, []);
 
   return (
     <View>
       <Topbar backNav={true} />
-        <ScrollView>
+      <ScrollView>
         <View style={style.container}>
           <Text style={style.titleText}>Verification OTP</Text>
           <Text style={{marginBottom: 20}}>
-            The verification code has been sent via email to herena@email.com
+            The verification code has been sent via email to {email}
           </Text>
-          <Text>Please wait 1231 seconds to resend</Text>
+          {/* <Text>Please wait 1231 seconds to resend</Text> */}
           <View style={style.textinput}>
             <TextInputs
               title="Code OTP"
@@ -105,47 +98,35 @@ const ScreenOtp = (props) => {
           </View>
 
           {form === 'signup' ? (
-          <View style={style.button}>
-            {loading ? (
-              <Button
-              title="Loading"
-              style="primary"
-              type="fullwidth"
-              />
-            )
-            :(
-              <Button
-              title="Confirm"
-              style="primary"
-              type="fullwidth"
-              onPress={handleSubmitSendSignup}
-              />
-            )}
-          </View>
-          )
-          :
-          (
-          <View style={style.button}>
-            {loading ? (
-              <Button
-              title="Loading"
-              style="primary"
-              type="fullwidth"
-              />
-            )
-            :(
-              <Button
-              title="Confirm"
-              style="primary"
-              type="fullwidth"
-              onPress={handleSubmitSendReset}
-              />
-            )}
-          </View>
+            <View style={style.button}>
+              {loading ? (
+                <Button title="Loading" style="primary" type="fullwidth" />
+              ) : (
+                <Button
+                  title="Confirm"
+                  style="primary"
+                  type="fullwidth"
+                  onPress={handleSubmitSendSignup}
+                />
+              )}
+            </View>
+          ) : (
+            <View style={style.button}>
+              {loading ? (
+                <Button title="Loading" style="primary" type="fullwidth" />
+              ) : (
+                <Button
+                  title="Confirm"
+                  style="primary"
+                  type="fullwidth"
+                  onPress={handleSubmitSendReset}
+                />
+              )}
+            </View>
           )}
         </View>
       </ScrollView>
-      </View>
+    </View>
   );
 };
 
