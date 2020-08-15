@@ -9,6 +9,7 @@ const ScreenOtp = (props) => {
   const [form, setForm] =  useState('');
   const [otp, setOtp] = useState();
   const [loading, setLoading] = useState();
+  const { email } = props.route.params;
 
   const handleSubmitSendSignup = async (event) => {
     await setLoading(true);
@@ -35,8 +36,7 @@ const ScreenOtp = (props) => {
         setLoading(false);
         console.log(res);
         props.navigation.replace('Auth', {form: 'login'});
-      })
-      .catch((err) => {
+    }).catch((err) => {
         setLoading(false);
         console.log(err.response);
         Alert.alert(
@@ -92,9 +92,9 @@ const ScreenOtp = (props) => {
         <View style={style.container}>
           <Text style={style.titleText}>Verification OTP</Text>
           <Text style={{marginBottom: 20}}>
-            The verification code has been sent via email to herena@email.com
+            The verification code has been sent via email to {email}
           </Text>
-          <Text>Please wait 1231 seconds to resend</Text>
+          {/* <Text>Please wait 1231 seconds to resend</Text> */}
           <View style={style.textinput}>
             <TextInputs
               title="Code OTP"
