@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, Alert} from 'react-native';
-import {TextInputs, Topbar, Button} from '../../Components';
+import {View, Text, TouchableOpacity} from 'react-native';
+import {TextInputs, Topbar, Button, Alert} from '../../Components';
 import style from './style';
 import axios from 'axios';
 import {API_URL} from '../../../env';
@@ -12,10 +12,12 @@ import {loginSchema, signupSchema} from '../../Utils/valid';
 const Auth = (props) => {
   const navigation = useNavigation();
   const [form, setForm] = useState('');
+  const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [name, setName] = useState();
   const [loading, setLoading] = useState();
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
 
   // const handleValidate = (text) => {
   //   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -44,56 +46,59 @@ const Auth = (props) => {
         }
       }).then((res) => {
         setLoading(false)
+        setSuccess('Login Success')
         props.login(res.data.data);
         props.navigation.replace('Index');
       }).catch((err) => {
         setLoading(false);
-        console.log(err)
-        console.log(err.response);
-        Alert.alert("Failed!", err.response.data.message, [{ text: "OK" }],{ cancelable: false });
+        const errorMessage = err.response.data.message ? err.response.data.message : err.response;
+        setError(errorMessage);
+        // Alert.alert("Failed!", err.response.data.message, [{ text: "OK" }],{ cancelable: false });
       })
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      const errorMessage = error.toString().replace('ValidationError:', '');
+      setError(errorMessage)
     }
   };
 
   const handleSubmitRegister = async () => {
     await setLoading(true);
     const data = {
+      fullname: name,
       email: email,
-      requestType: 'register',
-    };
-    try {
-      await signupSchema.validateAsync(data);
-    } catch (error) {
-      console.log(error);
+      password: password,
+      form: 'signup'
     }
     try {
-      const res = await axios({
+      await signupSchema.validateAsync(data);
+      axios({
         method: 'POST',
         url: API_URL + '/auth/request/otp',
         data: {
-          email: data.email,
-          requestType: data.requestType,
+          email: email,
+          requestType: 'register',
         },
+      }).then((res) => {
+        setLoading(false);
+        console.log(res);
+        props.navigation.push('ScreenOtp', {
+          fullname: name,
+          email: email,
+          password: password,
+          form: 'signup',
+        });
+      }).catch((error) => {
+        setLoading(false);
+        const errorMessage = error.toString().replace('ValidationError:', '');
+        setError(errorMessage)
+        console.log(error.response)
       })
-      // .then((res) => {
+    } catch (error) {
       setLoading(false);
-      console.log(res);
-      props.navigation.push('ScreenOtp', {
-        fullname: name,
-        email: email,
-        password: password,
-        form: 'signup',
-      });
-      // })
-      return res
-    } catch (err) {
-      setLoading(false);
-      console.log(err);
-      Alert.alert('Failed!', 'Register failed!', [{text: 'OK'}], {
-        cancelable: false,
-      });
+      const errorMessage = error.toString().replace('ValidationError:', '');
+      setError(errorMessage)
+      console.log(error);
     }
   };
 
@@ -198,7 +203,10 @@ const Auth = (props) => {
             )}
           </View>
         )}
+
       </View>
+      {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+      {isError ? <Alert title={isError} type='failed' onPress={() => setError()} />: <></>}
     </>
   );
 };

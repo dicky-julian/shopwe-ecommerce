@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView, Alert} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import style from './style';
-import {TextInputs, Topbar, Button} from '../../Components';
+import {TextInputs, Topbar, Button, Alert} from '../../Components';
 import axios from 'axios';
 import {API_URL} from '../../../env';
 import {otpSchema} from '../../Utils/valid';
@@ -10,15 +10,14 @@ const ScreenOtp = (props) => {
   const [form, setForm] = useState('');
   const [otp, setOtp] = useState();
   const [loading, setLoading] = useState();
-  const { email } = props.route.params;
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
+  const { fullname, email, password } = props.route.params;
 
   const handleSubmitSendSignup = async (event) => {
     await setLoading(true);
     event.preventDefault();
     const data = {
-      fullname: props.route.params.fullname,
-      email: props.route.params.email,
-      password: props.route.params.password,
       otp: otp,
     };
     try {
@@ -27,9 +26,9 @@ const ScreenOtp = (props) => {
         method: 'POST',
         url: API_URL + '/auth/register',
         data: {
-          full_name: data.fullname,
-          email: data.email,
-          password: data.password,
+          full_name: fullname,
+          email: email,
+          password: password,
           otp: otp,
         },
         headers: {
@@ -41,37 +40,52 @@ const ScreenOtp = (props) => {
         props.navigation.replace('Auth', { form: 'login' });
       }).catch((err) => {
         setLoading(false);
-        console.log(err.response);
-        Alert.alert("Failed!",err.response.data.message,[{ text: "OK" }],{ cancelable: false });
+        const errorMessage = err.response.data.message ? err.response.data.message : 'Signup Failed';
+        setError(errorMessage)
+        console.log(err.response)
+        // Alert.alert("Failed!",err.response.data.message,[{ text: "OK" }],{ cancelable: false });
       })
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      setLoading(false);
+      const errorMessage = err.toString().replace('ValidationError:', '');
+      setError(errorMessage)
+      console.log(err)
     } 
   }
 
   const handleSubmitSendReset = async (event) => {
     await setLoading(true);
     event.preventDefault();
-    const data = {
-      otp: otp,
-    };
-    axios({
-      method: 'POST',
-      url: API_URL + '/auth/confirm/otp',
-      data: {
+    try {
+      const data = {
         otp: otp,
-      },
-    }).then((res) => {
-      setLoading(false);
-      console.log(res);
-      props.navigation.replace('ResetPassword', {
-        email: props.route.params.email,
+      };
+      await otpSchema.validateAsync(data);
+      axios({
+        method: 'POST',
+        url: API_URL + '/auth/confirm/otp',
+        data: {
+          otp: otp,
+        },
+      }).then((res) => {
+        setLoading(false);
+        console.log(res);
+        props.navigation.replace('ResetPassword', {
+          email: props.route.params.email,
+        });
+      }).catch((err) => {
+        setLoading(false);
+        const errorMessage = err.response.data.message && err.response.data.message;
+        setError(errorMessage)
+        console.log(err.response);
+        // Alert.alert('Failed!', 'OTP is not valid!', [{ text: 'OK' }], { cancelable: false });
       });
-    }).catch((err) => {
+    } catch (err) {
       setLoading(false);
-      console.log(err.response);
-      Alert.alert('Failed!', 'OTP is not valid!', [{text: 'OK'}], {cancelable: false});
-    });
+      const errorMessage = err.toString().replace('ValidationError:', '');
+      setError(errorMessage)
+      console.log(err)
+    }
   };
 
   useEffect(() => {
@@ -126,6 +140,8 @@ const ScreenOtp = (props) => {
           )}
         </View>
       </ScrollView>
+      {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+      {isError ? <Alert title={isError} type='failed' onPress={() => setError()} /> : <></>}
     </View>
   );
 };
