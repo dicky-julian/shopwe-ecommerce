@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Text, ScrollView, View } from 'react-native';
+import { Dimensions, Text, ScrollView, View, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { Button, Card, PaymentCard, Topbar } from '../../Components';
 import style from './style';
+import { color } from '../../Assets/Styles';
 import store from './store';
 import Axios from 'axios';
 import { API_URL } from '../../../env';
@@ -25,7 +26,7 @@ const Checkout = props => {
 
   useEffect(() => {
     if (!payment) {
-      props.fetchPayment();
+      props.fetchPayment(user.tokenLogin);  
     }
 
     if (!address) {
@@ -36,6 +37,14 @@ const Checkout = props => {
       }
     }
   })
+
+  useEffect(() => {
+    if (user.address) {
+      let userAddress = splitString(user.address);
+      userAddress = userAddress[user.address_active];
+      setAddress(userAddress);
+    }
+  }, [user])
   /**
     * API Services
     */
@@ -70,17 +79,15 @@ const Checkout = props => {
     });
   }
   return (
-    <View>
+    <View style={{ position: 'relative', flex: 1 }}>
       <Topbar backNav={true} title="Checkout" />
       <View style={{ flex: 1, flexDirection: 'column' }}>
         <View style={{ height: Dimensions.get('window').height - 285 }}>
           <ScrollView style={style.fullContainer}>
             <Text style={style.subTitleText}>Shipping Address</Text>
-            {address ?
-              <Card dataAddress={address} indexCard={user.address_active} onPress={() => navigation.navigate('ShipAddress')} />
-              :
-              <></>
-            }
+            {address
+              ? <Card dataAddress={address} indexCard={user.address_active} onPress={() => navigation.navigate('ShipAddress')} />
+              : <Button title='Add new address' type='fullwidth' style={color.light} onPress={() => navigation.navigate('Address')} />}
             <Text style={style.subTitleText}>Payment</Text>
             {store.paymentData.map((payment, key) => {
               return (
@@ -109,7 +116,13 @@ const Checkout = props => {
             <Text style={style.fadeText}>Summary:</Text>
             <Text style={style.darkText}>{parseInt(sub_total)+15}$</Text>
           </View>
-          {isLoading
+          
+        </View>
+      </View>
+      <View style={{ ...style.bottomBar, height: 125, bottom: 0 }}>
+        <View style={style.textContainer}></View>
+        {address
+          ? isLoading
             ? <Button
               title="Loading..."
               style="primary"
@@ -120,8 +133,13 @@ const Checkout = props => {
               style="primary"
               type="fullwidth"
               onPress={() => addOrder()}
-            />}
-        </View>
+            />
+          : <Button
+            title="Submit Order"
+            style={color.light}
+            type="fullwidth"
+            onPress={() => Alert.alert('No Address Yet.', 'Please add one address first at least.')}
+          />}
       </View>
     </View>
   );
