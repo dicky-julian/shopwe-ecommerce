@@ -1,7 +1,7 @@
 import { getPayment } from '../../../Utils/Api';
 
-const fetchPayment = () => dispatch => {
-    getPayment().then(res => {
+const fetchPayment = (tokenApi) => dispatch => {
+    getPayment(tokenApi).then(res => {
         if (res) dispatch(setPayment(res));
     })
 }
