@@ -144,7 +144,7 @@ const OrderDetail = (props) => {
               detailOrder.length > 0 ? (
                 detailOrder.map((dataDetail, index) => {
                   addDetailOrder(dataDetail);
-                  return <ProductOrder dataOrderDetail={dataDetail} />;
+                  return <ProductOrder key={index} dataOrderDetail={dataDetail} />;
                 })
               ) : (
                 <Text>No Data</Text>
