@@ -16,14 +16,17 @@ import { API_URL } from '../../../env';
 const Profile = (props) => {
   const navigation = useNavigation();
   const [totalOrders, setTotalOrders] = useState(0)
-  const { tokenLogin, image, full_name, username, email, id } = props.auth.auth;
-  const { address } = props.auth.auth;
-  const [addressAvailable] = useState(address ? address.split('|').length : 0)
+  const { tokenLogin, image, full_name, username, email, id, address } = props.auth.auth;
+  const [addressAvailable, setAddressAvailable] = useState(address ? address.split('|').length : 0)
   // const [profiles, setProfiles] = useState({});
   useEffect(() => {
     checkAuth()
     getUserOrders()
   }, [])
+
+  useEffect(() => {
+    setAddressAvailable(address ? address.split('|').length : 0);
+  }, [props.auth.auth])
 
   const checkAuth = () => {
     !tokenLogin && navigation.navigate('Auth')
