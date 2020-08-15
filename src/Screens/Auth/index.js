@@ -38,7 +38,7 @@ const Auth = (props) => {
         password: data.password
       },
     }).then((res) => {
-        setLoading(false)
+      setLoading(false)
         props.login(res.data.data);
         props.navigation.replace('Index');
       })
