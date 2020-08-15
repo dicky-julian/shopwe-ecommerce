@@ -121,6 +121,11 @@ const Setting = (props) => {
     // I have joi error message handler in my helper file btw :v
     // and the output would be like a human readable message.
   }
+
+  const toResetPassword = () => {
+    setModalVisiblePassword(false);
+    props.navigation.navigate('ForgotPassword', {email:email});
+  }
   return (
     <View style={{flex: 1}}>
       <Topbar backNav={true} title="Profile Setting" />
@@ -218,8 +223,8 @@ const Setting = (props) => {
                 autoFocus={true}
                 onChangeText={(text) => setPassword(text)}
               />
-              <TouchableOpacity onPress={() => Alert.alert('hi')}>
-                <Text style={{marginBottom: 5, textAlign: 'right'}}>
+              <TouchableOpacity onPress={() => toResetPassword()}>
+                <Text style={{marginBottom: 5, padding: 5, textAlign: 'right'}}>
                   Forgot Password
                 </Text>
               </TouchableOpacity>
