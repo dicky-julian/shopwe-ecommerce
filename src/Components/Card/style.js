@@ -11,6 +11,7 @@ const style = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     marginBottom: 15,
+    borderColor: color.fade,
   },
   dataContainer: {
     width: '80%',
@@ -20,12 +21,13 @@ const style = StyleSheet.create({
     fontSize: 16,
     lineHeight: 26,
     color: color.dark,
+    textTransform: 'capitalize'
   },
   paymentContainer: {
     width: Dimensions.get('window').width - 30,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 10
   },
   paymentBrand: {
     justifyContent: 'center',
@@ -35,27 +37,33 @@ const style = StyleSheet.create({
     backgroundColor: color.light,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: color.fade,
+    borderColor: color.fade
   },
   brandImage: {
     width: 50,
-    height: 50,
+    height: 50
   },
   brandText: {
     marginLeft: 20,
     fontSize: 16,
-    color: color.dark,
+    color: color.dark
   },
   brandIndicator: {
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
     right: 0,
     width: 25,
     height: 25,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: color.fade,
+    borderColor: color.fade
   },
-
+  dotIndicator: {
+    width: 18,
+    height: 18,
+    borderRadius: 18,
+  },
   text: {
     fontSize: 14,
     color: '#9B9B9B',

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
   Modal,
@@ -7,28 +7,35 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Alert,
 } from 'react-native';
-import {Rating, Topbar, Button} from '../../Components';
+import {Topbar, Button} from '../../Components';
 import styles from './style';
 import {color} from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {color as colors} from '../../Assets/Styles';
+import { RenderRating } from '../../Components/Product/action';
+import { apiUri } from '../../Utils/config';
+import { setOrder } from '../../Redux/Action/order';
+import { connect } from 'react-redux';
 
-const DetailProduct = () => {
+const DetailProduct = (props) => {
   const navigation = useNavigation();
+  const { product } = props.route.params;
   const [modalVisibleSize, setModalVisibleSize] = useState(false);
   const [activeSize, setActiveSize] = useState('');
   const [modalVisibleColor, setModalVisibleColor] = useState(false);
   const [activeColor, setActiveColor] = useState('');
-  const colorActionList = [
-    '#000',
-    '#F7F7F7',
-    '#B82222',
-    '#BEA9A9',
-    '#E2BB8D',
-  ];
-  const sizeActionList = ['XS', 'S', 'M', 'L', 'XL'];
+  const colorActionList = product.colors.split('|');
+  // const colorActionList = [
+  //   '#000',
+  //   '#F7F7F7',
+  //   '#B82222',
+  //   '#BEA9A9',
+  //   '#E2BB8D',
+  // ];
+  const sizeActionList = product.sizes.split('|');
 
   const handleSetSize = (list) => {
     setActiveSize(list);
@@ -40,12 +47,73 @@ const DetailProduct = () => {
     setModalVisibleColor(false);
   };
 
+  /**
+   * Life Cycles
+   */
+
+   /**
+    * Logics
+    */
+  const addToCart = () => {
+    let error = 0;
+    if (activeColor === '' || activeColor === undefined || activeColor.length < 1) {
+      Alert.alert('No Color Choosed!', 'Please choose one color of product.')
+      error += 1;
+    }
+    if (activeSize === '' || activeSize === undefined || activeSize.length < 1) {
+      Alert.alert('No Size Choosed!', 'Please choose one size of product.')
+      error += 1;
+    }
+    if (error !== 0) {
+      return;
+    }
+    const detail_product = {
+      "product_id": product.id,
+      "image": product.image,
+      "size": activeSize,
+      "color": activeColor,
+      "price": product.price,
+      "quantity": 1,
+      "sub_total": 1*parseInt(product.price)
+    }
+    let orders = props.order.orders;
+    if (orders.length > 0) {
+      let getIndex;
+      orders.map((order, index) => {
+        if (order.product_id === detail_product.product_id && order.size === detail_product.size && order.color === detail_product.color) {
+          getIndex = index;
+        }
+      })
+      if (getIndex !== undefined) {
+        orders[getIndex].quantity += orders[getIndex].quantity;
+        orders[getIndex].sub_total += orders[getIndex].sub_total;
+      } else {
+        orders.push(detail_product)
+      }
+    } else {
+      orders.push(detail_product)
+    }
+    props.setOrder(orders);
+    Alert.alert(
+      "Item Added To Cart",
+      "Add one more?",
+      [
+        {
+          text: "No, Thanks",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "Yes", onPress: () => addToCart() }
+      ],
+      { cancelable: false }
+    );
+  }
   return (
     <View style={styles.container}>
-      <Topbar backNav={true} title="Brand Name" />
+      <Topbar backNav={true} title={product.name} />
       <ScrollView>
         <ImageBackground
-          source={{uri: 'https://reactjs.org/logo-og.png'}}
+          source={{ uri: `${apiUri.newImagePath}/${product.image}`}}
           style={styles.image}
         />
         <View style={styles.DetailStyle}>
@@ -87,15 +155,14 @@ const DetailProduct = () => {
 
           <View style={styles.detailCard}>
             <View style={styles.modalsCard}>
-              <Text style={styles.fadeText}>H & M</Text>
-              <Text style={styles.fadeText}>$ 19.99</Text>
+              <Text style={styles.fadeText}>{product.name}</Text>
+              <Text style={styles.fadeText}>$ {product.price}</Text>
             </View>
-            <Text style={styles.darkText}>Categori</Text>
-            <Rating />
-            <Text style={styles.descText}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vitae quam et ante molestie fringilla eu eget neque.
-            </Text>
+            <Text style={styles.darkText}>{product.category_name}</Text>
+            <View style={styles.ratingContainer}>
+              <RenderRating rating={product.rating} />
+            </View>
+            <Text style={styles.descText}>{product.description}</Text>
           </View>
         </View>
       </ScrollView>
@@ -104,7 +171,7 @@ const DetailProduct = () => {
           title="ADD TO CART"
           style="primary"
           type="fullwidth"
-          onPress={() => navigation.navigate('Checkout')}
+          onPress={() => addToCart()}
         />
       </View>
 
@@ -132,7 +199,7 @@ const DetailProduct = () => {
                     key={key}
                     onPress={() => handleSetSize(list)}>
                     <Text style={{...styles.listText, color: color.light}}>
-                      {list}
+                      {list.toUpperCase()}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -142,7 +209,7 @@ const DetailProduct = () => {
                     style={styles.listContainer}
                     key={key}
                     onPress={() => handleSetSize(list)}>
-                    <Text style={styles.listText}>{list}</Text>
+                    <Text style={styles.listText}>{list.toUpperCase()}</Text>
                   </TouchableOpacity>
                 );
               }
@@ -171,12 +238,12 @@ const DetailProduct = () => {
               if (col === activeColor) {
                 return (
                   <TouchableOpacity
-                    style={{
+                    style={{ 
                       ...styles.colorWrapper,
                       borderColor: colors.primary,
                     }}
                     key={key}
-                    onPress={() => setColor()}>
+                    onPress={() => handleSetColor(col)}>
                     <View
                       style={{
                         ...styles.colorPicker,
@@ -192,7 +259,7 @@ const DetailProduct = () => {
                       borderColor: 'transparent',
                     }}
                     key={key}
-                    onPress={() => setColor(col)}>
+                    onPress={() => handleSetColor(col)}>
                     <View
                       style={{
                         ...styles.colorPicker,
@@ -209,4 +276,13 @@ const DetailProduct = () => {
   );
 };
 
-export default DetailProduct;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  order: state.order
+})
+
+const mapDispatchToProps = {
+  setOrder
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailProduct);

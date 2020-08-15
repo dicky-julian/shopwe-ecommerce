@@ -5,7 +5,7 @@ import { color } from '../../Assets/Styles';
 
 const Button = props => {
     const textColor = props.style === 'primary' ? color.light : color.dark;
-    const background = props.style === 'primary' ? color.primary : 'transparent';
+    const background = props.style === 'primary' ? color.primary  : props.style === 'transparent' ? 'transparent' : props.style;
     const border = props.style === 'primary' ? color.primary : color.dark;
     const width = props.type === 'fullwidth' ? Dimensions.get('window').width - 30 : Dimensions.get('window').width * 45 / 100 - 10;
     return (

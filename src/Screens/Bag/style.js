@@ -26,6 +26,15 @@ const style = StyleSheet.create({
         fontWeight: '700',
         color: color.dark
     },
+    exceptionText: {
+        marginVertical: 20,
+        fontWeight: '700',
+        color: color.dark
+    },
+    standaloneCenter: {
+        width: '100%',
+        textAlign: 'center'
+    },
     bottomBar: {
         width: Dimensions.get('window').width,
         padding: 15,
@@ -43,6 +52,16 @@ const style = StyleSheet.create({
         borderRadius: 30,
         backgroundColor: color.primary
     },
+    buttonBackground: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        left: 0,
+        paddingVertical: 20,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     buttonText: {
         fontSize: 16,
         color: color.light
@@ -54,10 +73,12 @@ const style = StyleSheet.create({
     },
     darkText: {
         fontSize: 16,
+        lineHeight: 26,
         color: color.dark
     },
     fadeText: {
         fontSize: 16,
+        lineHeight: 26,
         color: color.default
     },
     searchBar: {
@@ -77,6 +98,11 @@ const style = StyleSheet.create({
         marginLeft: 5,
         fontSize: 16
     },
+    statusImage: {
+        height: 213,
+        width: 208,
+        marginBottom: 30
+    }
 });
 
 export default style;

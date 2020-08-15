@@ -1,3 +1,4 @@
+import Alert from './Alert';
 import Product from './Product';
 import ProductCollection from './ProductCollection';
 import ProductOrder from './ProductOrder';
@@ -7,8 +8,10 @@ import Card from './Card';
 import PaymentCard from './Card/paymentCard';
 import Rating from './Rating';
 import TextInputs from './TextInputs';
+import DateTimeInputs from './TextInputs/dateTime';
 
 export {
+  Alert,
   Product,
   ProductCollection,
   ProductOrder,
@@ -17,5 +20,6 @@ export {
   PaymentCard,
   Rating,
   TextInputs,
+  DateTimeInputs,
   Topbar,
 };

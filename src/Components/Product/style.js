@@ -34,13 +34,15 @@ const style = StyleSheet.create({
     brandText: {
         marginBottom: 3,
         fontSize: 16,
-        color: color.default
+        color: color.default,
+        textTransform: 'capitalize'
     },
     nameText: {
         marginBottom: 3,
         fontSize: 20,
         fontWeight: '700',
-        color: color.dark
+        color: color.dark,
+        textTransform: 'capitalize'
     },
     priceText: {
         fontSize: 16,
