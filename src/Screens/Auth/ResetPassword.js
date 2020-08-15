@@ -8,48 +8,44 @@ import {API_URL} from '../../../env';
 import {resetSchema} from '../../Utils/valid';
 
 const ResetPassword = (props) => {
-  const [password, setPassword] = useState();
+  const [password1, setPassword1] = useState('');
+  const [password2, setPassword2] = useState('');
   const [loading, setLoading] = useState();
+  const {email} = props.route.params;
 
-  const handleSubmitSend = async (event) => {
+  const handleSubmitSend = async () => {
     await setLoading(true);
-    event.preventDefault();
-    const data = {
-      email: props.route.params.email,
-      password: password,
-    };
     try {
+      const data = {
+        password1: password1,
+        password2: password2
+      };
       await resetSchema.validateAsync(data);
-    } catch (e) {
-      console.log(e);
-    }
-    try {
-      const res = await axios({
+      if (password1 !== password2) {
+        setLoading(false);
+        Alert.alert('Password Not Match!', 'Please match the password.')
+        return;
+      }
+      axios({
         method: 'POST',
         url: API_URL + '/auth/resetpassword',
         data: {
-          email: data.email,
-          password: data.password,
+          email: email,
+          password: password1,
         },
-      });
-      // .then((res) => {
-      setLoading(false);
-      console.log(res);
-      Alert.alert(
-        'Success!',
-        'Your password has been changed!',
-        [{text: 'OK'}],
-        {cancelable: false},
-      );
-      props.navigation.replace('Auth', {form: 'login'});
-      // })
-      return res;
+      }).then((res) => {
+        setLoading(false);
+        console.log(res);
+        Alert.alert('Success!','Your password has been changed!',[{ text: 'OK' }],{ cancelable: false },);
+        props.navigation.replace('Auth', { form: 'login' });
+      }).catch((err) => {
+        setLoading(false);
+        console.log(err);
+      })
     } catch (err) {
       setLoading(false);
-      console.log(err.response);
-      Alert.alert('Failled!', err.response.data.message, [{text: 'OK'}], {
-        cancelable: false,
-      });
+      Alert.alert('Failled!', err.toString(), [{ text: 'OK' }], { cancelable: false });
+      console.log(err);
     }
   };
   return (
@@ -59,20 +55,22 @@ const ResetPassword = (props) => {
         <View style={style.container}>
           <Text style={style.titleText}>Reset Password</Text>
           <Text
-            style={{textAlign: 'justify', color: color.primary, fontSize: 16}}>
+            style={{ ...style.darkText, marginBottom: 10, color: color.primary }}>
             You need to change your password to active your account
           </Text>
           <View style={style.textinput}>
             <TextInputs
               title="New Password"
               placeholder="Insert Your Password"
+              value={password1}
+              onChangeText={(text) => setPassword1(text)}
               secureTextEntry={true}
             />
             <TextInputs
               title="Confirmation New Password"
               placeholder="Insert Your Password"
-              value={password}
-              onChangeText={(text) => setPassword(text)}
+              value={password2}
+              onChangeText={(text) => setPassword2(text)}
               secureTextEntry={true}
             />
           </View>
@@ -85,7 +83,7 @@ const ResetPassword = (props) => {
                 title="Reset Password"
                 style="primary"
                 type="fullwidth"
-                onPress={handleSubmitSend}
+                  onPress={() => handleSubmitSend()}
               />
             )}
           </View>

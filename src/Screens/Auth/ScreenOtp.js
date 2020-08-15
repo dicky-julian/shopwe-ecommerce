@@ -98,7 +98,8 @@ const ScreenOtp = (props) => {
       <ScrollView>
         <View style={style.container}>
           <Text style={style.titleText}>Verification OTP</Text>
-          <Text style={{marginBottom: 20}}>
+          <Text
+            style={{ ...style.darkText, marginBottom: 10}}>
             The verification code has been sent via email to {email}
           </Text>
           {/* <Text>Please wait 1231 seconds to resend</Text> */}

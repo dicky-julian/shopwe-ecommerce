@@ -25,12 +25,19 @@ const style = StyleSheet.create({
         fontSize: 34,
         fontWeight: '700'
     },
+    darkText: {
+        fontSize: 18,
+        color: color.dark,
+    },
     forgotText: {
         marginTop: 10,
         marginBottom: 50,
         fontSize: 16,
         color: color.dark,
         textAlign: 'right',
+    },
+    button: {
+        marginVertical: 10
     }
 });
 
