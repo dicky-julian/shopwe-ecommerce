@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { Alert, Button, TextInputs, Topbar } from '../../Components';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import style from './style';
 
 import { updateUser } from '../../Utils/Api';
 import { setUpdateUser } from '../../Redux/Actions/users/users';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Address = props => {
     const data = props.route.params ? props.route.params.data : '';
@@ -19,6 +21,7 @@ const Address = props => {
     const [zip, setZip] = useState(zipOld || '');
     const [isSuccess, setSuccess] = useState('');
     const [isError, setError] = useState('');
+    const [isDefault, setIsDefault] = useState(false)
     const user = props.user;
 
     const handleSubmit = () => {
@@ -41,26 +44,36 @@ const Address = props => {
         })
 
         const result = { address: newAddress };
-        updateUser(result, user.id).then(res => {
+        updateUser(result, user.id, user.tokenLogin).then(res => {
             if (res) {
                 setSuccess('Successfully updated address')
                 props.setUpdateUser(result);
+                props.navigation.goBack();
             } else setError('Something wrong, please check later')
         })
     }
 
     const handleAddAddress = data => {
-        const userAddress = user.address.split('|');
+        let userAddress = [];
+        if (user.address) {
+            userAddress = user.address.split('|');
+        }
         let newAddress = '';
         userAddress.push(data);
         userAddress.map(item => {
             newAddress = newAddress ? `${newAddress}|${item}` : item;
         })
-        const result = { address: newAddress };
-        updateUser(result, user.id).then(res => {
+        result = {};
+        newAddress.split('|').length > 1
+            ? isDefault
+                ? result = { address: newAddress, address_active: userAddress.length - 1 }
+                : result = { address: newAddress }
+            : result = { address: newAddress, address_active: 0 };
+        updateUser(result, user.id, user.tokenLogin).then(res => {
             if (res) {
                 setSuccess('Successfully added address')
                 props.setUpdateUser(result);
+                props.navigation.goBack();
             } else setError('Something wrong, please check later')
         })
     }
@@ -112,6 +125,14 @@ const Address = props => {
                         value={zip}
                         onChangeText={(text) => setZip(text)}
                     />
+                    {user.address
+                        ? <TouchableOpacity style={style.checkboxWrapper} onPress={() => setIsDefault(!isDefault)}>
+                            <Text style={style.checkboxLabel}>Set as default</Text>
+                            {isDefault
+                                ? <Ionicons name='checkbox-outline' size={20} color='#000' />
+                                : <Ionicons name='square-outline' size={20} color='#000' />}
+                        </TouchableOpacity>
+                        : <></>}
                     <Button title='Save Address' style='primary' type='fullwidth' onPress={() => handleSubmit()} />
                 </View>
             </ScrollView>
