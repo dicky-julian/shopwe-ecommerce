@@ -13,11 +13,13 @@ export const signupSchema = Joi.object({
   form: Joi.string(),
 });
 export const forgotSchema = Joi.object({
-  email: Joi.string().email({minDomainSegments: 2,tlds: {allow: ['com', 'net']}}).required(),
+  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+  requestType: Joi.string().required()
 });
 export const otpSchema = Joi.object({
   otp: Joi.string().required(),
 });
 export const resetSchema = Joi.object({
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+  password1: Joi.string().min(3).required(),
+  password2: Joi.string().min(3).required(),
 });
