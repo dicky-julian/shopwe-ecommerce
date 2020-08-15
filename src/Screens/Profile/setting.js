@@ -90,19 +90,19 @@ const Setting = (props) => {
      * and move this code inside of try code block.
      */
     // start move
-    if (password !== newPassword) {
+    if (newPassword !== repeatNewPassword) {
       setIsLoading(false);
       Alert.alert('Password Not Match!', 'Please match the password.');
       return;
     }
     const data = {
-      old_password: password,
+      id: id,
+      password: password,
       new_password: newPassword
     }
-    if (name === full_name) delete data.full_name;
     Axios({
-      method: 'PATCH',
-      url: `${API_URL}/users/${id}`,
+      method: 'POST',
+      url: `${API_URL}/auth/resetpassword`,
       data: data,
       headers: {
         Authorization: tokenLogin,
@@ -110,12 +110,12 @@ const Setting = (props) => {
       }
     }).then((res) => {
       setIsLoading(false)
-      Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+      Alert.alert('Profile Updated!', 'Your password updated succesfully.');
       console.log(res, 'ini result')
     }).catch((error) => {
       setIsLoading(false)
       console.log(error.response)
-      if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
+      if (error.response.data.message) Alert.alert('Update Password Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
     });
     // end move
     // I have joi error message handler in my helper file btw :v
@@ -175,6 +175,7 @@ const Setting = (props) => {
               <TextInputs
                 title="Password"
                 placeholder="Insert Your Password"
+                onFocus={() => setModalVisiblePassword(true)}
                 value=""
                 onChangeText={(text) => setPassword(text)}
               />
@@ -214,7 +215,8 @@ const Setting = (props) => {
                 placeholder="Insert Your Old Password"
                 value={password}
                 secureTextEntry={true}
-                onChangeText={(text) => setNewPassword(text)}
+                autoFocus={true}
+                onChangeText={(text) => setPassword(text)}
               />
               <TouchableOpacity onPress={() => Alert.alert('hi')}>
                 <Text style={{marginBottom: 5, textAlign: 'right'}}>
