@@ -4,7 +4,7 @@ import {Button, ProductOrder, Topbar} from '../../Components';
 import style from './style';
 import {connect} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {get_all_order, get_id_order} from '../../Redux/Action/order';
+import {get_all_order, get_id_order, setOrder} from '../../Redux/Action/order';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import moment from 'moment';
@@ -14,15 +14,8 @@ const OrderDetail = (props) => {
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false)
   const [detailOrder, setDetailOrder] = useState([])
-  const {
-    order_id,
-    tracking_number,
-    updated_at,
-    address,
-    name,
-    total,
-    payment_id,
-  } = props.route.params;
+  const [reorder, setReorder] = useState(0)
+  const {order_id, tracking_number, updated_at, address, name, total, payment_id} = props.route.params;
   const {
     tokenLogin,
     id,
@@ -58,6 +51,7 @@ const OrderDetail = (props) => {
       })
         .then((res) => {
           setDetailOrder(res.data.data)
+          console.log(res.data.data);
           // props.get_id_order(res);
           // props.get_all_order(res);
         })
@@ -70,32 +64,51 @@ const OrderDetail = (props) => {
   /**
    * API Services
    */
-  const addOrder = () => {
-    setIsLoading(true)
-    axios({
-      method: 'POST',
-      url: `${API_URL}/orders`,
-      headers: {
-        Authorization: tokenLogin,
-        'Content-Type': 'application/json'
-      },
-      data: order
-    })
-      .then((res) => {
-        setIsLoading(false)
-        Alert.alert(
-          "Reorder Success!",
-          "Reorder again?",
-          [{text: "No, Thanks", onPress: () => console.log("Cancel Pressed"), style: "cancel"},
-            { text: "OK", onPress: () => console.log("OK Pressed") }],
-          { cancelable: false }
-        );
-        console.log(res, 'ini result')
+  // const addOrder = () => {
+  //   setIsLoading(true)
+  //   axios({
+  //     method: 'POST',
+  //     url: `${API_URL}/orders`,
+  //     headers: {
+  //       Authorization: tokenLogin,
+  //       'Content-Type': 'application/json'
+  //     },
+  //     data: order
+  //   })
+  //     .then((res) => {
+  //       setIsLoading(false)
+  //       Alert.alert(
+  //         "Reorder Success!",
+  //         "Reorder again?",
+  //         [{text: "No, Thanks", onPress: () => console.log("Cancel Pressed"), style: "cancel"},
+  //           { text: "OK", onPress: () => console.log("OK Pressed") }],
+  //         { cancelable: false }
+  //       );
+  //       console.log(res, 'ini result')
+  //     })
+  //     .catch((error) => {
+  //       setIsLoading(false)
+  //       console.log(error.response);
+  //     });
+  // }
+  const addToCart = () => {
+    let data = [];
+    if (detailOrder !== undefined && detailOrder !== null && detailOrder.length > 0) {
+      detailOrder.map((item, index) => {
+        data.push({
+          "product_id": item.product_id,
+          "image": item.image,
+          "size": item.size,
+          "color": item.color,
+          "price": item.price,
+          "quantity": item.quantity,
+          "sub_total": item.sub_total
+        })
       })
-      .catch((error) => {
-        setIsLoading(false)
-        console.log(error.response);
-      });
+    }
+    console.log(data)
+    props.setOrder(data);
+    Alert.alert('Items was added to cart.','Item only added once.')
   }
 
   /**
@@ -113,7 +126,7 @@ const OrderDetail = (props) => {
   }
   return (
     <View>
-      <Topbar backNav={true} search={true} title="Order Details" />
+      <Topbar backNav={true} search={false} title="Order Details" />
       <ScrollView style={style.fullContainer}>
         <View>
           {/* TRANSACTION DETAIL */}
@@ -144,7 +157,7 @@ const OrderDetail = (props) => {
               detailOrder.length > 0 ? (
                 detailOrder.map((dataDetail, index) => {
                   addDetailOrder(dataDetail);
-                  return <ProductOrder key={index} dataOrderDetail={dataDetail} />;
+                  return <ProductOrder key={index} dataOrderDetail={dataDetail} noTrash={true} />;
                 })
               ) : (
                 <Text>No Data</Text>
@@ -200,7 +213,7 @@ const OrderDetail = (props) => {
           <View
             style={{
               ...style.detailContainer,
-              marginTop: 30,
+              marginTop: 10,
               marginBottom: 35,
             }}>
             <View style={{
@@ -209,8 +222,8 @@ const OrderDetail = (props) => {
               alignItems: 'center'
             }}>
               {isLoading 
-                ? <Button title="Loading..." onPress={() => console.log('')} />
-                : <Button title="Reorder" onPress={() => addOrder()} />
+                ? <Button title="Loading..." type="fullwidth" onPress={() => console.log('')} />
+                : <Button title="Reorder" type="fullwidth" onPress={() => addToCart()} />
               }
             </View>
           </View>
@@ -225,6 +238,10 @@ const mapStateToProps = (state) => ({
   order: state.order,
 });
 
-const mapDispatchProps = {get_all_order, get_id_order};
+const mapDispatchProps = {
+  get_all_order,
+  get_id_order,
+  setOrder
+};
 
 export default connect(mapStateToProps, mapDispatchProps)(OrderDetail);
