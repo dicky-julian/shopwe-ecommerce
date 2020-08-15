@@ -17,14 +17,14 @@ const Auth = (props) => {
   const [name, setName] = useState();
   const [loading, setLoading] = useState();
 
-  const handleValidate = (text) => {
-    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (reg.test(text) === false) {
-      // show error function (alert)
-      return false;
-    }
-    return true;
-  };
+  // const handleValidate = (text) => {
+  //   const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  //   if (reg.test(text) === false) {
+  //     // show error function (alert)
+  //     return false;
+  //   }
+  //   return true;
+  // };
 
   const handleSubmitLogin = async () => {
     await setLoading(true);
