@@ -10,6 +10,8 @@ import {resetSchema} from '../../Utils/valid';
 const ResetPassword = (props) => {
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState();
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
 
   const handleSubmitSend = async (event) => {
     await setLoading(true);

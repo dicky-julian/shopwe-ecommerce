@@ -7,13 +7,24 @@ import { color } from '../../Assets/Styles';
 import { connect } from 'react-redux';
 import { setSearch } from '../../Redux/Actions/products/products';
 import { useNavigation } from '@react-navigation/native';
+import { searchSchema } from '../../Utils/valid';
 
 const Search = (props) => {
   const navigation = useNavigation();
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
+  
   const {
     search
   } = props.products;
-  const handleSubmitSearch = (text) => {
+  const handleSubmitSearch = async (text) => {
+    try {
+      await searchSchema.validateAsync(text);
+    } catch (error) {
+      console.log(error);
+       const errorMessage = error.toString().replace('ValidationError:', '');
+       setError(errorMessage);
+    }
     if (text.length > 0) {
       props.setSearch(text);
       navigation.goBack();

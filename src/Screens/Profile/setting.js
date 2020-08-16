@@ -8,6 +8,7 @@ import { color } from '../../Assets/Styles/colors';
 import moment from 'moment';
 import Axios from 'axios';
 import { API_URL } from '../../../env';
+import { profileSchema, changePassSchema } from '../../Utils/valid';
 
 const Setting = (props) => {
   const {id, tokenLogin, full_name, birth, email, created_at} = props.auth.auth;
@@ -36,12 +37,45 @@ const Setting = (props) => {
   /**
    * API Services
    */
+  // const updateUser = () => {
+  //   setIsLoading(true)
+  //   const data = {
+  //     full_name: name,
+  //     birth: moment(date).format('YYYY-MM-DD')
+  //   }
+  //   if (name === full_name) delete data.full_name;
+  //   Axios({
+  //     method: 'PATCH',
+  //     url: `${API_URL}/users/${id}`,
+  //     data: data,
+  //     headers: {
+  //       Authorization: tokenLogin,
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then((res) => {
+  //     setIsLoading(false)
+  //     Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+  //     console.log(res, 'ini result')
+  //   }).catch((error) => {
+  //     setIsLoading(false)
+  //     console.log(error.response)
+  //     if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
+  //   });
+  // }
+
   const updateUser = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const data = {
       full_name: name,
-      birth: moment(date).format('YYYY-MM-DD')
-    }
+      birth: moment(date).format('YYYY-MM-DD'),
+    };
+
+    // try {
+    //   await profileSchema.validateAsync(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    
     if (name === full_name) delete data.full_name;
     Axios({
       method: 'PATCH',
@@ -49,18 +83,25 @@ const Setting = (props) => {
       data: data,
       headers: {
         Authorization: tokenLogin,
-        'Content-Type': 'application/json'
-      }
-    }).then((res) => {
-      setIsLoading(false)
-      Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
-      console.log(res, 'ini result')
-    }).catch((error) => {
-      setIsLoading(false)
-      console.log(error.response)
-      if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
-    });
-  }
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        setIsLoading(false);
+        Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+        console.log(res, 'ini result');
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error.response);
+        if (error.response.data.message)
+          Alert.alert(
+            'Update Profile Failed!',
+            error.response.data.message.replace('birth', 'Date of Birth '),
+          );
+      });
+  };
+
   const updatePassword = () => {
     setIsLoading(true)
     /**

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView, Alert} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import style from './style';
-import {TextInputs, Topbar, Button} from '../../Components';
+import {TextInputs, Topbar, Button, Alert} from '../../Components';
 import axios from 'axios';
 import {API_URL} from '../../../env';
 import {otpSchema} from '../../Utils/valid';
@@ -10,6 +10,8 @@ const ScreenOtp = (props) => {
   const [form, setForm] = useState('');
   const [otp, setOtp] = useState();
   const [loading, setLoading] = useState();
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
 
   const handleSubmitSendSignup = async (event) => {
     await setLoading(true);
@@ -22,11 +24,7 @@ const ScreenOtp = (props) => {
     };
     try {
       await otpSchema.validateAsync(data);
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      const res = await axios({
+      axios({
         method: 'POST',
         url: API_URL + '/auth/register',
         data: {
@@ -38,19 +36,29 @@ const ScreenOtp = (props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-      });
-      // .then((res) => {
-      setLoading(false);
-      console.log(res);
-      props.navigation.replace('Auth', {form: 'login'});
-      // })
-      return res;
+      })
+        .then((res) => {
+          setLoading(false);
+          console.log(res);
+          setSuccess('Confirm Success');
+          props.navigation.replace('Auth', {form: 'login'});
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+          const errorMessage = err.response.data.message
+            ? err.response.data.message
+            : err.response;
+          setError(errorMessage); //set message error from axios
+          // Alert.alert('Failed!', err.response.data.message, [{text: 'OK'}], {
+          //   cancelable: false,
+          // });
+        });
     } catch (err) {
       setLoading(false);
-      console.log(err.response);
-      Alert.alert('Failed!', err.response.data.message, [{text: 'OK'}], {
-        cancelable: false,
-      });
+      console.log(err);
+      const errorMessage = err.toString().replace('ValidationError: ', '');
+      setError(errorMessage);
     }
   };
 
@@ -60,27 +68,39 @@ const ScreenOtp = (props) => {
     const data = {
       otp: otp,
     };
-    axios({
-      method: 'POST',
-      url: API_URL + '/auth/confirm/otp',
-      data: {
-        otp: otp,
-      },
-    })
-      .then((res) => {
-        setLoading(false);
-        console.log(res);
-        props.navigation.replace('ResetPassword', {
-          email: props.route.params.email,
-        });
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log(err.response);
-        Alert.alert('Failed!', 'OTP is not valid!', [{text: 'OK'}], {
-          cancelable: false,
-        });
-      });
+     try {
+       await otpSchema.validateAsync(data);
+       axios({
+         method: 'POST',
+         url: API_URL + '/auth/confirm/otp',
+         data: {
+           otp: otp,
+         },
+       })
+         .then((res) => {
+           setLoading(false);
+           console.log(res);
+           props.navigation.replace('ResetPassword', {
+             email: props.route.params.email,
+           });
+         })
+         .catch((err) => {
+           setLoading(false);
+           console.log(err.response);
+           const errorMessage = err.response.data.message
+             ? err.response.data.message
+             : err.response;
+           setError(errorMessage);
+          //  Alert.alert('Failed!', 'OTP is not valid!', [{text: 'OK'}], {
+          //    cancelable: false,
+          //  });
+         });
+     } catch (err) {
+       setLoading(false);
+       console.log(err);
+       const errorMessage = err.toString().replace('ValidationError: ', '');
+       setError(errorMessage);
+     }
   };
 
   useEffect(() => {
@@ -94,7 +114,8 @@ const ScreenOtp = (props) => {
         <View style={style.container}>
           <Text style={style.titleText}>Verification OTP</Text>
           <Text style={{marginBottom: 20}}>
-            The verification code has been sent via email to {props.route.params.email}
+            The verification code has been sent via email to{' '}
+            {props.route.params.email}
           </Text>
           {/* <Text>Please wait 1231 seconds to resend</Text> */}
           <View style={style.textinput}>
