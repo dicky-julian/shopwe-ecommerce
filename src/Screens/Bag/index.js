@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 const Bag = (props) => {
   const navigation = useNavigation();
   const [subTotal, setSubTotal] = useState(0)
-  const { orders } = props.order;
-
+  const {orders} = props.order;
   useEffect(() => {
     sumSubTotal();
   }, [props.order])
@@ -20,9 +19,15 @@ const Bag = (props) => {
     orders.map(order => subtotal += order.sub_total)
     setSubTotal(subtotal)
   }
+  function checkout() {
+    const user = props.auth.auth;
+    user.tokenLogin
+      ? navigation.navigate('Checkout', { detail_order: props.order.orders, sub_total: subTotal })
+      : navigation.navigate('Auth', { form: 'signup' })
+  }
   return (
     <View style={{ position: 'relative', flex: 1 }}>
-      <Topbar search={true} />
+      <Topbar search={false} />
       <View style={{flex: 1, flexDirection: 'column'}}>
         <View style={{flex: 1}}>
         {/* <View style={{height: Dimensions.get('window').height - 260}}> */}
@@ -53,7 +58,7 @@ const Bag = (props) => {
               title="Checkout"
               style="primary"
               type="fullwidth"
-              onPress={() => navigation.navigate('Checkout', { detail_order: props.order.orders, sub_total: subTotal })}
+              onPress={() => checkout()}
             />
           </View>
           : <></>

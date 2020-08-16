@@ -34,7 +34,7 @@ const Filter = (props) => {
     navigation.goBack();
   }
   return (
-    <View>
+    <View style={{flex: 1, position: 'relative'}}>
       <Topbar backNav={true} title="Filters" />
 
       <View style={{ height: Dimensions.get('window').height + 10 }}>
@@ -159,7 +159,7 @@ const Filter = (props) => {
           </View>
         </ScrollView>
       </View>
-      <View style={style.bottomBar}>
+      <View style={[style.bottomBar, {position: 'absolute', right: 0, bottom: 0, left: 0}]}>
         <TouchableOpacity
           style={{
             ...style.button,

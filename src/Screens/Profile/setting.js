@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Text, TouchableOpacity, ScrollView, View, Modal, Alert} from 'react-native';
-import {Button, TextInputs, DateTimeInputs, Topbar} from '../../Components';
+import {Text, TouchableOpacity, ScrollView, View, Modal} from 'react-native';
+import {Button, TextInputs, DateTimeInputs, Topbar, Alert} from '../../Components';
 import style from './style';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,7 +8,8 @@ import { color } from '../../Assets/Styles/colors';
 import moment from 'moment';
 import Axios from 'axios';
 import { API_URL } from '../../../env';
-import { profileSchema, changePassSchema } from '../../Utils/valid';
+import { profileSchema, changePassSchema, resetPasswordSchema } from '../../Utils/valid';
+import { object } from '@hapi/joi';
 
 const Setting = (props) => {
   const {id, tokenLogin, full_name, birth, email, created_at} = props.auth.auth;
@@ -20,6 +21,8 @@ const Setting = (props) => {
   const [modalVisiblePassword, setModalVisiblePassword] = useState(false);
   const [activePass, setActivePass] = useState('');
   const [profil, setProfil] = useState('');
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -63,104 +66,111 @@ const Setting = (props) => {
   //   });
   // }
 
-  const updateUser = () => {
+  const updateUser = async () => {
     setIsLoading(true);
+    let message = [];
     const data = {
       full_name: name,
       birth: moment(date).format('YYYY-MM-DD'),
     };
 
-    // try {
-    //   await profileSchema.validateAsync(data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    
-    if (name === full_name) delete data.full_name;
-    Axios({
-      method: 'PATCH',
-      url: `${API_URL}/users/${id}`,
-      data: data,
-      headers: {
-        Authorization: tokenLogin,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
+    try {
+      await profileSchema.validateAsync(data);
+      if (name === full_name) delete data.full_name;
+      Axios({
+        method: 'PATCH',
+        url: `${API_URL}/users/${id}`,
+        data: data,
+        headers: {
+          Authorization: tokenLogin,
+          'Content-Type': 'application/json',
+        },
+      }).then((res) => {
         setIsLoading(false);
-        Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
-        console.log(res, 'ini result');
-      })
-      .catch((error) => {
+        message.push('Your profile updated succesfully.');
+        setError('');
+        setSuccess(message);
+      }).catch((error) => {
         setIsLoading(false);
         console.log(error.response);
         if (error.response.data.message)
-          Alert.alert(
-            'Update Profile Failed!',
-            error.response.data.message.replace('birth', 'Date of Birth '),
-          );
-      });
+          message.push('Your profile failed to update.' + error.response.data.message.replace('birth', 'Date of Birth '));
+          setError(message);
+        });
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      message.push(error.toString().replace('ValidationError:', ''));
+      setError(message)
+    }
   };
 
-  const updatePassword = () => {
+  const updatePassword = async () => {
     setIsLoading(true)
-    /**
-     * Replace this validation using JOI or your own validation style.
-     */
+    let message = [];
+
     // start replace
     if (password.length < 1) {
       setIsLoading(false);
-      Alert.alert('Old Password Couldn\'t To Be Empty!', 'Please type the password.');
-      return;
+      message.push('Old Password Couldn\'t To Be Empty!.');
     }
     if (newPassword.length < 1) {
       setIsLoading(false);
-      Alert.alert('New Password Couldn\'t To Be Empty!', 'Please type the password.');
-      return;
+      message.push('New Password Couldn\'t To Be Empty!.');
     }
     if (repeatNewPassword.length < 1) {
       setIsLoading(false);
-      Alert.alert('Repeat Password Couldn\'t To Be Empty!', 'Please type the password.');
-      return;
-    }
-    // end replace
+      message.push('Repeat Password Couldn\'t To Be Empty!.');
+    }  
 
-    /**
-     * If you using joi as validation library,
-     * please use validateAsync with try catch
-     * and move this code inside of try code block.
-     */
-    // start move
     if (newPassword !== repeatNewPassword) {
       setIsLoading(false);
-      Alert.alert('Password Not Match!', 'Please match the password.');
+      message.push('Password Not Match!. Please match the password.')
+    }
+
+    if (message.length > 0) {
+      setError(message);
       return;
-    }
-    const data = {
-      id: id,
-      password: password,
-      new_password: newPassword
-    }
-    Axios({
-      method: 'POST',
-      url: `${API_URL}/auth/resetpassword`,
-      data: data,
-      headers: {
-        Authorization: tokenLogin,
-        'Content-Type': 'application/json'
+    } 
+
+    try {
+      const data = {
+        password,
+        newPassword,
+        repeatNewPassword
       }
-    }).then((res) => {
-      setIsLoading(false)
-      Alert.alert('Profile Updated!', 'Your password updated succesfully.');
-      console.log(res, 'ini result')
-    }).catch((error) => {
-      setIsLoading(false)
-      console.log(error.response)
-      if (error.response.data.message) Alert.alert('Update Password Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
-    });
-    // end move
-    // I have joi error message handler in my helper file btw :v
-    // and the output would be like a human readable message.
+      await resetPasswordSchema.validateAsync(data);
+      
+      const data2 = {
+        id: id,
+        password: password,
+        new_password: newPassword
+      }
+      Axios({
+        method: 'POST',
+        url: `${API_URL}/auth/resetpassword`,
+        data: data2,
+        headers: {
+          Authorization: tokenLogin,
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
+        setIsLoading(false)
+        setError('');
+        message.push('Profile Updated!. Your password updated succesfully.')
+        setSuccess(message)
+        console.log(res, 'ini result')
+      }).catch((error) => {
+        setIsLoading(false)
+        if (error.response.data.message) message.push('Update Password Failed!.' + error.response.data.message.replace('birth', 'Date of Birth '));
+        setError(message);
+        console.log(error.response)
+      });
+    } catch (error) {
+      setIsLoading(false);
+      message.push(error.toString().replace('ValidationError:', ''));
+      setError(message)  
+    }
   }
 
   const toResetPassword = () => {
@@ -223,7 +233,7 @@ const Setting = (props) => {
                 placeholder="Insert Your Password"
                 onFocus={() => setModalVisiblePassword(true)}
                 value=""
-                onChangeText={(text) => setPassword(text)}
+                onChangeText={() => setModalVisiblePassword(true)}
               />
             </View>
             {isLoading
@@ -243,14 +253,17 @@ const Setting = (props) => {
         </View>
       </View>
 
-      {/* start modal size */}
+      {/* start modal reset password */}
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisiblePassword}>
         <TouchableOpacity
           style={style.modalFade}
-          onPress={() => setModalVisiblePassword(false)}></TouchableOpacity>
+          onPress={() => setModalVisiblePassword(false)}>
+          {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+          {isError ? <Alert title={isError} type='failed' onPress={() => setError()} /> : <></>}
+          </TouchableOpacity>
         <View style={style.modalContainer}>
           <View style={style.scrollTit}></View>
           <Text style={style.titleText}>Password Change</Text>
@@ -296,6 +309,8 @@ const Setting = (props) => {
         </View>
       </Modal>
       {/* end modal size */}
+      {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+      {isError ? <Alert title={isError} type='failed' onPress={() => setError()} /> : <></>}
     </View>
   );
 };

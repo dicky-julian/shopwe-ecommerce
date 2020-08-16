@@ -8,6 +8,7 @@ import style from './style';
 import { updateUser } from '../../Utils/Api';
 import { setUpdateUser } from '../../Redux/Actions/users/users';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { addressSchema } from '../../Utils/valid';
 
 const Address = props => {
     const data = props.route.params ? props.route.params.data : '';
@@ -24,14 +25,33 @@ const Address = props => {
     const [isDefault, setIsDefault] = useState(false)
     const user = props.user;
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        let message = [];
         if (!fullname || !address || !city || !state || !country || !zip) {
-            setError('Data cant be empty')
+            message.push('Data can\'t be empty.');
+            setError(message);
             return;
         }
-
-        const dataAddress = `${label}-${fullname}-${address}-${city}-${state}-${country}-${zip}`;
-        data ? handleUpdateAddress(dataAddress) : handleAddAddress(dataAddress);
+        const data = {
+            label,
+            fullname,
+            address,
+            city,
+            state,
+            country,
+            zip
+        };
+        try {
+            console.log(data);
+            await addressSchema.validateAsync(data);
+            const dataAddress = `${label}-${fullname}-${address}-${city}-${state}-${country}-${zip}`;
+            data ? handleUpdateAddress(dataAddress) : handleAddAddress(dataAddress);
+            setError('')
+        } catch (error) {
+            console.log(error);
+            message.push(error.toString().replace('ValidationError:', ''));
+            setError(message);
+        };
     }
 
     const handleUpdateAddress = data => {

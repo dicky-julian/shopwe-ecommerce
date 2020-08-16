@@ -1,15 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {
-  Dimensions,
-  Modal,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  ImageBackground,
-  Alert,
-} from 'react-native';
-import {Topbar, Button} from '../../Components';
+import {Dimensions, Modal, ScrollView, Text, TouchableOpacity, View, ImageBackground} from 'react-native';
+import {Topbar, Button, Alert} from '../../Components';
 import styles from './style';
 import {color} from '../../Assets/Styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -28,6 +19,9 @@ const DetailProduct = (props) => {
   const [modalVisibleColor, setModalVisibleColor] = useState(false);
   const [activeColor, setActiveColor] = useState('');
   const colorActionList = product.colors.split('|');
+  const sizeActionList = product.sizes.split('|');
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
   // const colorActionList = [
   //   '#000',
   //   '#F7F7F7',
@@ -35,7 +29,6 @@ const DetailProduct = (props) => {
   //   '#BEA9A9',
   //   '#E2BB8D',
   // ];
-  const sizeActionList = product.sizes.split('|');
 
   const handleSetSize = (list) => {
     setActiveSize(list);
@@ -50,21 +43,30 @@ const DetailProduct = (props) => {
   /**
    * Life Cycles
    */
+  useEffect(() => {
+    try {
+      isSuccess.length > 0 && setError('');
+    } catch (error) {
+      
+    }
+  }, [isSuccess])
 
-   /**
-    * Logics
-    */
+  /**
+  * Logics
+  */
   const addToCart = () => {
     let error = 0;
+    let message = [];
     if (activeColor === '' || activeColor === undefined || activeColor.length < 1) {
-      Alert.alert('No Color Choosed!', 'Please choose one color of product.')
+      message.push('Please choose a color.');
       error += 1;
     }
     if (activeSize === '' || activeSize === undefined || activeSize.length < 1) {
-      Alert.alert('No Size Choosed!', 'Please choose one size of product.')
+      message.push('Please choose a size.');
       error += 1;
     }
     if (error !== 0) {
+      setError(message);
       return;
     }
     const detail_product = {
@@ -94,19 +96,8 @@ const DetailProduct = (props) => {
       orders.push(detail_product)
     }
     props.setOrder(orders);
-    Alert.alert(
-      "Item Added To Cart",
-      "Add one more?",
-      [
-        {
-          text: "No, Thanks",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "Yes", onPress: () => addToCart() }
-      ],
-      { cancelable: false }
-    );
+    setSuccess('Item Added To Cart.')
+    // Alert.alert("Item Added To Cart","Add one more?",[{text: "No, Thanks",onPress: () => console.log("Cancel Pressed"),style: "cancel"},{ text: "Yes", onPress: () => addToCart() }],{ cancelable: false });
   }
   return (
     <View style={styles.container}>
@@ -272,6 +263,8 @@ const DetailProduct = (props) => {
         </View>
       </Modal>
       {/* end modal color */}
+      {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+      {isError ? <Alert title={isError} type='failed' onPress={() => setError()} /> : <></>}
     </View>
   );
 };
