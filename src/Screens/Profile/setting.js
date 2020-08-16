@@ -8,6 +8,7 @@ import { color } from '../../Assets/Styles/colors';
 import moment from 'moment';
 import Axios from 'axios';
 import { API_URL } from '../../../env';
+import { profileSchema, changePassSchema } from '../../Utils/valid';
 
 const Setting = (props) => {
   const {id, tokenLogin, full_name, birth, email, created_at} = props.auth.auth;
@@ -36,12 +37,45 @@ const Setting = (props) => {
   /**
    * API Services
    */
+  // const updateUser = () => {
+  //   setIsLoading(true)
+  //   const data = {
+  //     full_name: name,
+  //     birth: moment(date).format('YYYY-MM-DD')
+  //   }
+  //   if (name === full_name) delete data.full_name;
+  //   Axios({
+  //     method: 'PATCH',
+  //     url: `${API_URL}/users/${id}`,
+  //     data: data,
+  //     headers: {
+  //       Authorization: tokenLogin,
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then((res) => {
+  //     setIsLoading(false)
+  //     Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+  //     console.log(res, 'ini result')
+  //   }).catch((error) => {
+  //     setIsLoading(false)
+  //     console.log(error.response)
+  //     if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
+  //   });
+  // }
+
   const updateUser = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const data = {
       full_name: name,
-      birth: moment(date).format('YYYY-MM-DD')
-    }
+      birth: moment(date).format('YYYY-MM-DD'),
+    };
+
+    // try {
+    //   await profileSchema.validateAsync(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    
     if (name === full_name) delete data.full_name;
     Axios({
       method: 'PATCH',
@@ -49,18 +83,25 @@ const Setting = (props) => {
       data: data,
       headers: {
         Authorization: tokenLogin,
-        'Content-Type': 'application/json'
-      }
-    }).then((res) => {
-      setIsLoading(false)
-      Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
-      console.log(res, 'ini result')
-    }).catch((error) => {
-      setIsLoading(false)
-      console.log(error.response)
-      if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
-    });
-  }
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        setIsLoading(false);
+        Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+        console.log(res, 'ini result');
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        console.log(error.response);
+        if (error.response.data.message)
+          Alert.alert(
+            'Update Profile Failed!',
+            error.response.data.message.replace('birth', 'Date of Birth '),
+          );
+      });
+  };
+
   const updatePassword = () => {
     setIsLoading(true)
     /**
@@ -90,19 +131,19 @@ const Setting = (props) => {
      * and move this code inside of try code block.
      */
     // start move
-    if (password !== newPassword) {
+    if (newPassword !== repeatNewPassword) {
       setIsLoading(false);
       Alert.alert('Password Not Match!', 'Please match the password.');
       return;
     }
     const data = {
-      old_password: password,
+      id: id,
+      password: password,
       new_password: newPassword
     }
-    if (name === full_name) delete data.full_name;
     Axios({
-      method: 'PATCH',
-      url: `${API_URL}/users/${id}`,
+      method: 'POST',
+      url: `${API_URL}/auth/resetpassword`,
       data: data,
       headers: {
         Authorization: tokenLogin,
@@ -110,16 +151,21 @@ const Setting = (props) => {
       }
     }).then((res) => {
       setIsLoading(false)
-      Alert.alert('Profile Updated!', 'Your profile updated succesfully.');
+      Alert.alert('Profile Updated!', 'Your password updated succesfully.');
       console.log(res, 'ini result')
     }).catch((error) => {
       setIsLoading(false)
       console.log(error.response)
-      if (error.response.data.message) Alert.alert('Update Profile Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
+      if (error.response.data.message) Alert.alert('Update Password Failed!', error.response.data.message.replace('birth', 'Date of Birth '));
     });
     // end move
     // I have joi error message handler in my helper file btw :v
     // and the output would be like a human readable message.
+  }
+
+  const toResetPassword = () => {
+    setModalVisiblePassword(false);
+    props.navigation.navigate('ForgotPassword', {email:email});
   }
   return (
     <View style={{flex: 1}}>
@@ -175,6 +221,7 @@ const Setting = (props) => {
               <TextInputs
                 title="Password"
                 placeholder="Insert Your Password"
+                onFocus={() => setModalVisiblePassword(true)}
                 value=""
                 onChangeText={(text) => setPassword(text)}
               />
@@ -214,10 +261,11 @@ const Setting = (props) => {
                 placeholder="Insert Your Old Password"
                 value={password}
                 secureTextEntry={true}
-                onChangeText={(text) => setNewPassword(text)}
+                autoFocus={true}
+                onChangeText={(text) => setPassword(text)}
               />
-              <TouchableOpacity onPress={() => Alert.alert('hi')}>
-                <Text style={{marginBottom: 5, textAlign: 'right'}}>
+              <TouchableOpacity onPress={() => toResetPassword()}>
+                <Text style={{marginBottom: 5, padding: 5, textAlign: 'right'}}>
                   Forgot Password
                 </Text>
               </TouchableOpacity>

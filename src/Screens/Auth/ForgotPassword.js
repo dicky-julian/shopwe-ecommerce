@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text} from 'react-native';
 import style from './style';
-import {TextInputs, Topbar, Button} from '../../Components';
+import {TextInputs, Topbar, Button, Alert} from '../../Components';
 import axios from 'axios';
 import {API_URL} from '../../../env';
 import {forgotSchema} from '../../Utils/valid';
@@ -9,10 +9,12 @@ import {forgotSchema} from '../../Utils/valid';
 const ForgotPassword = (props) => {
   const [email, setEmail] = useState();
   const [loading, setLoading] = useState();
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
 
-  const handleSubmitSend = async (event) => {
+  const handleSubmitSend = async () => {
     await setLoading(true);
-    event.preventDefault();
+    // event.preventDefault();
     const data = {
       email: email,
       requestType: 'resetPassword',
@@ -73,7 +75,8 @@ const ForgotPassword = (props) => {
       <Topbar backNav={true} />
       <View style={style.container}>
         <Text style={style.titleText}>Forgot Password</Text>
-        <Text>
+        <Text
+          style={{ ...style.darkText, marginTop: 25, marginBottom: 25 }}>
           Please, enter your email address. You will receive a link to create a
           new password via email.
         </Text>
