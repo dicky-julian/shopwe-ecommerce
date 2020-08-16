@@ -59,8 +59,8 @@ const shipingAddress = props => {
 
                 <Text style={style.subTitleText}>Shipping Address</Text>
                 <View>
-                    {address ?
-                        address.length > 1 
+                    {address
+                        ? address.length > 1 
                             ? address.map((address, key) => {
                                 return (
                                     <Card

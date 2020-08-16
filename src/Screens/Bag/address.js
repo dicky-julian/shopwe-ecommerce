@@ -32,7 +32,7 @@ const Address = props => {
             setError(message);
             return;
         }
-        const data = {
+        const setData = {
             label,
             fullname,
             address,
@@ -42,8 +42,7 @@ const Address = props => {
             zip
         };
         try {
-            console.log(data);
-            await addressSchema.validateAsync(data);
+            await addressSchema.validateAsync(setData);
             const dataAddress = `${label}-${fullname}-${address}-${city}-${state}-${country}-${zip}`;
             data ? handleUpdateAddress(dataAddress) : handleAddAddress(dataAddress);
             setError('')
@@ -83,7 +82,7 @@ const Address = props => {
         userAddress.map(item => {
             newAddress = newAddress ? `${newAddress}|${item}` : item;
         })
-        result = {};
+        let result = {};
         newAddress.split('|').length > 1
             ? isDefault
                 ? result = { address: newAddress, address_active: userAddress.length - 1 }

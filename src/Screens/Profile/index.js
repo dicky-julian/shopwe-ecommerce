@@ -30,6 +30,7 @@ const Profile = (props) => {
   // const [profiles, setProfiles] = useState({});
   useEffect(() => {
     // checkAuth()
+    console.log(`${apiUri.newImagePath}/${image}`);
     getUserOrders()
   }, [])
 
