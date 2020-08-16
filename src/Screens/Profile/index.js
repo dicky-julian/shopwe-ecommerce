@@ -8,7 +8,7 @@ import Axios from 'axios';
 
 import { API_URL } from '../../../env';
 import { apiUri } from '../../Utils/config';
-import { Topbar } from '../../Components';
+import { Topbar, Button } from '../../Components';
 import { color } from '../../Assets/Styles';
 import styles from './style';
 
@@ -29,7 +29,7 @@ const Profile = (props) => {
   const [upload, setUpload] = useState(false)
   // const [profiles, setProfiles] = useState({});
   useEffect(() => {
-    checkAuth()
+    // checkAuth()
     getUserOrders()
   }, [])
 
@@ -113,93 +113,114 @@ const Profile = (props) => {
       <View style={styles.headline}>
         <Text style={styles.headText}>My Profile</Text>
       </View>
-
-      <View style={styles.container}>
-        <View style={[styles.list, styles.cardImage]}>
-          {newImage
-            ? <TouchableOpacity onPress={() => handleChoosePhoto()}>
+      {tokenLogin
+        ?
+        <View style={styles.container}>
+          <View style={[styles.list, styles.cardImage]}>
+            {newImage
+              ? <TouchableOpacity onPress={() => handleChoosePhoto()}>
                 <Image
                   source={{ uri: `${newImage.uri}` }}
                   style={styles.image}
                 />
-            </TouchableOpacity>
-            : <TouchableOpacity onPress={() => handleChoosePhoto()}>
+              </TouchableOpacity>
+              : <TouchableOpacity onPress={() => handleChoosePhoto()}>
                 <Image
                   source={{ uri: `${apiUri.newImagePath}/${image}` }}
                   style={styles.image}
                 />
-            </TouchableOpacity>}
-          <View style={[styles.list, styles.cardText]}>
-            <Text style={styles.darkText}>{full_name}</Text>
-            <Text style={styles.fadeText}>{email}</Text>
-            {upload && <Text style={styles.fadeText}>Uploading...</Text>}
+              </TouchableOpacity>}
+            <View style={[styles.list, styles.cardText]}>
+              <Text style={styles.darkText}>{full_name}</Text>
+              <Text style={styles.fadeText}>{email}</Text>
+              {upload && <Text style={styles.fadeText}>Uploading...</Text>}
+            </View>
           </View>
+
+          <TouchableOpacity style={styles.list} onPress={() => navigation.navigate('MyOrder')}>
+            <View>
+              <View style={styles.cardIcon}>
+                <Text style={styles.darkText}>My Orders</Text>
+                <Ionicons
+                  name="chevron-forward-outline"
+                  size={20}
+                  color={color.dark}
+                />
+              </View>
+            </View>
+            <View style={styles.cardIcon}>
+              <Text style={styles.fadeText}>Already have {totalOrders} orders</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.list} onPress={() => navigation.navigate('ShipAddress')}>
+            <View>
+              <View style={styles.cardIcon}>
+                <Text style={styles.darkText}>Shipping Address</Text>
+                <Ionicons
+                  name="chevron-forward-outline"
+                  size={20}
+                  color={color.dark}
+                />
+              </View>
+            </View>
+            <View style={styles.cardIcon}>
+              <Text style={styles.fadeText}>{addressAvailable} Address</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.list} onPress={() => navigation.navigate('SettingProfile')}>
+            <View>
+              <View style={styles.cardIcon}>
+                <Text style={styles.darkText}>Settings</Text>
+                <Ionicons
+                  name="chevron-forward-outline"
+                  size={20}
+                  color={color.dark}
+                />
+              </View>
+            </View>
+            <View style={styles.cardIcon}>
+              <Text style={styles.fadeText}>Notifications, password</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.list} onPress={() => logout()}>
+            <View>
+              <View style={styles.cardIcon}>
+                <Text style={styles.darkText}>Logout</Text>
+                <Ionicons
+                  name="chevron-forward-outline"
+                  size={20}
+                  color={color.dark}
+                />
+              </View>
+            </View>
+            <View style={styles.cardIcon}>
+              <Text style={styles.fadeText}>End your session.</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-
-        <TouchableOpacity style={styles.list} onPress={() => navigation.navigate('MyOrder')}>
-          <View>
-            <View style={styles.cardIcon}>
-              <Text style={styles.darkText}>My Orders</Text>
-              <Ionicons
-                name="chevron-forward-outline"
-                size={20}
-                color={color.dark}
-              />
-            </View>
+        : <View style={{
+          height: '100%',
+        }}>
+          <View style={[styles.list, styles.cardText, {flexDirection: 'column'}]}>
+            <Text style={styles.darkText}>You must login first to continue.</Text>
+            <Text style={
+              {
+                ...styles.darkText,
+                color: color.light,
+                backgroundColor: color.primary,
+                width: 80,
+                padding: 5,
+                borderRadius: 20,
+                textAlign: 'center',
+                marginTop: 5
+              }}
+              onPress={() => navigation.replace('Auth', {form: 'login'})}
+            >Login</Text>
           </View>
-          <View style={styles.cardIcon}>
-            <Text style={styles.fadeText}>Already have {totalOrders} orders</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.list} onPress={() => navigation.navigate('ShipAddress')}>
-          <View>
-            <View style={styles.cardIcon}>
-              <Text style={styles.darkText}>Shipping Address</Text>
-              <Ionicons
-                name="chevron-forward-outline"
-                size={20}
-                color={color.dark}
-              />
-            </View>
-          </View>
-          <View style={styles.cardIcon}>
-            <Text style={styles.fadeText}>{addressAvailable} Address</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.list} onPress={() => navigation.navigate('SettingProfile')}>
-          <View>
-            <View style={styles.cardIcon}>
-              <Text style={styles.darkText}>Settings</Text>
-              <Ionicons
-                name="chevron-forward-outline"
-                size={20}
-                color={color.dark}
-              />
-            </View>
-          </View>
-          <View style={styles.cardIcon}>
-            <Text style={styles.fadeText}>Notifications, password</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.list} onPress={() => logout()}>
-          <View>
-            <View style={styles.cardIcon}>
-              <Text style={styles.darkText}>Logout</Text>
-              <Ionicons
-                name="chevron-forward-outline"
-                size={20}
-                color={color.dark}
-              />
-            </View>
-          </View>
-          <View style={styles.cardIcon}>
-            <Text style={styles.fadeText}>End your session.</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          </View>}
     </View>
   );
 }
