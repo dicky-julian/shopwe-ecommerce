@@ -12,14 +12,12 @@ const ScreenOtp = (props) => {
   const [loading, setLoading] = useState();
   const [isSuccess, setSuccess] = useState('');
   const [isError, setError] = useState('');
+  const { fullname, email, password } = props.route.params;
 
   const handleSubmitSendSignup = async (event) => {
     await setLoading(true);
     event.preventDefault();
     const data = {
-      fullname: props.route.params.fullname,
-      email: props.route.params.email,
-      password: props.route.params.password,
       otp: otp,
     };
     try {
@@ -28,79 +26,66 @@ const ScreenOtp = (props) => {
         method: 'POST',
         url: API_URL + '/auth/register',
         data: {
-          full_name: data.fullname,
-          email: data.email,
-          password: data.password,
+          full_name: fullname,
+          email: email,
+          password: password,
           otp: otp,
         },
         headers: {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
+        setLoading(false);
+        console.log(res);
+        props.navigation.replace('Auth', { form: 'login' });
+      }).catch((err) => {
+        setLoading(false);
+        const errorMessage = err.response.data.message ? err.response.data.message : 'Signup Failed';
+        setError(errorMessage)
+        console.log(err.response)
+        // Alert.alert("Failed!",err.response.data.message,[{ text: "OK" }],{ cancelable: false });
       })
-        .then((res) => {
-          setLoading(false);
-          console.log(res);
-          setSuccess('Confirm Success');
-          props.navigation.replace('Auth', {form: 'login'});
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-          const errorMessage = err.response.data.message
-            ? err.response.data.message
-            : err.response;
-          setError(errorMessage); //set message error from axios
-          // Alert.alert('Failed!', err.response.data.message, [{text: 'OK'}], {
-          //   cancelable: false,
-          // });
-        });
     } catch (err) {
       setLoading(false);
-      console.log(err);
-      const errorMessage = err.toString().replace('ValidationError: ', '');
-      setError(errorMessage);
-    }
-  };
+      const errorMessage = err.toString().replace('ValidationError:', '');
+      setError(errorMessage)
+      console.log(err)
+    } 
+  }
 
   const handleSubmitSendReset = async (event) => {
     await setLoading(true);
     event.preventDefault();
-    const data = {
-      otp: otp,
-    };
-     try {
-       await otpSchema.validateAsync(data);
-       axios({
-         method: 'POST',
-         url: API_URL + '/auth/confirm/otp',
-         data: {
-           otp: otp,
-         },
-       })
-         .then((res) => {
-           setLoading(false);
-           console.log(res);
-           props.navigation.replace('ResetPassword', {
-             email: props.route.params.email,
-           });
-         })
-         .catch((err) => {
-           setLoading(false);
-           console.log(err.response);
-           const errorMessage = err.response.data.message
-             ? err.response.data.message
-             : err.response;
-           setError(errorMessage);
-          //  Alert.alert('Failed!', 'OTP is not valid!', [{text: 'OK'}], {
-          //    cancelable: false,
-          //  });
-         });
-     } catch (err) {
-       setLoading(false);
-       console.log(err);
-       const errorMessage = err.toString().replace('ValidationError: ', '');
-       setError(errorMessage);
-     }
+    try {
+      const data = {
+        otp: otp,
+      };
+      await otpSchema.validateAsync(data);
+      axios({
+        method: 'POST',
+        url: API_URL + '/auth/confirm/otp',
+        data: {
+          otp: otp,
+        },
+      }).then((res) => {
+        setLoading(false);
+        console.log(res);
+        props.navigation.replace('ResetPassword', {
+          email: props.route.params.email,
+        });
+      }).catch((err) => {
+        setLoading(false);
+        const errorMessage = err.response.data.message && err.response.data.message;
+        setError(errorMessage)
+        console.log(err.response);
+        // Alert.alert('Failed!', 'OTP is not valid!', [{ text: 'OK' }], { cancelable: false });
+      });
+    } catch (err) {
+      setLoading(false);
+      const errorMessage = err.toString().replace('ValidationError:', '');
+      setError(errorMessage)
+      console.log(err)
+    }
   };
 
   useEffect(() => {
@@ -113,9 +98,9 @@ const ScreenOtp = (props) => {
       <ScrollView>
         <View style={style.container}>
           <Text style={style.titleText}>Verification OTP</Text>
-          <Text style={{marginBottom: 20}}>
-            The verification code has been sent via email to{' '}
-            {props.route.params.email}
+          <Text
+            style={{ ...style.darkText, marginBottom: 10}}>
+            The verification code has been sent via email to {email}
           </Text>
           {/* <Text>Please wait 1231 seconds to resend</Text> */}
           <View style={style.textinput}>
@@ -156,6 +141,8 @@ const ScreenOtp = (props) => {
           )}
         </View>
       </ScrollView>
+      {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+      {isError ? <Alert title={isError} type='failed' onPress={() => setError()} /> : <></>}
     </View>
   );
 };

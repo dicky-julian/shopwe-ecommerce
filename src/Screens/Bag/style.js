@@ -102,6 +102,21 @@ const style = StyleSheet.create({
         height: 213,
         width: 208,
         marginBottom: 30
+    },
+
+
+    /**
+     * Set as default checkbox
+     */
+    checkboxWrapper: {
+        alignSelf: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 15
+    },
+    checkboxLabel: {
+        marginRight: 5
     }
 });
 

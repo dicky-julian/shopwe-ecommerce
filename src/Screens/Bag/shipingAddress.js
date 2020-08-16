@@ -22,6 +22,7 @@ const shipingAddress = props => {
             const userAddress = splitString(user.address);
             setAddress(userAddress);
         }
+        setActiveCard(user.address_active)
     }, [user])
 
     useEffect(() => {
@@ -33,13 +34,12 @@ const shipingAddress = props => {
 
     const handleActivate = (key) => {
         const data = { address_active: key };
-        updateUser(data, user.id).then(res => {
+        updateUser(data, user.id, user.tokenLogin).then(res => {
             if (res) {
                 props.setUpdateUser(data);
                 setActiveCard(key);
             }
         })
-
     }
 
     return (
@@ -60,17 +60,32 @@ const shipingAddress = props => {
                 <Text style={style.subTitleText}>Shipping Address</Text>
                 <View>
                     {address ?
-                        address.map((address, key) => {
-                            return (
-                                <Card
-                                    key={key}
-                                    dataAddress={address}
-                                    indexCard={key}
-                                    isActive={key === activeCard ? true : false}
-                                    onPress={() => handleActivate(key)}
-                                />
-                            )
-                        })
+                        address.length > 1 
+                            ? address.map((address, key) => {
+                                return (
+                                    <Card
+                                        key={key}
+                                        dataAddress={address}
+                                        indexCard={key}
+                                        isActive={key === activeCard ? true : false}
+                                        onPress={() => handleActivate(key)}
+                                    />
+                                )
+                            })
+                            : address.map((address, key) => {
+                                return (
+                                    <>
+                                        <View onLayout={() => handleActivate(key)}></View>
+                                        <Card
+                                            key={key}
+                                            dataAddress={address}
+                                            indexCard={key}
+                                            isActive={key === activeCard ? true : false}
+                                            onPress={() => handleActivate(key)}
+                                        />
+                                    </>
+                                )
+                            })
                         :
                         <Text style={[style.exceptionText, style.standaloneCenter]}>No address yet.</Text>}
                 </View>

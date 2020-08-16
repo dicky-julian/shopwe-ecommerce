@@ -76,9 +76,11 @@ const ProductOrder = (props) => {
               </View>
             </View>
           </View>
-          <TouchableOpacity onPress={() => deleteOrder(dataOrderDetail)}>
-            <Ionicons name="trash-outline" size={20} color={color.dark} />
-          </TouchableOpacity>
+          {props.noTrash
+            ? <></>
+            : <TouchableOpacity onPress={() => deleteOrder(dataOrderDetail)}>
+              <Ionicons name="trash-outline" size={20} color={color.dark} />
+            </TouchableOpacity>}
         </View>
         <View style={style.productWrapper}>
           {props.counter ? (
@@ -118,7 +120,7 @@ const ProductOrder = (props) => {
                 </Text>
               </View>
             )}
-          <Text style={style.counterText}>{dataOrderDetail.sub_total}$</Text>
+          <Text style={style.counterText}>$ {dataOrderDetail.sub_total}</Text>
         </View>
       </View>
     </View>

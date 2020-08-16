@@ -12,7 +12,7 @@ const ForgotPassword = (props) => {
   const [isSuccess, setSuccess] = useState('');
   const [isError, setError] = useState('');
 
-  const handleSubmitSend = async (event) => {
+  const handleSubmitSend = async () => {
     await setLoading(true);
     // event.preventDefault();
     const data = {
@@ -75,7 +75,8 @@ const ForgotPassword = (props) => {
       <Topbar backNav={true} />
       <View style={style.container}>
         <Text style={style.titleText}>Forgot Password</Text>
-        <Text>
+        <Text
+          style={{ ...style.darkText, marginTop: 25, marginBottom: 25 }}>
           Please, enter your email address. You will receive a link to create a
           new password via email.
         </Text>

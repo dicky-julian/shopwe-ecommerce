@@ -1,7 +1,8 @@
 import fetch from '../fetch';
-import { apiUri, tokenApi } from '../config.js';
+import { apiUri } from '../config.js';
+// import { apiUri, tokenApi } from '../config.js';
 
-const getPayment = async () => {
+const getPayment = async (tokenApi) => {
     const options = {
         'method': 'get',
         'url': apiUri.payments,

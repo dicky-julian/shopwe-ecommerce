@@ -13,9 +13,9 @@ import {ValidationError} from '@hapi/joi';
 const Auth = (props) => {
   const navigation = useNavigation();
   const [form, setForm] = useState('');
+  const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [name, setName] = useState();
   const [loading, setLoading] = useState();
   const [isSuccess, setSuccess] = useState('');
   const [isError, setError] = useState('');
@@ -33,73 +33,63 @@ const Auth = (props) => {
         url: API_URL + '/auth/login',
         data: {
           email: data.email,
-          password: data.password,
-        },
+          password: data.password
+        }
+      }).then((res) => {
+        setLoading(false)
+        setSuccess('Login Success')
+        props.login(res.data.data);
+        props.navigation.replace('Index');
+      }).catch((err) => {
+        setLoading(false);
+        const errorMessage = err.response.data.message ? err.response.data.message : err.response;
+        setError(errorMessage);
+        // Alert.alert("Failed!", err.response.data.message, [{ text: "OK" }],{ cancelable: false });
       })
-        .then((res) => {
-          setLoading(false);
-          setSuccess('Login Success');
-          props.login(res.data.data);
-          props.navigation.replace('Index');
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-          const errorMessage = err.response.data.message
-            ? err.response.data.message
-            : err.response;
-          setError(errorMessage); //set message error from axios
-          // Alert.alert('Failed!', err.response.data.message, [{text: 'OK'}], {
-          //   cancelable: false,
-          // });
-        });
-    } catch (err) {
+    } catch (error) {
       setLoading(false);
-      console.log(err);
-      const errorMessage = err.toString().replace('ValidationError: ', '');
-      setError(errorMessage);
+      const errorMessage = error.toString().replace('ValidationError:', '');
+      setError(errorMessage)
     }
   };
 
   const handleSubmitRegister = async () => {
     await setLoading(true);
     const data = {
+      fullname: name,
       email: email,
-      requestType: 'register',
-    };
+      password: password,
+      form: 'signup'
+    }
     try {
       await signupSchema.validateAsync(data);
       axios({
         method: 'POST',
         url: API_URL + '/auth/request/otp',
         data: {
-          email: data.email,
-          requestType: data.requestType,
+          email: email,
+          requestType: 'register',
         },
-      })
-        .then((res) => {
-          setLoading(false);
-          console.log(res);
-          setSuccess('Register Success');
-          props.navigation.push('ScreenOtp', {
-            fullname: name,
-            email: email,
-            password: password,
-            form: 'signup',
-          });
-        })
-        .catch((err) => {
-          setLoading(false);
-          console.log(err);
-          // Alert.alert('Failed!', 'Register failed!', [{text: 'OK'}], {
-          //   cancelable: false,
-          // });
+      }).then((res) => {
+        setLoading(false);
+        console.log(res);
+        props.navigation.push('ScreenOtp', {
+          fullname: name,
+          email: email,
+          password: password,
+          form: 'signup',
         });
-    } catch (err) {
+      }).catch((error) => {
+        setLoading(false);
+        const errorMessage = error.toString().replace('ValidationError:', '');
+        setError(errorMessage)
+        console.log(error.response)
+      })
+    } catch (error) {
       setLoading(false);
-      console.log(err);
-      const errorMessage = err.toString().replace('ValidationError:', '');
-      setError(errorMessage);
+      const errorMessage = error.toString().replace('ValidationError:', '');
+      setError(errorMessage)
+      console.log(error);
     }
   };
 
@@ -204,7 +194,10 @@ const Auth = (props) => {
             )}
           </View>
         )}
+
       </View>
+      {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+      {isError ? <Alert title={isError} type='failed' onPress={() => setError()} />: <></>}
     </>
   );
 };

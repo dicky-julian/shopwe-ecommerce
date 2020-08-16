@@ -18,3 +18,19 @@ export const splitString = string => {
   })
   return result;
 }
+
+export const createImageFormData = (body, image, field) => {
+  const data = new FormData();
+
+  (image !== undefined && image !== null) && data.append(field, {
+    uri: Platform.OS === "android" ? image.uri : image.uri.replace("file://", ""),
+    type: image.type,
+    name: image.fileName,
+  });
+
+  (body !== undefined && body !== null) && Object.keys(body).forEach(key => {
+    data.append(key, body[key]);
+  });
+
+  return data;
+};

@@ -1,29 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Text, View, Image, Alert, TouchableOpacity } from 'react-native';
-import { Topbar } from '../../Components';
-import styles from './style';
-import { color } from '../../Assets/Styles';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import ImagePicker from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import { get_all_order } from '../../Redux/Action/order';
-import { apiUri } from '../../Utils/config';
 import Axios from 'axios';
-import { logout } from '../../Redux/Actions/auth';
+
 import { API_URL } from '../../../env';
+import { apiUri } from '../../Utils/config';
+import { Topbar } from '../../Components';
+import { color } from '../../Assets/Styles';
+import styles from './style';
+
+import { createImageFormData } from '../../Utils/helper';
+import { setUpdateUser } from '../../Redux/Actions/users/users';
+import { updateUser } from '../../Utils/Api';
+import { get_all_order } from '../../Redux/Action/order';
+import { logout } from '../../Redux/Actions/auth';
 
 
 const Profile = (props) => {
   const navigation = useNavigation();
+  const user = props.auth.auth;
   const [totalOrders, setTotalOrders] = useState(0)
-  const { tokenLogin, image, full_name, username, email, id } = props.auth.auth;
-  const { address } = props.auth.auth;
-  const [addressAvailable] = useState(address ? address.split('|').length : 0)
+  const {tokenLogin, image, full_name, username, email, id, address} = props.auth.auth;
+  const [addressAvailable, setAddressAvailable] = useState(address ? address.split('|').length : 0)
+  const [newImage, setNewImage] = useState(null)
+  const [upload, setUpload] = useState(false)
   // const [profiles, setProfiles] = useState({});
   useEffect(() => {
     checkAuth()
     getUserOrders()
   }, [])
+
+  useEffect(() => {
+    setAddressAvailable(address ? address.split('|').length : 0);
+  }, [props.auth.auth])
+
+  useEffect(() => {
+    if (newImage !== null) handleUploadPhoto();
+  }, [newImage])
 
   const checkAuth = () => {
     !tokenLogin && navigation.navigate('Auth')
@@ -66,25 +82,57 @@ const Profile = (props) => {
       { cancelable: false }
     );
   }
+  const handleChoosePhoto = () => {
+    console.log('test');
+    const options = {
+      noData: true,
+    }
+    ImagePicker.showImagePicker(options, response => {
+      if (response.uri) {
+        if (response.fileSize > 1024 * 1024 * 3) {
+          Alert.alert('Image size is too large.', 'The maximum size is 3 MB. Please choose another image.')
+        } else {
+          setNewImage(response);
+        }
+      }
+    })
+  }
+  const handleUploadPhoto = () => {
+    const formData = createImageFormData(null, newImage, 'image')
+    updateUser(formData, user.id, user.tokenLogin).then(res => {
+      props.setUpdateUser({ user_id: user.id, image: res.data.image});
+      console.log(user)
+    }).catch(err => console.log(err))
+  }
   return (
     <View
       style={{
         backgroundColor: color.light,
       }}>
-      <Topbar search={true} />
+      <Topbar search={false} />
       <View style={styles.headline}>
         <Text style={styles.headText}>My Profile</Text>
       </View>
 
       <View style={styles.container}>
         <View style={[styles.list, styles.cardImage]}>
-          <Image
-            source={{ uri: `${apiUri.newImagePath}/${image}` }}
-            style={styles.image}
-          />
+          {newImage
+            ? <TouchableOpacity onPress={() => handleChoosePhoto()}>
+                <Image
+                  source={{ uri: `${newImage.uri}` }}
+                  style={styles.image}
+                />
+            </TouchableOpacity>
+            : <TouchableOpacity onPress={() => handleChoosePhoto()}>
+                <Image
+                  source={{ uri: `${apiUri.newImagePath}/${image}` }}
+                  style={styles.image}
+                />
+            </TouchableOpacity>}
           <View style={[styles.list, styles.cardText]}>
             <Text style={styles.darkText}>{full_name}</Text>
             <Text style={styles.fadeText}>{email}</Text>
+            {upload && <Text style={styles.fadeText}>Uploading...</Text>}
           </View>
         </View>
 
@@ -162,7 +210,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchProps = {
   get_all_order,
-  logout
+  logout,
+  setUpdateUser
 };
 
 export default connect(mapStateToProps, mapDispatchProps)(Profile);
