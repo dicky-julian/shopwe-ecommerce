@@ -206,19 +206,37 @@ const Profile = (props) => {
         }}>
           <View style={[styles.list, styles.cardText, {flexDirection: 'column'}]}>
             <Text style={styles.darkText}>You must login first to continue.</Text>
-            <Text style={
-              {
-                ...styles.darkText,
-                color: color.light,
-                backgroundColor: color.primary,
-                width: 80,
-                padding: 5,
-                borderRadius: 20,
-                textAlign: 'center',
-                marginTop: 5
-              }}
-              onPress={() => navigation.replace('Auth', {form: 'login'})}
-            >Login</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={
+                {
+                  ...styles.darkText,
+                  color: color.light,
+                  backgroundColor: color.primary,
+                  width: 80,
+                  padding: 5,
+                  borderRadius: 20,
+                  textAlign: 'center',
+                  marginTop: 5
+                }}
+                onPress={() => navigation.replace('Auth', { form: 'login' })}
+              >Login</Text>
+              <Text style={
+                {
+                  ...styles.darkText,
+                  color: color.dark,
+                  backgroundColor: color.light,
+                  borderColor: color.dark,
+                  borderWidth: 1,
+                  width: 90,
+                  padding: 5,
+                  borderRadius: 20,
+                  marginLeft: 5,
+                  textAlign: 'center',
+                  marginTop: 5
+                }}
+                onPress={() => navigation.replace('Auth', { form: 'signup' })}
+              >Sign Up</Text>
+            </View>
           </View>
           </View>}
     </View>
