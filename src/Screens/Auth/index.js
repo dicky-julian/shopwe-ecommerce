@@ -8,7 +8,6 @@ import {connect} from 'react-redux';
 import {login} from '../../Redux/Actions/auth';
 import {useNavigation} from '@react-navigation/native';
 import {loginSchema, signupSchema} from '../../Utils/valid';
-import {ValidationError} from '@hapi/joi';
 
 const Auth = (props) => {
   const navigation = useNavigation();

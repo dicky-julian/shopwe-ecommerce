@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Image, Text, ScrollView, View, Alert} from 'react-native';
-import {Button, ProductOrder, Topbar} from '../../Components';
+import {Image, Text, ScrollView, View} from 'react-native';
+import {Button, ProductOrder, Topbar, Alert} from '../../Components';
 import style from './style';
 import {connect} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -15,11 +15,10 @@ const OrderDetail = (props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [detailOrder, setDetailOrder] = useState([])
   const [reorder, setReorder] = useState(0)
-  const {order_id, tracking_number, updated_at, address, name, total, payment_id} = props.route.params;
-  const {
-    tokenLogin,
-    id,
-  } = props.auth.auth;
+  const { order_id, tracking_number, updated_at, address, name, total, payment_id } = props.route.params;
+  const {tokenLogin,id} = props.auth.auth;
+  const [isSuccess, setSuccess] = useState('');
+  const [isError, setError] = useState('');
   let detail_order = [];
   
   let order = {
@@ -77,7 +76,7 @@ const OrderDetail = (props) => {
   //   })
   //     .then((res) => {
   //       setIsLoading(false)
-  //       Alert.alert(
+        // Alert.alert(
   //         "Reorder Success!",
   //         "Reorder again?",
   //         [{text: "No, Thanks", onPress: () => console.log("Cancel Pressed"), style: "cancel"},
@@ -92,6 +91,7 @@ const OrderDetail = (props) => {
   //     });
   // }
   const addToCart = () => {
+    setSuccess('');
     let data = [];
     if (detailOrder !== undefined && detailOrder !== null && detailOrder.length > 0) {
       detailOrder.map((item, index) => {
@@ -108,7 +108,8 @@ const OrderDetail = (props) => {
     }
     console.log(data)
     props.setOrder(data);
-    Alert.alert('Items was added to cart.','Item only added once.')
+    setSuccess('Item(s) was added to cart. Item only added once.')
+    // Alert.alert('Items was added to cart.','Item only added once.')
   }
 
   /**
@@ -229,6 +230,8 @@ const OrderDetail = (props) => {
           </View>
         </View>
       </ScrollView>
+      {isSuccess ? <Alert title={isSuccess} type='success' onPress={() => setSuccess()} /> : <></>}
+      {isError ? <Alert title={isError} type='failed' onPress={() => setError()} /> : <></>}
     </View>
   );
 };
