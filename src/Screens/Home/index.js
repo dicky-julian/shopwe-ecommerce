@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SplashScreen from 'react-native-splash-screen'
 import { ImageBackground, Text, ScrollView } from 'react-native';
 import { ProductCollection } from '../../Components';
 import style from './style';
@@ -19,6 +20,7 @@ const Home = (props) => {
     props.initProducts();
     getNewProducts()
     getPopularProducts()
+    SplashScreen.hide();
   }, [])
 
   /**
