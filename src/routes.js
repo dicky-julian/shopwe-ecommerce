@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 // Page
 import Navbar from './Components/Navbar';
+import SplashScreen from './Screens/SplashScreen';
 // Shop Screen
 import Search from './Screens/Search';
 import Filter from './Screens/Shop/filter';
@@ -30,11 +31,11 @@ const Stack = createStackNavigator();
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Index">
+      <Stack.Navigator initialRouteName="SplashScreen">
         <Stack.Screen
           name="Auth"
           component={Auth}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="ScreenOtp"
@@ -54,57 +55,62 @@ const Routes = () => {
         <Stack.Screen
           name="Index"
           component={Navbar}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Search"
           component={Search}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Filter"
           component={Filter}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="MyOrder"
           component={MyOrder}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="OrderDetail"
           component={OrderDetail}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Checkout"
           component={Checkout}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Address"
           component={Address}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="ShipAddress"
           component={ShipAddress}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="ShipStatus"
           component={shipStatus}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="DetailProduct"
           component={DetailProduct}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="SettingProfile"
           component={SettingProfile}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
