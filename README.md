@@ -30,33 +30,33 @@
 ## Screenshots
 
 <div align="center">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/splash.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/home.jpg">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/detail.jpg">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/shop.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/splash.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/home.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/detail.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/shop.jpg">
 </div>
 <div align="center">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/filter.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/sort.jpg">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/search.jpg">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/order.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/filter.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/sort.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/search.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/order.jpg">
 </div>
 <div align="center">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/checkout.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/address.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/add_address.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/success.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/checkout.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/address.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/add_address.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/success.jpg">   
 </div>
 <div align="center">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/profile.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/setting.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/reset_password.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/forgot_password.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/profile.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/setting.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/reset_password.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/forgot_password.jpg">   
 </div>
 <div align="center">
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/signup.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/login.jpg">   
-    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/verification.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/signup.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/login.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/master/screenshots/verification.jpg">   
 </div>
 
 ## Getting Started
