@@ -12,39 +12,82 @@
 
 ## Table of Contents
 
-* [About the Project](#about-the-project)
-  * [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
-* [Usage](#usage)
+- [About the Project](#about-the-project)
+  - [Built With](#built-with)
+- [Screenshots](#screenshots)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
 
 ## About the Project
+
 ### Built With
-* [React Native](https://reactnative.dev)
-* [Node JS](https://nodejs.org)
+
+- [React Native](https://reactnative.dev)
+- [Node JS](https://nodejs.org)
+
+## Screenshots
+
+<div align="center">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/splash.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/home.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/detail.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/shop.jpg">
+</div>
+<div align="center">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/filter.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/sort.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/search.jpg">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/order.jpg">
+</div>
+<div align="center">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/checkout.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/address.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/add_address.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/success.jpg">   
+</div>
+<div align="center">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/profile.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/setting.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/reset_password.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/forgot_password.jpg">   
+</div>
+<div align="center">
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/signup.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/login.jpg">   
+    <img width="200" src="https://github.com/dicky-julian/e-commerce/blob/develop/screenshots/verification.jpg">   
+</div>
 
 ## Getting Started
+
 To try the apps, you must follow the simple example steps below.
 
 ### Prerequisites
-* [npm](https://www.npmjs.com)
-* [React Native's Environtment](https://reactnative.dev/docs/environment-setup)
+
+- [npm](https://www.npmjs.com)
+- [React Native's Environtment](https://reactnative.dev/docs/environment-setup)
 
 ### Installation
 
 1. Clone the repo
+
 ```sh
 git clone https://github.com/dicky-julian/e-commerce.git
 ```
+
 2. Install NPM packages
+
 ```sh
 npm install
 ```
+
 3. If you use your local as backend server, Enter your endpoint in `env.js`
+
 ```JS
 const API_URL = {{ your endpoint }};
 ```
+
 for backend, you can see https://github.com/rifanid98/shopweapi
 
 ## Usage
